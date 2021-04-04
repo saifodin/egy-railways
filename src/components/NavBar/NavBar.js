@@ -6,23 +6,23 @@ import SignIn from '../../pages/SignIn/SignIn.js';
 import YourBooking from '../../pages/YourBooking/YourBooking.js';
 import CreateAccount from '../../pages/CreateAccount/CreateAccount.js';
 
-
+import css from './NavBar.module.css';
 
 const NavBar = props => (
   <Router>
     <div>
       <ul>
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink exact to="/" activeClassName={css.linkSelected}>Home</NavLink>
         </li>
         <li>
-          <NavLink to="/YourBooking">YourBooking</NavLink>
+          <NavLink to="/YourBooking" activeClassName={css.linkSelected}>YourBooking</NavLink>
         </li>
         <li>
-          <NavLink to="/SignIn">SignIn</NavLink>
+          <NavLink to="/SignIn" activeClassName={css.linkSelected}>SignIn</NavLink>
         </li>
         <li>
-          <NavLink to="/CreateAccount">CreateAccount</NavLink>
+          <NavLink to="/CreateAccount" activeClassName={css.linkSelected}>CreateAccount</NavLink>
         </li>
       </ul>
 

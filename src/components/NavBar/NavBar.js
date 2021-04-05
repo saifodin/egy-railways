@@ -1,43 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
+import React, { useState, Fragment } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect, NavLink, Link } from "react-router-dom";
 
-import Home from '../../pages/Home/Home.js';
-import SignIn from '../../pages/SignIn/SignIn.js';
-import YourBooking from '../../pages/YourBooking/YourBooking.js';
-import CreateAccount from '../../pages/CreateAccount/CreateAccount.js';
+import Logo from '../Logo/Logo'
+import NavigationItem from './NavigationItem/NavigationItem'
 
-import css from './NavBar.module.css';
+import css from './Navbar.module.css';
 
-const NavBar = props => (
-  <Router>
-    <div>
+const Navbar = props => {
+
+  return (
+    <nav>
+      <Logo/>
       <ul>
-        <li>
-          <NavLink exact to="/" activeClassName={css.linkSelected}>Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/YourBooking" activeClassName={css.linkSelected}>YourBooking</NavLink>
-        </li>
-        <li>
-          <NavLink to="/SignIn" activeClassName={css.linkSelected}>SignIn</NavLink>
-        </li>
-        <li>
-          <NavLink to="/CreateAccount" activeClassName={css.linkSelected}>CreateAccount</NavLink>
-        </li>
+        <NavigationItem to="/">Home</NavigationItem>
+        <NavigationItem to="/YourBooking" >YourBooking</NavigationItem>
+        <NavigationItem to="/SignIn" >SignIn</NavigationItem>
+        <NavigationItem to="/CreateAccount" >CreateAccount</NavigationItem>
       </ul>
-
-      <hr />
-
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/YourBooking" component={YourBooking} />
-        <Route path="/CreateAccount" component={CreateAccount} />
-        <Route path="/SignIn" component={SignIn} />
-        <Redirect to="/" />
-      </Switch>
-
-    </div>
-  </Router>
-);
-
-export default NavBar;
+      <button>click</button>
+    </nav>
+  )
+}
+export default Navbar;

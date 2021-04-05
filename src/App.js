@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css';
 import Navbar from './components/Navbar/Navbar.js'
-import { BrowserRouter as Router, Switch, Route, Redirect, NavLink, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Home from './pages/Home/Home';
 import SignIn from './pages/SignIn/SignIn.js';
@@ -12,8 +12,8 @@ function App() {
   return (
     <Router>
       <div>
-        
-        <Navbar/>
+
+        <Navbar />
 
         <hr />
 

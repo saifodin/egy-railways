@@ -1,10 +1,7 @@
-import React, { useState, Fragment } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect, NavLink, Link } from "react-router-dom";
+import React from "react";
 
 import Logo from '../Logo/Logo'
 import NavigationItem from './NavigationItem/NavigationItem'
-
-import css from './Navbar.module.css';
 
 const Navbar = props => {
 

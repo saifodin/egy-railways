@@ -3,18 +3,19 @@ import React from "react";
 import Logo from '../Logo/Logo'
 import NavigationItem from './NavigationItem/NavigationItem'
 
+import css from './Navbar.module.css'
+
 const Navbar = props => {
 
   return (
-    <nav>
-      <Logo/>
+    <nav className={`container ${css.Navbar}`}>
+      <Logo className={`${css.Logo}`}/>
       <ul>
-        <NavigationItem to="/">Home</NavigationItem>
-        <NavigationItem to="/YourBooking" >YourBooking</NavigationItem>
-        <NavigationItem to="/SignIn" >SignIn</NavigationItem>
-        <NavigationItem to="/CreateAccount" >CreateAccount</NavigationItem>
+        {/* <NavigationItem to="/">Home</NavigationItem> */}
+        <NavigationItem to="/YourBooking" >Your booking</NavigationItem>
+        <NavigationItem to="/SignIn" >Sign in</NavigationItem>
+        <NavigationItem to="/CreateAccount" >Create an account</NavigationItem>
       </ul>
-      <button>click</button>
     </nav>
   )
 }

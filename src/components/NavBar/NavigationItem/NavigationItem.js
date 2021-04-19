@@ -5,8 +5,8 @@ import css from './NavigationItem.module.css'
 
 const NavigationItem = (props) => {
   return (
-    <li>
-      <NavLink className={css.red} to={props.to} exact={props.exact}>
+    <li className={css.navbarLists}>
+      <NavLink className={css.navlink} to={props.to} exact={props.exact}>
         {props.children}
       </NavLink>
     </li>

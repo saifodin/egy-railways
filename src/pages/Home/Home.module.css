@@ -1,0 +1,16 @@
+.Header {
+  height: 351px;
+  background-color: var(--a);
+  /* #132968 */
+}
+.Header .title{
+  color: var(--b);
+  font-weight: 700;
+  font-size: 40px;
+  margin-top: 40px;
+
+}
+h3 {
+  color: #f96b6b;
+  /* color: #fa6b6b; */
+}

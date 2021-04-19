@@ -12,16 +12,18 @@ function App() {
   return (
     <Router>
       <div>
+        {/* <header>
+          <Navbar />
+          <h1>Book Train Tickets across Europe</h1>
+          <HomeSearchBar/>
+        </header> */}
 
-        <Navbar />
-
-        <hr />
 
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/YourBooking" component={YourBooking} />
-          <Route path="/CreateAccount" component={CreateAccount} />
           <Route path="/SignIn" component={SignIn} />
+          <Route path="/CreateAccount" component={CreateAccount} />
           <Redirect to="/" />
         </Switch>
       </div>

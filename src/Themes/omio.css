@@ -1,0 +1,18 @@
+:root {
+  /* titles , paragraphs , some background */
+  /* blue */
+  --a: #132968;
+
+  /* most background , some titles and paragraphs*/
+  /* white */
+  --b: #fff;
+
+  /*little dark background */
+  /* off white */
+  --c: #f1f2f6;
+
+  /*buttons and some letters and logo  */
+  /* pink */
+  --d: #fa6b6b;
+
+}

@@ -1,9 +1,14 @@
 import React from 'react'
+import '../../assets/fonts/Nexa.css' //font
+import css from './Logo.module.css'
+
+
 
 const Logo = () => {
   return (
-    <div>
-      logo
+    <div className={css.logoContainer}>
+      <p className={css.firstLine}><span className={css.coloredPart}>Egyption</span>Railways</p>
+      <p className={css.secondLine} >Lifeline of the Nation</p>
     </div>
   )
 }

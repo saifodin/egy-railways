@@ -7,3 +7,14 @@
   color: var(--b);
   font-size: 14px;
 }
+
+@media (max-width: 576px) {
+  .navbarLists {
+    display: none;
+  }
+
+  .navlink {
+    display: none;
+  }
+}
+

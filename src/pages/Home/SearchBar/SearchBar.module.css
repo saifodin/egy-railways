@@ -1,3 +1,143 @@
-.SearchBar{
-  
+.SearchBar {
+  height: 150px;
+  background-color: white;
+  z-index: 999;
+  margin-top: -91px;
+  border-radius: 8px;
+  box-shadow: inset 0 -1px 0 0 rgb(0 0 0 / 10%), 0 8px 16px 0 rgb(19 41 104 / 20%);
+  padding: 0px 0px;
+}
+
+.SearchBar form {
+  margin-left: 50px;
+  padding-top: 50px;
+  display: flex;
+}
+
+.inputContainer {
+  position: relative;
+  margin: 0 8px;
+}
+
+.inputContainer input {
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  box-sizing: border-box;
+  height: 48px;
+  width: 100%;
+  padding: 0 12px;
+  border: 1px solid #f1f2f6;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: left;
+  letter-spacing: 0.3px;
+  appearance: none;
+  background-color: #f1f2f6;
+  box-shadow: none;
+  caret-color: #a1a9c3;
+  color: #132968;
+  transition: border 0.15s;
+  font-family: "GT Walsheim Pro";
+  padding-left: 35px;
+}
+
+.inputContainer input:hover,
+.inputContainer input:focus {
+  border: 1px solid #a1a9c3;
+  outline: 0;
+}
+
+.inputContainer i {
+  position: absolute;
+  font-size: 20px;
+  top: 15px;
+  left: 8px;
+  height: 24px;
+  width: 24px;
+  pointer-events: none;
+  background-color: #f1f2f6;
+  color: #a1a9c3;
+}
+
+.inputDateContainer {
+  width: 140px;
+}
+
+/* input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none; 
+} */
+
+.nextDatesContainer {
+  display: flex;
+  height: 100%;
+  margin-top: 8px;
+}
+
+.nextDatesContainer .nextDate {
+  display: inline-block;
+  width: 60px;
+  margin-right: 6px;
+  color: #4b4b4b;
+  text-align: center;
+  font-weight: 400;
+  border: 1px solid var(--d);
+  border-radius: 4px;
+  cursor: pointer;
+  /* padding-top: 4px; */
+}
+
+.nextDatesContainer .nextDate p:nth-child(1) {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+
+.nextDatesContainer .nextDate p:nth-child(2) {
+  font-size: 12px;
+  font-weight: 400;
+  /* margin-top: -3px; */
+  margin-bottom: 1px;
+}
+
+.searchButton {
+  width: 15%;
+  text-align: center;
+  line-height: 20px;
+  padding: 0px 16px;
+  border: 0px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  appearance: none;
+  box-shadow: none;
+  z-index: 2;
+  text-decoration: none;
+  transition: background-color 0.2s linear 0s;
+  color: rgb(255, 255, 255);
+  background-color: rgb(250, 107, 107);
+  height: 48px;
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: 50px;
+  outline: none;
+}
+
+.searchButton:hover {
+  background-color: var(--l);
+}
+
+label {
+  cursor: pointer;
+}
+
+input[type="radio"]:checked ~ label .nextDate {
+  background: var(--d) !important;
+  color: #fff !important;
+}
+
+input[type="radio"] {
+  display: none;
 }

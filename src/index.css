@@ -3,6 +3,14 @@ body {
   font-family: 'GT Walsheim Pro';
 }
 
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 576px) {
+
+}
+
 /* https://github.com/twbs/bootstrap/blob/main/dist/css/bootstrap-grid.css */
 .container,
 .container-fluid,

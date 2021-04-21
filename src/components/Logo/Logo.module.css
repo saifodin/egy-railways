@@ -20,8 +20,9 @@
  font-size: 12px;
  text-align: center;
  color: #dadada;
- letter-spacing: 2px;
+ letter-spacing: 0.3px;
  font-weight: 700;
- word-spacing: 4px;
+ margin-top: -4px ;
+ /* word-spacing: 1px; */
 }
 

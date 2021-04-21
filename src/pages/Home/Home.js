@@ -9,9 +9,8 @@ const Home = props => (
     <header className={`${css.Header}`}>
       <Navbar />
       <h1 className={`${css.title} container`}>Book Train Tickets across Egypt</h1>
-      {/* <HomeSearchBar /> */}
     </header>
-      <SearchBar/>
+    <SearchBar />
   </div>
 );
 

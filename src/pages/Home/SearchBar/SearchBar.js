@@ -93,7 +93,7 @@ function SearchBar() {
         </div>
 
         <button className={css.searchButton}>
-          search
+          Search
         </button>
 
       </form>

@@ -1,31 +1,50 @@
 .Header {
   height: 351px;
-  background-color: var(--a);
-  /* #132968 */
+  /* background-image: url(../../assets/imgs/omioCovers/cover-trainMountain.jpg); */
+  background-image: url(../../assets/imgs/omioCovers/cover-walking.svg);
+
+  /* background-image: url(../../assets/imgs/otherCovers/cover.png); */
+  background-size: cover;
+  background-position: 50%;
+  width: 100%;
 }
-.Header .title{
+
+.Header .title {
   color: var(--b);
   font-weight: 700;
   font-size: 40px;
   margin-top: 40px;
 }
 
+@media (max-width: 992px) {
+  .Header {
+    height: 216px;
+  }
+  .Header .title {
+    font-size: 35px;
+    margin-top: 15px;
+  }
+}
+
 @media (max-width: 768px) {
-  .Header .title{
+  .Header .title {
     font-size: 30px;
-    margin-top: 30px;
+    margin-top: 10px;
   }
 }
 
 @media (max-width: 576px) {
-  .Header .title{
+  .Header .title {
     font-size: 24px;
     margin-top: 7px;
   }
 }
 
 
-h3 {
-  color: #f96b6b;
-  /* color: #fa6b6b; */
+/* svg:first-of-type {
+  filter: invert(66%) sepia(100%) saturate(492%) hue-rotate(305deg) brightness(103%) contrast(96%);
 }
+
+svg:last-of-type{
+  filter: invert(15%) sepia(18%) saturate(5844%) hue-rotate(205deg) brightness(96%) contrast(98%);
+} */

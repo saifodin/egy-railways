@@ -2,7 +2,7 @@ import React from 'react';
 import css from './MainServices.module.css'
 
 import SvgLiveStation from '../../../assets/imgs/trains/SvgLiveStation'
-import SvgSearchRoutes from '../../../assets/imgs/trains/SvgSearchRoutes'
+// import SvgSearchRoutes from '../../../assets/imgs/trains/SvgSearchRoutes'
 import SvgLiveTrain from '../../../assets/imgs/trains/SvgLiveTrain'
 import SvgLiveStatus from '../../../assets/imgs/trains/SvgLiveStatus'
 
@@ -19,7 +19,7 @@ const MainServices = () => {
           </div>
           <div className={css.txtBox}>
             <p className={css.title}>Search Routes</p>
-            <p className={css.paraph}>Search between two stations in any governorate, to choose the right train for you.</p>
+            <p className={css.paraph}>Search between two stations in any governorate, to choose <br></br>the right train for you.</p>
           </div>
         </div>
 
@@ -51,7 +51,19 @@ const MainServices = () => {
             <p className={css.title}>Live Status</p>
             <p className={css.paraph}>Search between two stations in any governorate, to choose the right train for you  </p>
           </div>
+        </div>
+
+        <div className={css.serviceBox}>
+          <div className={css.imgBox}>
+            <SvgLiveStatus/>
+          </div>
+          <div className={css.txtBox}>
+            <p className={css.title}>Live Status</p>
+            <p className={css.paraph}>Search between two stations in any governorate, to choose the right train for you  </p>
+          </div>
         </div> */}
+
+
 
       </div>
 

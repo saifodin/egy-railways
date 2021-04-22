@@ -1,5 +1,6 @@
 .MainServices {
   background-color: var(--c);
+  overflow: hidden;
 }
 
 .MainServices .servicesBoxes {
@@ -46,4 +47,53 @@
 
 .servicesBoxes .serviceBox .txtBox .paraph {
   font-size: 12px;
+}
+
+@media (max-width: 992px) {
+  .servicesBoxes .serviceBox .txtBox {
+    margin: auto 30px;
+  }
+
+  .MainServices .servicesBoxes {
+    overflow-x: scroll;
+  }
+
+  .MainServices .servicesBoxes .serviceBox {
+    min-width: 270px;
+  }
+
+  .MainServices .servicesBoxes::after {
+    content: "sss";
+    color: transparent;
+  }
+
+  .MainServices .servicesBoxes::-webkit-scrollbar {
+    /* display: none; */
+  }
+  
+  .MainServices .servicesBoxes::-webkit-scrollbar {
+    height: 5px;
+    cursor: pointer;
+  }
+
+  .MainServices .servicesBoxes::-webkit-scrollbar-track {
+    box-shadow: inset 1px 0px 0px 0px white;
+    background-color: white;
+  }
+
+  .MainServices .servicesBoxes::-webkit-scrollbar-thumb {
+    background: var(--c);
+    border-radius: 50px;
+    box-shadow: inset 2px 2px 3px 0px #b4b3b5;
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  .MainServices .servicesBoxes {
+    /* overflow-x: scroll;
+    width: 1300px; */
+  }
 }

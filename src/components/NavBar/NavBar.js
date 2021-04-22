@@ -8,8 +8,9 @@ import css from './Navbar.module.css'
 const Navbar = props => {
 
   return (
+
     <nav className={`container ${css.Navbar}`}>
-      <Logo className={`${css.Logo}`}/>
+      <Logo className={`${css.Logo}`} />
       <ul>
         {/* <NavigationItem to="/">Home</NavigationItem> */}
         <NavigationItem to="/YourBooking" >Your booking</NavigationItem>

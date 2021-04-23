@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from './SearchBar/SearchBar'
 import MainServices from './MainServices/MainServices'
+import TopTrainRoutes from './TopTrainRoutes/TopTrainRoutes'
 import css from './Home.module.css'
 
 
@@ -13,6 +14,8 @@ const Home = props => (
     </header>
     <SearchBar />
     <MainServices />
+    <div className={css.toShowScroll}></div>
+    <TopTrainRoutes/>
   </div>
 );
 

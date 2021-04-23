@@ -1,5 +1,5 @@
-.Home{
-  background-color: var(--c)
+.Home {
+  background-color: var(--c);
 }
 .Header {
   height: 351px;
@@ -44,7 +44,6 @@
   }
 }
 
-
 /* svg:first-of-type {
   filter: invert(66%) sepia(100%) saturate(492%) hue-rotate(305deg) brightness(103%) contrast(96%);
 }
@@ -53,6 +52,9 @@ svg:last-of-type{
   filter: invert(15%) sepia(18%) saturate(5844%) hue-rotate(205deg) brightness(96%) contrast(98%);
 } */
 
-SearchBar {
-  background-color: var(--c);
+@media (max-width: 992px) {
+  .toShowScroll {
+    height: 10px;
+    background-color: var(--c);
+  }
 }

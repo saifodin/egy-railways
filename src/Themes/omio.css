@@ -1,7 +1,11 @@
 :root {
-  /* titles , paragraphs , some background */
+  /* titles some background */
   /* blue */
   --a: #132968;
+
+  /*paragraphs , some background */
+  /* blue lite */
+  --f: #425486;
 
   /* most background , some titles and paragraphs*/
   /* white */

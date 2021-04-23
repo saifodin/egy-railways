@@ -1,0 +1,35 @@
+
+.topTrainRoutesContainer {
+  background-color: var(--b);
+}
+
+.topTrainRoutes {
+  padding-top: 40px;
+}
+
+.topTrainRoutes h2 {
+  color: var(--a);
+  text-align: center;
+}
+
+.topTrainRoutes .trainsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #dfe2e2;
+  border-bottom: 2px solid #dfe2e2;
+  margin: 20px 0;
+  border-radius: 3px;
+  padding: 1% 2%;
+}
+
+.topTrainRoutes .trainsContainer > * {
+  min-width: 45%;
+  margin: auto;
+}
+
+@media (max-width: 576px) {
+  .topTrainRoutes .trainsContainer > * {
+    min-width: 100%;
+    margin: auto;
+  }
+}

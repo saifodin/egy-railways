@@ -43,6 +43,7 @@
   font-size: 15px;
   font-weight: 600;
   line-height: 25px;
+  color: var(--f);
 }
 
 .servicesBoxes .serviceBox .txtBox .paraph {
@@ -85,15 +86,5 @@
     background: var(--c);
     border-radius: 50px;
     box-shadow: inset 2px 2px 3px 0px #b4b3b5;
-  }
-}
-
-@media (max-width: 768px) {
-}
-
-@media (max-width: 576px) {
-  .MainServices .servicesBoxes {
-    /* overflow-x: scroll;
-    width: 1300px; */
   }
 }

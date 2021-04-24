@@ -1,0 +1,34 @@
+.FooterBackground {
+  background-color: var(--a);
+}
+.FooterBackground .FooterContainer {
+  height: 50px;
+}
+.Footer {
+  display: flex;
+  height: 100%;
+  align-items: baseline;
+  padding: 10px 0px;
+}
+.Footer .Logo {
+}
+
+.Footer .CopyWrightContainer {
+  font-size: 12px;
+  margin: auto;
+  color: #ffffffcc;
+}
+
+@media (max-width: 576px) {
+  .Footer .Logo {
+    text-align: center;
+  }
+  .Footer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .Footer .CopyWrightContainer {
+    margin-top: 20px;
+    font-size: 10px;
+  }
+}

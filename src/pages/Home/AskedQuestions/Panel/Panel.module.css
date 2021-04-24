@@ -1,0 +1,66 @@
+
+.panel {
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: inset 0 -1px 0 0 rgb(0 0 0 / 10%), 0 2px 5px 0 rgb(19 41 104 / 20%);
+}
+.panel:hover {
+  box-shadow: inset 0 -1px 0 0 rgb(0 0 0 / 10%), 0 8px 16px 0 rgb(51 51 51 / 20%);
+}
+
+.panelHeading {
+  color: #132968;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 56px;
+  display: table;
+  width: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.panelHeading .panelTitle {
+  font-size: 24px;
+  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.panelHeading .anchor {
+  transition: all 0.3s;
+  height: 8px;
+  width: 8px;
+  border: solid #a1a9c3;
+  border-width: 2px 2px 0 0;
+  content: "";
+  transform: rotate(135deg);
+  margin-left: auto;
+}
+
+.panelClose {
+  max-height: 0px;
+  transition: max-height 0.25s ease-out;
+  overflow: hidden;
+  border-top: 1px solid #e4e8eb;
+}
+
+.panelBodyContainer {
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+}
+
+.panelBody {
+  padding: 32px 25px;
+  margin-left: 15%;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--a);
+}
+
+.panelBody p {
+  margin: 0 0 11.5px;
+}

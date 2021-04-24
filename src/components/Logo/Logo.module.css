@@ -18,7 +18,7 @@
 
 .secondLine{
  font-size: 12px;
- text-align: center;
+ /* text-align: center; */
  color: #dadada;
  letter-spacing: 0.3px;
  font-weight: 700;

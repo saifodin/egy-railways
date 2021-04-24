@@ -4,6 +4,8 @@ import SearchBar from './SearchBar/SearchBar'
 import MainServices from './MainServices/MainServices'
 import TopTrainRoutes from './TopTrainRoutes/TopTrainRoutes'
 import DownloadApp from './DownloadApp/DownloadApp'
+import AskedQuestions from './AskedQuestions/AskedQuestions'
+import Footer from '../../components/Footer/Footer'
 import css from './Home.module.css'
 
 
@@ -21,9 +23,14 @@ const Home = props => (
 
     <div className={css.toShowScroll}></div>
 
-    <TopTrainRoutes/>
+    <TopTrainRoutes />
 
-    <DownloadApp/>
+    <DownloadApp />
+
+    <AskedQuestions/>
+
+    <Footer />
+
   </div>
 );
 

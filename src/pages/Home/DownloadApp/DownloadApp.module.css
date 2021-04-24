@@ -35,6 +35,7 @@
   outline: none;
   background-color: transparent;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .downloadAppTxt .downloadButtons .android button > * {

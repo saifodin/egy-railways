@@ -1,0 +1,18 @@
+.AskedQuestions {
+  min-height: 400px;
+  background-color: white;
+}
+.AskedQuestions h2 {
+  color: var(--a);
+  text-align: center;
+  padding-top: 30px;
+}
+.panelGroup > * {
+  margin-top: 15px;
+}
+
+.split{
+  height: 10px;
+  margin-top: 50px;
+  padding-bottom: 50px;
+}

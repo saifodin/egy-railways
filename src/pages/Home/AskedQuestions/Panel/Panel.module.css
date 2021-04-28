@@ -40,6 +40,9 @@
   transform: rotate(135deg);
   margin-left: auto;
 }
+.panelHeading .anchor.anchorOpen {
+  transform: rotate(315deg);
+}
 
 .panelClose {
   max-height: 0px;

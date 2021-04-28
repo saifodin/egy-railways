@@ -1,5 +1,5 @@
 .navbarLists {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .navlink {
@@ -18,3 +18,7 @@
   }
 }
 
+/* in trains-between-stations page  */
+.navlink.trainsBetweenStations {
+  color: var(--a);
+}

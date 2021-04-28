@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/Navbar/Navbar'
-import SearchBar from './SearchBar/SearchBar'
+import SearchBar from '../../components/SearchBar/SearchBar'
 import MainServices from './MainServices/MainServices'
 import TopTrainRoutes from './TopTrainRoutes/TopTrainRoutes'
 import DownloadApp from './DownloadApp/DownloadApp'

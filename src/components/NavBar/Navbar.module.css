@@ -11,4 +11,10 @@
   margin: 0;
   margin-left: auto;
   display: flex;
+  align-items: center;
+}
+
+.Navbar.trainsBetweenStations {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

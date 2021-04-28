@@ -1,15 +1,28 @@
 import React, { useState } from 'react'
-import css from './SearchBar.module.css'
+import { useLocation } from "react-router-dom"
+
+import css from './SearchBar.module.scss'
 
 function SearchBar() {
 
+
+  //#region generate date today, tomorrow,...
   const [selectedDate, setSelectedDate] = useState(0);
-
-
   const createDateFormat = index => {
     // 0 => today
     // 1 => tomorrow
     // 2 => afterTomorrow
+
+    // const tomorrow = new Date()
+    // tomorrow.setDate(tomorrow.getDate() + 1)
+
+    // const afterTomorrow = new Date()
+    // afterTomorrow.setDate(afterTomorrow.getDate() + 2)
+
+    // console.log(day)
+    // console.log(tomorrow)
+    // console.log(afterTomorrow)
+
     const day = new Date();
 
     day.setDate(day.getDate() + index)
@@ -26,21 +39,20 @@ function SearchBar() {
       monthName,
       dayDigit,
     };
-    // const tomorrow = new Date()
-    // tomorrow.setDate(tomorrow.getDate() + 1)
-
-    // const afterTomorrow = new Date()
-    // afterTomorrow.setDate(afterTomorrow.getDate() + 2)
-
-    // console.log(day)
-    // console.log(tomorrow)
-    // console.log(afterTomorrow)
   };
+  //#endregion 
 
+  //#region add extra styles for different pages  
+  const location = useLocation();
+  let extraCss = "";
+  if (location.pathname === '/trains-between-stations') {
+    extraCss = css.trainsBetweenStations;
+  }
+  //#endregion
 
   return (
     <div className={css.SearchBarContainer}>
-      <div className={`container ${css.SearchBar}`}>
+      <div className={`container ${css.SearchBar} ${extraCss}`}>
         <form>
           <div className={css.inputContainer}>
             <i className={`far fa-circle`}></i>
@@ -93,9 +105,7 @@ function SearchBar() {
 
           </div>
 
-          <button className={css.searchButton}>
-            Search
-        </button>
+          <button className={css.searchButton}>Search</button>
 
         </form>
       </div>

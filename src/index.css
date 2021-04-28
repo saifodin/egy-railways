@@ -14,6 +14,12 @@ body {
 @media (max-width: 576px) {
 
 }
+/* 
+  //#region add extra styles for different pages
+
+  //#endregion
+
+*/
 
 /* https://github.com/twbs/bootstrap/blob/main/dist/css/bootstrap-grid.css */
 .container,

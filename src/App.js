@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 
 import Home from './pages/Home/Home';
 import SignIn from './pages/SignIn/SignIn.js';
-import YourBooking from './pages/YourBooking/YourBooking.js';
+import TrainsBetweenStations from './pages/TrainsBetweenStations/TrainsBetweenStations';
 import CreateAccount from './pages/CreateAccount/CreateAccount.js';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
 
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/YourBooking" component={YourBooking} />
+          <Route path="/trains-between-stations" component={TrainsBetweenStations} />
           <Route path="/SignIn" component={SignIn} />
           <Route path="/CreateAccount" component={CreateAccount} />
           <Redirect to="/" />

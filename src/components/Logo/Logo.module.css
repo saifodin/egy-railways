@@ -1,28 +1,37 @@
-*{
+* {
   padding: 0;
   margin: 0;
 }
+
 .logoContainer {
   color: white;
   font-family: "Nexa";
+  cursor: pointer;
 }
 
-.firstLine{
+.firstLine {
   font-weight: 900;
   font-size: 20px;
 }
 
-.coloredPart{
+.coloredPart {
   color: var(--d);
 }
 
-.secondLine{
- font-size: 12px;
- /* text-align: center; */
- color: #dadada;
- letter-spacing: 0.3px;
- font-weight: 700;
- margin-top: -4px ;
- /* word-spacing: 1px; */
+.secondLine {
+  font-size: 12px;
+  /* text-align: center; */
+  color: #dadada;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+  margin-top: -4px;
+  /* word-spacing: 1px; */
 }
 
+/* in trains-between-stations page */
+.trainsBetweenStations.logoContainer {
+  color: var(--a);
+}
+.trainsBetweenStations .secondLine {
+  color: var(--a);
+}

@@ -9,6 +9,7 @@
       position: fixed;
       width: 100%;
       background-color: var(--b);
+      z-index: 5;
     }
 
     .line {
@@ -17,6 +18,45 @@
 
     .SearchBarContainer {
       box-shadow: inset 0 1px 0 0 #eaeaea, 0 2px 14px 0 rgba(0, 21, 75, 0.1);
+    }
+  }
+
+  .mainPart {
+    padding-top: 132px;
+
+    .filtersContainer {
+      background-color: white;
+      .filters {
+        display: flex;
+        height: 122px;
+        // align-items: center;
+
+
+        .class {
+          display: flex;
+          flex-direction: column;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          border-right: 1px dashed rgba(0,0,0,.12);
+          h4 {
+            // align-self: center;
+            color: var(--a);
+            // margin-right: 20px;
+            margin-bottom: 20px;
+          }
+          .checkBoxOrRadioContainer {
+            // margin-top: 10px;
+          }
+          .checkBoxOrRadioContainer ul li {
+            // margin-top: 10px;
+          }
+        }
+
+        
+        .departureTime{
+
+        }
+      }
     }
   }
 }

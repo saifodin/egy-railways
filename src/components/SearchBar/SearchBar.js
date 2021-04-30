@@ -74,7 +74,7 @@ function SearchBar() {
             <div>
               <input type="radio" id="f-option" name="selector" defaultChecked />
               <label for="f-option">
-                <div className={`${css.nextDate} ${css.active}`} onClick={_ => setSelectedDate(0)}>
+                <div className={css.nextDate} onClick={_ => setSelectedDate(0)}>
                   <p>{`${createDateFormat(0).dayDigit} ${createDateFormat(0).monthName}`}</p>
                   <p>{createDateFormat(0).weekDayName}</p>
                 </div>

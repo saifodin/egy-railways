@@ -12,6 +12,7 @@ import pngNight from '../../assets/imgs/time/night.png'
 const TrainsBetweenStations = props => {
   return (
     <div className={css.TrainsBetweenStations}>
+
       <div className={css.upperPart}>
         <Navbar />
         <div className={css.line}></div>
@@ -19,9 +20,38 @@ const TrainsBetweenStations = props => {
           <SearchBar />
         </div>
       </div>
+
+
       <div className={css.mainPart}>
+
         <div className={css.filtersContainer}>
           <div className={`${css.filters} container`}>
+
+            <div className={css.sortedBy}>
+              <h4>
+                Sorted by
+              </h4>
+              <div className={css.optionsContainer}>
+
+                <div>
+                  <input type="radio" id="departure" name="sortedBy" value="departure" defaultChecked />
+                  <label for="departure">departure time</label>
+                </div>
+
+                <div>
+                  <input type="radio" id="duration" name="sortedBy" value="duration" />
+                  <label for="duration">duration</label>
+                </div>
+
+                <div>
+                  <input type="radio" id="arrival" name="sortedBy" value="arrival" />
+                  <label for="arrival">arrival time</label>
+                </div>
+
+              </div>
+            </div>
+
+            <span></span>
 
             <div className={css.class}>
               <h4>Class</h4>
@@ -29,9 +59,10 @@ const TrainsBetweenStations = props => {
                 <CheckBoxOrRadio shapeOfStyles="basic" isCheckBoxNotRadio={true} wordsInLabel={['1A', '2A', '3A']} nameOfRadio="gender" />
               </div>
             </div>
+            <span></span>
 
             <div className={css.departureTime}>
-              <h4>Class</h4>
+              <h4>Departure time</h4>
               <div className={css.timesContainer}>
 
                 <div>
@@ -49,7 +80,7 @@ const TrainsBetweenStations = props => {
                   <label for="afternoon">
                     <div class={css.innerSection}>
                       <img alt="afternoon" src={pngAfternoon} />
-                      <p>05 AM - 11 AM</p>
+                      <p>11 AM - 05 PM</p>
                     </div>
                   </label>
                 </div>
@@ -59,7 +90,7 @@ const TrainsBetweenStations = props => {
                   <label for="evening">
                     <div class={css.innerSection}>
                       <img alt="evening" src={pngEvening} />
-                      <p>05 AM - 11 AM</p>
+                      <p>05 PM - 11 PM</p>
                     </div>
                   </label>
                 </div>
@@ -69,15 +100,13 @@ const TrainsBetweenStations = props => {
                   <label for="night">
                     <div class={css.innerSection}>
                       <img alt="night" src={pngNight} />
-                      <p>05 AM - 11 AM</p>
+                      <p>11 PM - 05 AM</p>
                     </div>
                   </label>
                 </div>
 
               </div>
             </div>
-
-            <div>Sort by</div>
 
           </div>
         </div>

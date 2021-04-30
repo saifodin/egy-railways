@@ -20,42 +20,143 @@
       box-shadow: inset 0 1px 0 0 #eaeaea, 0 2px 14px 0 rgba(0, 21, 75, 0.1);
     }
   }
+}
 
-  .mainPart {
-    padding-top: 132px;
+.TrainsBetweenStations .mainPart {
+  padding-top: 132px;
 
-    .filtersContainer {
-      background-color: white;
-      .filters {
-        display: flex;
-        height: 122px;
-        // align-items: center;
+  .filtersContainer {
+    background-color: white;
+  }
+}
 
+.TrainsBetweenStations .mainPart .filters {
+  display: flex;
+  // height: 122px;
+  > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    &:not(:first-of-type) {
+      margin-left: 35px;
+    }
+    &:first-of-type {
+      margin-right: 35px;
+    }
+    > h4 {
+      color: var(--a);
+      margin-bottom: 10px;
+    }
+  }
+  > span {
+    height: 100%;
+    border-right: 1px dashed rgba(0, 0, 0, 0.12);
+  }
+}
 
-        .class {
+.TrainsBetweenStations .mainPart .filters .sortedBy {
+  margin-right: 35px;
+  .optionsContainer {
+    display: flex;
+    border: 1px solid var(--m);
+    padding: 10px;
+    > div {
+      &:last-of-type label {
+        border: none;
+        padding-right: 0px;
+      }
+      &:first-of-type label {
+        padding-left: 0px;
+      }
+      input {
+        display: none;
+      }
+      label {
+        border-right: 1px solid var(--m);
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: var(--m);
+        // padding-top: 90%;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      input:checked {
+        ~ label {
+          color: var(--d);
+        }
+      }
+    }
+  }
+}
+
+.TrainsBetweenStations .mainPart .filters .class {
+  //reduplicate styles for remove warning
+  margin-top: 20px;
+  h4 {
+    margin-bottom: 16px;
+  }
+}
+
+.TrainsBetweenStations .mainPart .filters .departureTime {
+  flex-grow: 1;
+  h4 {
+    margin-bottom: 19px;
+  }
+
+  .timesContainer {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      // margin-right: 10px;
+
+      input {
+        display: none;
+      }
+
+      input:checked {
+        ~ label > div {
+          background: var(--d) !important;
+          color: #fff !important;
+          border: 1px solid var(--d);
+          img {
+            filter: invert(98%) sepia(49%) saturate(307%) hue-rotate(171deg) brightness(112%) contrast(100%);
+          }
+        }
+      }
+
+      label {
+        cursor: pointer;
+        > div {
           display: flex;
-          flex-direction: column;
-          margin-top: 20px;
-          margin-bottom: 20px;
-          border-right: 1px dashed rgba(0,0,0,.12);
-          h4 {
-            // align-self: center;
-            color: var(--a);
-            // margin-right: 20px;
-            margin-bottom: 20px;
+          align-items: center;
+          justify-content: center;
+          width: 118px;
+          height: 25px;
+          border: 1px solid var(--m);
+          border-radius: 8px;
+          cursor: pointer;
+          box-sizing: border-box;
+          color: var(--a);
+          img {
+            width: 18px;
+            height: 19px;
+            margin-right: 5px;
+            filter: invert(24%) sepia(97%) saturate(393%) hue-rotate(186deg) brightness(95%) contrast(77%);
           }
-          .checkBoxOrRadioContainer {
-            // margin-top: 10px;
-          }
-          .checkBoxOrRadioContainer ul li {
-            // margin-top: 10px;
+          P {
+            font-size: 10px;
           }
         }
+      }
 
-        
-        .departureTime{
-
-        }
+      &:last-of-type > label div img {
+        // because moon img very big
+        width: 15px !important;
+        height: 15px !important;
       }
     }
   }

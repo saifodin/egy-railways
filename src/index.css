@@ -1,24 +1,51 @@
 body {
   margin: 0;
-  font-family: 'GT Walsheim Pro';
+  font-family: "GT Walsheim Pro";
 }
 
-@media (max-width: 992px) {
-
+@media (max-width: 991px) {
 }
 
-@media (max-width: 768px) {
-
+@media (max-width: 767px) {
 }
 
-@media (max-width: 576px) {
-
+@media (max-width: 575px) {
 }
+
+/* 
+@media (min-width: 576px) {
+} 
+@media (min-width: 768px) {
+}
+@media (min-width: 992px) {
+}
+*/
+
 /* 
   //#region add extra styles for different pages
 
   //#endregion
+*/
 
+/*
+.SearchBar .inputContainer,
+#media {
+  @media (max-width: 992px) {
+    margin-bottom: 10px;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 6px;
+  }
+  @media (max-width: 576px) {
+    margin-bottom: 4px;
+  }
+    input {
+      @media (max-width: 410px) {
+        font-size: 13px;
+      }
+    }
+  }
+}
 */
 
 /* https://github.com/twbs/bootstrap/blob/main/dist/css/bootstrap-grid.css */

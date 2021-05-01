@@ -54,6 +54,7 @@ function SearchBar() {
     <div className={css.SearchBarContainer}>
       <div className={`container ${css.SearchBar} ${extraCss}`}>
         <form>
+
           <div className={css.inputContainer}>
             <i className={`far fa-circle`}></i>
             <input type="text" placeholder="From: City, Station" />
@@ -101,7 +102,6 @@ function SearchBar() {
                 </div>
               </label>
             </div>
-
 
           </div>
 

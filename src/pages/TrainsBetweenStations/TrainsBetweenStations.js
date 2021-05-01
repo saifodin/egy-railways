@@ -19,6 +19,7 @@ const TrainsBetweenStations = props => {
         <div className={css.SearchBarContainer}>
           <SearchBar />
         </div>
+        <div className={css.line}></div>
       </div>
 
 
@@ -110,6 +111,7 @@ const TrainsBetweenStations = props => {
 
           </div>
         </div>
+     
       </div>
     </div>
   )

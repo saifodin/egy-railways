@@ -13,11 +13,12 @@
     }
 
     .line {
+      // border-top: 1px solid rgb(220, 220, 220);
       border-top: 1px solid rgb(220, 220, 220);
     }
 
     .SearchBarContainer {
-      box-shadow: inset 0 1px 0 0 #eaeaea, 0 2px 14px 0 rgba(0, 21, 75, 0.1);
+      // box-shadow: inset 0 1px 0 0 #eaeaea, 0 2px 14px 0 rgba(0, 21, 75, 0.1);
     }
   }
 }
@@ -30,9 +31,30 @@
   }
 }
 
+.TrainsBetweenStations,
+#media {
+  .upperPart {
+    @media (max-width: 991px) {
+      position: static;
+    }
+  }
+  .mainPart {
+    @media (max-width: 991px) {
+      padding-top: 0px;
+    }
+    .filtersContainer::after {
+      @media (max-width: 767px) {
+        content: ".";
+        width: 100%;
+        background-color: white;
+        color:transparent;
+      }
+    }
+  }
+}
+
 .TrainsBetweenStations .mainPart .filters {
   display: flex;
-  // height: 122px;
   > div {
     display: flex;
     flex-direction: column;
@@ -47,24 +69,29 @@
     > h4 {
       color: var(--a);
       margin-bottom: 10px;
+      font-weight: 500;
     }
   }
   > span {
-    height: 100%;
     border-right: 1px dashed rgba(0, 0, 0, 0.12);
   }
 }
 
 .TrainsBetweenStations .mainPart .filters .sortedBy {
-  margin-right: 35px;
+  min-width: 372px;
   .optionsContainer {
     display: flex;
     border: 1px solid var(--m);
     padding: 10px;
     > div {
+      text-align: center;
+      border-right: 1px solid var(--m);
       &:last-of-type label {
         border: none;
         padding-right: 0px;
+      }
+      &:last-of-type {
+        border-right: none;
       }
       &:first-of-type label {
         padding-left: 0px;
@@ -73,13 +100,13 @@
         display: none;
       }
       label {
-        border-right: 1px solid var(--m);
+        width: 100%;
         font-size: 14px;
+        text-align: center;
         text-transform: uppercase;
         font-weight: 600;
         letter-spacing: 0.5px;
         color: var(--m);
-        // padding-top: 90%;
         padding: 5px 10px;
         cursor: pointer;
       }
@@ -101,17 +128,16 @@
 }
 
 .TrainsBetweenStations .mainPart .filters .departureTime {
-  flex-grow: 1;
   h4 {
     margin-bottom: 19px;
   }
-
   .timesContainer {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
 
     > div {
-      // margin-right: 10px;
+      margin-right: 5px;
+      margin-bottom: 5px;
 
       input {
         display: none;
@@ -134,7 +160,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 118px;
+          width: 115px;
           height: 25px;
           border: 1px solid var(--m);
           border-radius: 8px;
@@ -157,6 +183,49 @@
         // because moon img very big
         width: 15px !important;
         height: 15px !important;
+      }
+    }
+  }
+}
+
+.TrainsBetweenStations .mainPart .filters,
+#media {
+  @media (max-width: 767px) {
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 1px 0px 0px 0px white;
+      background-color: var(--c);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--c);
+      border-radius: 50px;
+      box-shadow: inset 2px 2px 3px 0px #b4b3b5;
+    }
+  }
+
+  > div {
+    &:not(:first-of-type) {
+      @media (max-width: 991px) {
+        margin-left: 10px;
+      }
+    }
+    &:first-of-type {
+      @media (max-width: 991px) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .departureTime {
+    .timesContainer {
+      @media (max-width: 767px) {
+        display: flex;
+        flex-wrap: nowrap;
       }
     }
   }

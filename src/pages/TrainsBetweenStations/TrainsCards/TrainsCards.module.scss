@@ -1,0 +1,350 @@
+.trainsCardsContainer .trainsCards {
+  border: none;
+}
+
+.trainsCards .trainCard {
+  width: 75%;
+  margin-top: 30px;
+  background-color: var(--b);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 2px 2.5px 5px -1px #ccc;
+  &:hover {
+    box-shadow: 2px 2px 10px 0px #ccc;
+  }
+}
+
+// ******
+
+.trainData {
+  padding: 20px 28px;
+  > div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ******
+.trainData .trainCardTags {
+  margin-bottom: 10px;
+  > div {
+    display: flex;
+    padding: 2px 8px 2px 8px;
+    margin-right: 5px;
+    font-size: 10px;
+    color: var(--f);
+    // color: gold;
+    opacity: 0.9;
+    border: 1px solid var(--f);
+    border-radius: 4px;
+    i {
+      color: #e6e00e;
+      margin-right: 2px;
+    }
+  }
+}
+
+// ******
+
+.trainData .trainCardTop {
+  margin-bottom: 10px;
+
+  .trainNo {
+    // width: 50%;
+    color: var(--a);
+  }
+  .weekDays {
+    // transform: translateX(-50%);
+    margin-left: 62px;
+    ul {
+      display: flex;
+      li {
+        background-color: #fff;
+        border: 1px solid #24c114;
+        border-radius: 2px;
+        color: #24c114;
+        font-size: 11px;
+        margin: 0 1px;
+        text-align: center;
+        text-transform: uppercase;
+        width: 16px;
+        line-height: 15px;
+        padding: 0;
+        &.noRun {
+          background: #f1f1f1;
+          border: 1px solid #d0cece;
+          color: #b8b8b8;
+        }
+      }
+    }
+  }
+}
+
+// ******
+
+.trainData .trainCardMiddle {
+  display: flex;
+}
+
+.trainData .trainCardMiddle .timeInfo {
+  display: flex;
+}
+
+.trainData .trainCardMiddle .timeInfo .departureTimeInfo,
+.trainData .trainCardMiddle .timeInfo .arrivalTimeInfo {
+  display: flex;
+  flex-direction: column;
+  > :first-child {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--a);
+    span {
+      font-size: 14px;
+      margin-left: 3px;
+    }
+  }
+  > :last-child {
+    font-size: 14px;
+    color: var(--f);
+  }
+}
+
+.trainData .trainCardMiddle .timeInfo .durationAndStops {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 20px;
+  min-width: 150px;
+  > * {
+    margin: auto;
+  }
+}
+
+.trainData .trainCardMiddle .timeInfo .durationAndStops .duration {
+  color: var(--m);
+  font-size: 14px;
+}
+
+.trainData .trainCardMiddle .timeInfo .durationAndStops .line {
+  display: flex;
+  font-size: 0;
+  justify-content: space-between;
+  margin: 5px 0px;
+  height: 1px;
+  background-color: #ddddde;
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+    background-color: #ddddde;
+    margin-top: -2px;
+  }
+}
+
+.trainData .trainCardMiddle .timeInfo .durationAndStops .stops {
+  color: var(--m);
+  font-size: 12px;
+}
+
+.trainData .trainCardMiddle .fareClasses {
+  display: flex;
+  align-items: center;
+  margin-left: 6%;
+}
+
+.trainData .trainCardMiddle .fareClasses .classes {
+  display: flex;
+  > div {
+    input {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+      border: 1px solid var(--d);
+      color: var(--d);
+      border-right: none;
+      text-align: center;
+      padding: 5px 9.3px;
+    }
+    &:first-child label {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &:last-child label {
+      border-right: 1px solid var(--d);
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    input:checked {
+      ~ label {
+        background-color: var(--d);
+        color: var(--b);
+      }
+    }
+  }
+}
+
+.trainData .trainCardMiddle .fareClasses .fare {
+  color: var(--a);
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 50px;
+  :last-child {
+    font-size: 16px;
+  }
+}
+
+.trainData .trainCardMiddle .AvailButton {
+  margin-left: auto;
+  display: none;
+}
+
+.trainData .trainCardMiddle .AvailButton button {
+  border: 1px solid var(--d);
+  font-size: 15px;
+  height: 38px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 4px;
+  color: var(--d);
+  cursor: pointer;
+  outline: 0;
+  text-decoration: none;
+  transition: background 0.5s linear;
+  padding: 5px;
+  &:hover {
+    background-color: var(--d);
+    color: #ffffff;
+  }
+}
+
+// ******
+
+.trainAvail {
+  display: block;
+  display: flex;
+  align-items: center;
+  float: left;
+  background: #fbfafa;
+  padding: 10px;
+  border-top: 1px solid #eee;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.trainAvail .daysBoxes {
+  display: flex;
+  > div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 0;
+    padding-bottom: 0;
+    background-color: #fff;
+    min-width: 140px;
+    min-height: 118px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0px 3px;
+    p:first-of-type {
+      font-size: 13px;
+      color: var(--f);
+    }
+    p:last-of-type {
+      font-size: 14px;
+      margin-top: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #20bf7a;
+      &.notAvail {
+        color: red;
+      }
+      &.notExist {
+        &::after {
+          content: "_";
+          color: black;
+        }
+      }
+      &.notAvail ~ button,
+      &.notExist ~ button {
+        background-color: #c5c5c5;
+        cursor: not-allowed;
+      }
+    }
+    button {
+      margin-top: auto;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      line-height: 20px;
+      border: 0;
+      color: var(--b);
+      background-color: var(--d);
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+      outline: 0px;
+      padding: 6px 36px;
+    }
+  }
+}
+
+.trainAvail .closeButton {
+  margin-left: auto;
+  margin-bottom: auto;
+  cursor: pointer;
+  i {
+    font-size: 20px;
+    color: var(--m);
+  }
+}
+
+.trainAvail > button {
+  margin-left: auto;
+  // margin-top: auto;
+  border: 1px solid var(--d);
+  font-size: 15px;
+  height: 38px;
+  width: 121px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 4px;
+  color: var(--d);
+  cursor: pointer;
+  outline: 0;
+  text-decoration: none;
+  transition: background 0.5s linear;
+  padding: 5px;
+  &::after {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+
+    font-family: "Font Awesome 5 Free";
+    font-weight: 600;
+    content: "\f054";
+
+    // font-weight: lighter;
+    transform: translateY(5%);
+    margin-left: 4px;
+  }
+  &:hover {
+    background-color: var(--d);
+    color: #ffffff;
+  }
+}
+
+// ******
+
+.trainCard.AvailClose {
+  .trainData .trainCardMiddle .AvailButton {
+    display: block;
+  }
+  .trainAvail {
+    display: none;
+  }
+}

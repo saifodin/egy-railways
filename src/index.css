@@ -48,6 +48,14 @@ body {
 }
 */
 
+ul.reset,
+ul.reset li {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
 /* https://github.com/twbs/bootstrap/blob/main/dist/css/bootstrap-grid.css */
 .container,
 .container-fluid,

@@ -5,12 +5,21 @@ import css from './NavigationItem.module.css'
 
 const NavigationItem = (props) => {
 
-  // add this className in trains-between-stations page
-  const location = useLocation();
+  //#region comments how add extra styles based on current location
+  //// import { useLocation } from "react-router-dom";
+  // const location = useLocation();
+  // let extraCss = "";
+  // if (location.pathname === '/trains-between-stations') {
+  //   extraCss = css.trainsBetweenStations;
+  // }
+  //#endregion
+
+  //#region add extra styles based on props
   let extraCss = "";
-  if (location.pathname === '/trains-between-stations') {
+  if (props.extraStyle === 'whiteBackground') {
     extraCss = css.trainsBetweenStations;
   }
+  //#endregion
 
   return (
     <li className={css.navbarLists}>

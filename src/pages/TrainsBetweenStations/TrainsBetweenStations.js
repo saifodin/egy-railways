@@ -18,10 +18,10 @@ const TrainsBetweenStations = _ => {
     <div className={css.TrainsBetweenStations}>
 
       <div className={css.upperPart}>
-        <Navbar />
+        <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
         <div className={css.SearchBarContainer}>
-          <SearchBar />
+          <SearchBar extraStyle="flat" searchOn="stations"/>
         </div>
         <div className={css.line}></div>
       </div>

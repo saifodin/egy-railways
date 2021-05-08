@@ -1,0 +1,17 @@
+.Train {
+  & {
+    height: 4000px;
+    background-color: var(--c);
+  }
+
+  .upperPart {
+    & {
+      width: 100%;
+      background-color: var(--b);
+    }
+
+    .line {
+      border-top: 1px solid rgb(220, 220, 220);
+    }
+  }
+}

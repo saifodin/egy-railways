@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import css from './TrainCard.module.scss'
 
 const TrainCard = () => {
+  
+  //#region add extra styles when Avail Closed
   const [isAvailOpen, setIsAvailOpen] = useState(false);
   let isAvailOpenClass = isAvailOpen ? "" : css.AvailClose;
+  //#endregion
 
   //#region get price when click on Name of fare class 
   const [fare, setFare] = useState(20)

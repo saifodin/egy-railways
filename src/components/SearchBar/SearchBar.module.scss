@@ -41,7 +41,6 @@
   }
 }
 
-
 .SearchBar .inputContainer {
   position: relative;
   margin: 0 8px;
@@ -115,14 +114,16 @@
     @media (max-width: 410px) {
       width: 40%;
     }
+    @media (max-width: 330px) {
+      width: 32%;
+    }
     input {
       @media (max-width: 410px) {
-        font-size: 13px;
+        // font-size: 13px;
       }
     }
   }
 }
-
 
 .SearchBar .nextDatesContainer {
   display: flex;
@@ -175,7 +176,6 @@
     position: absolute;
     left: 55%;
     top: 140px;
-    //
     height: 30px;
   }
 
@@ -193,6 +193,9 @@
     top: 140px;
     margin-top: -4px;
   }
+  @media (max-width: 330px) {
+    left: 37%;
+  }
 
   > div {
     label {
@@ -207,7 +210,6 @@
     }
   }
 }
-
 
 .SearchBar .searchButton {
   width: 15%;
@@ -243,7 +245,6 @@
     margin: auto;
   }
 }
-
 
 // ***** another styles for different pages *****
 

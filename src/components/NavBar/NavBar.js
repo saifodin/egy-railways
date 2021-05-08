@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory ,useLocation} from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 
 import Logo from '../Logo/Logo'
 import NavigationItem from './NavigationItem/NavigationItem'
@@ -14,13 +14,22 @@ const Navbar = props => {
   }
   //#endregion
 
-  //#region add extra styles for different pages
-  const location = useLocation();
+  //#region comments how add extra styles based on current location
+  //// import { useLocation } from "react-router-dom";
+  // const location = useLocation();
+  // let extraCss = "";
+  // if (location.pathname === '/trains-between-stations') {
+  //   extraCss = css.trainsBetweenStations;
+  // }
+  //#endregion
+
+  //#region add extra styles based on props
   let extraCss = "";
-  if (location.pathname === '/trains-between-stations') {
+  if (props.extraStyle === 'whiteBackground') {
     extraCss = css.trainsBetweenStations;
   }
   //#endregion
+
 
 
   return (
@@ -28,15 +37,15 @@ const Navbar = props => {
     <nav className={`container ${css.Navbar} ${extraCss}`}>
 
       <div onClick={GoToHomePage}>
-        <Logo className={`${css.Logo}`} />
+        <Logo className={`${css.Logo}`} extraStyle={props.extraStyle}/>
       </div>
 
       <ul>
-
-        {/* <NavigationItem to="/">Home</NavigationItem> */}
-        <NavigationItem to="/trains-between-stations" >Trains</NavigationItem>
-        <NavigationItem to="/SignIn" >Sign in</NavigationItem>
-        <NavigationItem to="/CreateAccount" >Create an account</NavigationItem>
+        {/* add new page here and in App.js */}
+        <NavigationItem to="/trains-between-stations" extraStyle={props.extraStyle}>Trains</NavigationItem>
+        <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
+        <NavigationItem to="/SignIn" extraStyle={props.extraStyle}>Sign in</NavigationItem>
+        <NavigationItem to="/CreateAccount" extraStyle={props.extraStyle}>Create an account</NavigationItem>
       </ul>
     </nav>
   )

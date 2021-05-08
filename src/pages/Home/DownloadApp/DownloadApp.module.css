@@ -114,3 +114,13 @@
     margin-bottom: -5px;
   }
 }
+
+@media (max-width: 330px) {
+  .downloadAppTxt .downloadButtons {
+    display: flex;
+    flex-direction: column;
+  }
+  .downloadApp .downloadAppImg {
+    margin-left: 57px;
+  }
+}

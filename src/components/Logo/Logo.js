@@ -1,20 +1,20 @@
 import React from 'react'
-import { useLocation } from "react-router-dom";
 
 import '../../assets/fonts/Nexa.css' //font
 import css from './Logo.module.css'
 
 
 
-const Logo = () => {
+const Logo = props => {
 
-  //#region add extra styles for different pages
-  const location = useLocation();
+
+  //#region add extra styles based on props
   let extraCss = "";
-  if (location.pathname === '/trains-between-stations') {
+  if (props.extraStyle === 'whiteBackground') {
     extraCss = css.trainsBetweenStations;
   }
   //#endregion
+
 
   return (
     <div className={`${css.logoContainer} ${extraCss}`}>

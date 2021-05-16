@@ -17,7 +17,8 @@ const Home = props => (
       <h1 className={`${css.title} container`}>Train Ticket Booking and Tracking</h1>
     </header>
 
-    <SearchBar />
+    <SearchBar searchOn="stations"/>
+
 
     <MainServices />
 

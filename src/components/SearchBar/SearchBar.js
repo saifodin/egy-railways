@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { useLocation } from "react-router-dom"
-
 import css from './SearchBar.module.scss'
 
 const SearchBar = props => {
@@ -46,16 +44,19 @@ const SearchBar = props => {
   //#endregion 
 
   //#region add extra styles based on props
-  let extraCss = "";
+  let extraStyle = "";
   if (props.extraStyle === 'flat') {
-    extraCss = css.trainsBetweenStations;
+    extraStyle = css.flat;
+  }
+  let searchOn = "";
+  if (props.searchOn === 'trains') {
+    searchOn = css.trains;
   }
   //#endregion
 
   //#region transform from search stations to search Trains
-  // props.searchOn === "stations"
   let form = "";
-  if (true) {
+  if (props.searchOn === "stations") {
     form = (
       <form>
         <div className={css.inputContainer}>
@@ -111,11 +112,34 @@ const SearchBar = props => {
 
       </form>
     )
+  } else if (props.searchOn === "trains") {
+    form = (
+      <form>
+        <div className={css.inputContainer}>
+          <i className="fas fa-subway"></i>
+          <input type="text" placeholder="Train Number" />
+        </div>
+
+        <div className={css.inputContainer}>
+          <i className={`far fa-circle`}></i>
+          <input type="text" placeholder="From: City, Station" disabled />
+        </div>
+
+        <div className={css.inputContainer}>
+          <i className="fas fa-map-marker-alt"></i>
+          <input className="input-field" type="text" placeholder="To: City, Station" disabled />
+        </div>
+
+        <button className={css.searchButton}>Search Train</button>
+
+      </form>
+    )
   }
   //#endregion
+
   return (
     <div className={css.SearchBarContainer}>
-      <div className={`container ${css.SearchBar} ${extraCss}`}>
+      <div className={`container ${css.SearchBar} ${extraStyle} ${searchOn}`}>
         {form}
       </div>
     </div>

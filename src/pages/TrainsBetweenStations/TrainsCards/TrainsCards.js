@@ -1,6 +1,6 @@
 import React from 'react';
+import TrainCard from '../../../components/TrainCard/TrainCard';
 import css from './TrainsCards.module.scss'
-import TrainCard from './TrainCard/TrainCard'
 
 const TrainsCards = () => {
 

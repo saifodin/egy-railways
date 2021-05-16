@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import DayBox from '../DayBox/DayBox'
 import css from './TrainCard.module.scss'
 
-const TrainCard = () => {
-  
+const TrainCard = props => {
+  // <TrainCard />  // in TrainsBetweenStations.js
+  // <TrainCard forTrainPage /> // in train.js
+
+
   //#region add extra styles when Avail Closed
   const [isAvailOpen, setIsAvailOpen] = useState(false);
   let isAvailOpenClass = isAvailOpen ? "" : css.AvailClose;
@@ -27,7 +31,9 @@ const TrainCard = () => {
   }
   //#endregion
 
-  return (
+  //#region creat trainCard
+  //* when trainCard called by TrainsBetweenStations page
+  let trainCard = (
     <li>
       <div className={`${css.trainCard} ${isAvailOpenClass}`}>
 
@@ -38,13 +44,13 @@ const TrainCard = () => {
               <p>Top Rated</p>
             </div>
             {/* <div>
-              <i class="fas fa-star"></i>
-              <p>Fastest</p>
-            </div>
-            <div>
-              <i class="fas fa-star"></i>
-              <p>Cheapest</p>
-            </div> */}
+          <i class="fas fa-star"></i>
+          <p>Fastest</p>
+        </div>
+        <div>
+          <i class="fas fa-star"></i>
+          <p>Cheapest</p>
+        </div> */}
           </div>
 
           <div className={css.trainCardTop}>
@@ -113,7 +119,7 @@ const TrainCard = () => {
             <div className={css.AvailButton}>
               <button onClick={_ => setIsAvailOpen(true)}>
                 Check Availability
-          </button>
+             </button>
             </div>
 
           </div>
@@ -122,26 +128,10 @@ const TrainCard = () => {
 
         <div className={css.trainAvail}>
           <div className={css.daysBoxes}>
-            <div>
-              <p>3 May, Mon</p>
-              <p>available</p>
-              <button>Book Now</button>
-            </div>
-            <div>
-              <p>6 May, Thu</p>
-              <p className={css.notAvail}>not available</p>
-              <button>Book Now</button>
-            </div>
-            <div>
-              <p>9 May, Sun</p>
-              <p>available</p>
-              <button>Book Now</button>
-            </div>
-            <div>
-              <p>12 May, Wed</p>
-              <p className={css.notExist}></p>
-              <button>Book Now</button>
-            </div>
+            <DayBox date="3 May, Mon" availability="available" />
+            <DayBox date="6 May, Thu" availability="not available" />
+            <DayBox date="9 May, Sun" availability="available" />
+            <DayBox date="12 May, Wed" availability="not exist" />
           </div>
           <button>Train Details</button>
           <div className={css.closeButton} onClick={_ => setIsAvailOpen(false)}>
@@ -150,6 +140,71 @@ const TrainCard = () => {
         </div>
       </div>
     </li>
+  )
+  //* when trainCard called by train page
+  if (props.forTrainPage) {
+    trainCard = (
+      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage}`}>
+        <div className={css.trainData}>
+
+          <div className={css.trainCardTop}>
+            <div className={css.rating}>
+              <p>3.6</p>
+            </div>
+            <span className={css.trainNo}>02461</span>
+            <div className={css.weekDays}>
+              <ul className="reset">
+                <li className={css.noRun}>S</li>
+                <li>S</li>
+                <li className={css.noRun}>M</li>
+                <li>T</li>
+                <li className={css.noRun}>W</li>
+                <li className={css.noRun}>T</li>
+                <li>F</li>
+              </ul>
+            </div>
+            <div className={css.classes}>
+              <span>1A</span>
+              <span>2A</span>
+              <span>3A</span>
+            </div>
+          </div>
+
+          <div className={css.trainCardMiddle}>
+
+            <div className={css.timeInfo}>
+              <div className={css.departureTimeInfo}>
+                <span>10:27<span>PM</span></span>
+                <span>Cairo</span>
+              </div>
+
+              <div className={css.durationAndStops}>
+                <span className={css.duration}>2h13m</span>
+                <div className={css.line}>
+                  <span></span>
+                  <span></span>
+                </div>
+                <span className={css.stops}>6 Stations Between</span>
+              </div>
+
+              <div className={css.arrivalTimeInfo}>
+                <span>01:40<span>PM</span></span>
+                <span>Alexandria</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    )
+  }
+  //#endregion
+
+  return (
+    <Fragment>
+      {trainCard}
+    </Fragment>
   );
 }
 

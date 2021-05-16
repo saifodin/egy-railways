@@ -1,0 +1,52 @@
+.dayBox {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px 0;
+  padding-bottom: 0;
+  background-color: #fff;
+  min-width: 140px;
+  min-height: 118px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0px 3px;
+  p:first-of-type {
+    font-size: 13px;
+    color: var(--f);
+  }
+  p:last-of-type {
+    font-size: 14px;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #20bf7a;
+    &.notAvail {
+      color: red;
+    }
+    &.notExist {
+      &::after {
+        content: "_";
+        color: black;
+      }
+    }
+    &.notAvail ~ button,
+    &.notExist ~ button {
+      background-color: #c5c5c5;
+      cursor: not-allowed;
+    }
+  }
+  button {
+    margin-top: auto;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 20px;
+    border: 0;
+    color: var(--b);
+    background-color: var(--d);
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    outline: 0px;
+    padding: 6px 36px;
+  }
+}

@@ -1,7 +1,11 @@
 .Train {
   & {
-    height: 4000px;
-    background-color: var(--c);
+    // height: 4000px;
+    background-color: var(--b);
+    @media (max-width: 991px) {
+      background-color: red;
+
+    }
   }
 
   .upperPart {

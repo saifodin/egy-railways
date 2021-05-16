@@ -246,9 +246,9 @@
   }
 }
 
-// ***** another styles for different pages *****
+// ***** another styles for extraStyle="flat" *****
 
-.SearchBar.trainsBetweenStations {
+.SearchBar.flat {
   & {
     height: auto;
     margin-top: 0px;
@@ -272,7 +272,7 @@
   }
 }
 
-.SearchBar.trainsBetweenStations,
+.SearchBar.flat,
 #media {
   form {
     @media (max-width: 991px) {
@@ -301,6 +301,38 @@
     @media (max-width: 991px) {
       margin-left: 0px;
       margin-right: 0px;
+    }
+  }
+}
+
+// ***** another styles for searchOn="trains" *****
+.SearchBar.trains {
+  form {
+    .inputContainer:not(:first-of-type) {
+      input {
+        &:hover,
+        &:focus {
+          border: 1px solid #f1f2f6;
+        }
+      }
+    }
+    .searchButton {
+      margin-left: auto;
+      max-width: 30%;
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+.SearchBar.trains,
+#media {
+  form {
+    .searchButton {
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
     }
   }
 }

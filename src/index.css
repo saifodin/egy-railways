@@ -3,6 +3,9 @@ body {
   font-family: "GT Walsheim Pro";
 }
 
+/* in console (innerWidth) = 320 =  352 in chrome size*/
+
+/* 991<=OO */
 @media (max-width: 991px) {
 }
 

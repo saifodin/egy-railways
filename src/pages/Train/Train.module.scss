@@ -1,21 +1,250 @@
-.Train {
+.train {
   & {
-    // height: 4000px;
+    height: 4000px;
     background-color: var(--b);
+  }
+
+  h2 {
+    color: var(--a);
+    text-align: center;
+    margin-top: 50px;
+  }
+}
+
+.train .upperPart {
+  & {
+    width: 100%;
+    background-color: var(--b);
+  }
+
+  .line {
+    border-top: 1px solid rgb(220, 220, 220);
+  }
+}
+
+// ******
+
+.train .fareAndSeatContainer .fareAndSeat {
+  margin-top: 50px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding-bottom: 50px;
+}
+
+.fareAndSeat .inputs {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.fareAndSeat .inputs .fromToSearch form {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  > div {
+    position: relative;
+    margin: 0 8px;
+    i {
+      position: absolute;
+      left: 8px;
+      height: 24px;
+      width: 24px;
+      pointer-events: none;
+      color: var(--d);
+      top: 11px;
+      &:first-of-type {
+        font-size: 20px;
+        left: 8px;
+      }
+      &:last-of-type {
+        left: 152px;
+        font-size: 14px;
+        top: 14px;
+      }
+    }
+    select {
+      font-weight: 400;
+      font-style: normal;
+      font-stretch: normal;
+      box-sizing: border-box;
+      height: 40px;
+      width: 170px;
+      padding: 0 12px;
+      border: none;
+      font-size: 16px;
+      text-align: left;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      background-color: transparent;
+      box-shadow: none;
+      color: var(--f);
+      border-bottom: 1px solid var(--d);
+      transition: border 0.15s;
+      padding-left: 35px;
+      appearance: none;
+      &:hover,
+      &:focus {
+        outline: 0;
+      }
+      option {
+        margin-top: 20px;
+        border-color: var(--d);
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+  > i {
+    pointer-events: none;
+    font-size: 22px;
+    color: var(--f);
+    opacity: 0.6;
+    font-weight: 100;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+}
+
+.fareAndSeat .inputs .fareAndPrice {
+  margin-top: 51px;
+  display: flex;
+  > div {
+    padding-right: 20px;
+    input {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+      text-align: center;
+      color: var(--f);
+      font-size: 20px;
+      span {
+        margin-left: 10px;
+        opacity: 0.6;
+        &::after {
+          content: "EGP";
+          font-size: 15px;
+        }
+      }
+    }
+
+    input:checked {
+      ~ label {
+        color: var(--d);
+      }
+      ~ .border {
+        height: 5px;
+        background: var(--d);
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
+  }
+}
+
+.fareAndSeat .results {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-radius: 6px;
+  padding: 25px 25px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+  margin: 0px 50px;
+  // padding-bottom: 20px;
+  > div {
+    // max-height: ;
+    margin-bottom: 10px;
+    // width: 100px;
+  }
+}
+
+.fareAndSeat,
+#media {
+  .inputs {
     @media (max-width: 991px) {
-      background-color: red;
+      flex-direction: column;
+    }
+    .fromToSearch form {
+      //extra media
+      @media (max-width: 455px) {
+        flex-wrap: wrap;
+        flex-direction: column;
+      }
+      > i {
+        @media (max-width: 455px) {
+          transform: rotate(90deg);
+          margin: 10px 0px;
+        }
+      }
+    }
+    .fareAndPrice {
+      @media (max-width: 991px) {
+        margin-top: 0px;
+      }
+      > div {
+        //extra media
+        @media (max-width: 476px) {
+          font-size: 15px;
+          padding-right: 18px;
+        }
+        label {
+          //extra media
+          @media (max-width: 476px) {
+            font-size: 17px;
+          }
 
+          span {
+            //extra media
+            @media (max-width: 476px) {
+              margin-left: 5px;
+            }
+            &::after {
+              //extra media
+              @media (max-width: 476px) {
+                font-size: 10px;
+              }
+            }
+          }
+        }
+      }
     }
   }
+  .results {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-  .upperPart {
-    & {
-      width: 100%;
-      background-color: var(--b);
+    //extra
+    // @media (max-width: 476px) {
+    //   overflow-y: scroll;
+    //   max-height: 200px;
+    //   justify-content: center;
+    // }
+    @media (max-width: 575px) {
+      overflow-y: scroll;
+      max-height: 200px;
+      justify-content: center;
     }
-
-    .line {
-      border-top: 1px solid rgb(220, 220, 220);
+    //extra media
+    @media (max-width: 476px) {
+      padding: 25px 25px;
+      margin: 0px 10px;
+    }
+    > div {
+      margin-bottom: 10px;
     }
   }
+}
+//extra
+@media (max-width: 506px) {
+}
+
+@media (max-width: 767px) {
+}
+
+@media (max-width: 575px) {
 }

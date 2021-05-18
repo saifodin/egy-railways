@@ -6,7 +6,6 @@ const SearchBar = props => {
   // <SearchBar extraStyle="flat" searchOn="trains"/>
 
 
-
   //#region generate date today, tomorrow,...
   const [selectedDate, setSelectedDate] = useState(0);
   const createDateFormat = index => {
@@ -117,17 +116,17 @@ const SearchBar = props => {
       <form>
         <div className={css.inputContainer}>
           <i className="fas fa-subway"></i>
-          <input type="text" placeholder="Train Number" />
+          <input type="text" placeholder="Train Number" value="02461" />
         </div>
 
         <div className={css.inputContainer}>
           <i className={`far fa-circle`}></i>
-          <input type="text" placeholder="From: City, Station" disabled />
+          <input type="text" placeholder="From: City, Station" value="Start From: Cairo" disabled />
         </div>
 
         <div className={css.inputContainer}>
           <i className="fas fa-map-marker-alt"></i>
-          <input className="input-field" type="text" placeholder="To: City, Station" disabled />
+          <input className="input-field" type="text" placeholder="To: City, Station" value="End In: Alexandria" disabled />
         </div>
 
         <button className={css.searchButton}>Search Train</button>

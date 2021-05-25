@@ -83,6 +83,10 @@
       border: 1px solid #a1a9c3;
       outline: 0;
     }
+    &::placeholder {
+      color: #a1a9c3;
+      opacity: 1;
+    }
   }
 
   &.inputDateContainer {

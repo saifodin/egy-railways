@@ -416,19 +416,20 @@
         :last-child {
           margin-right: 20px;
         }
+
         &::-webkit-scrollbar {
           height: 5px;
         }
-
+    
         &::-webkit-scrollbar-track {
-          box-shadow: inset 1px 0px 0px 0px rgb(44, 44, 44);
-          background-color: rgb(181, 181, 181);
+          box-shadow: inset 1px 0px 0px 0px white;
+          background-color: var(--c);
         }
-
+    
         &::-webkit-scrollbar-thumb {
-          background: rgb(179, 179, 179);
+          background: var(--c);
           border-radius: 50px;
-          box-shadow: inset 2px 2px 3px 0px #4d4c4c;
+          box-shadow: inset 2px 2px 3px 0px #b4b3b5;
         }
       }
 

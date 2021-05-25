@@ -4,11 +4,13 @@ import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import TrainCard from '../../components/TrainCard/TrainCard';
 import DayBox from '../../components/DayBox/DayBox';
+import Footer from '../../components/Footer/Footer'
 // import TrainCard from '../TrainsBetweenStations/TrainsCards/TrainCard/TrainCard'
 
 const Train = () => {
   return (
     <div className={css.train}>
+
       <div className={css.upperPart}>
         <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
@@ -17,11 +19,13 @@ const Train = () => {
         </div>
         <div className={css.line}></div>
       </div>
-      <div className={`container`}>
+
+      <div className={`${css.trainCard} container`}>
         <TrainCard forTrainPage />
       </div>
-      <h2>Fare and Seat Availability of 02461</h2>
-      <div className={`container ${css.fareAndSeatContainer}`}>
+
+      <div className={`${css.fareAndSeatContainer} container`}>
+        <h2>Fare and Seat Availability of 02461</h2>
         <div className={css.fareAndSeat}>
           <div className={css.inputs}>
             <div className={css.fromToSearch}>
@@ -94,6 +98,171 @@ const Train = () => {
 
         </div>
       </div>
+
+      <div className={`${css.scheduleContainer} container`}>
+        <div className={css.schedule}>
+          <h2>02461 Schedule</h2>
+          <div className={css.tableContainer}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Station Name</th>
+                  <th>Arrives</th>
+                  <th>Departs</th>
+                  <th>Stop time</th>
+                  <th>Day</th>
+                  <th>Stn Governorate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cairo</td>
+                  <td>starts</td>
+                  <td>00:05</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Cairo<i class="fas fa-flag"></i></td>
+                </tr>
+                <tr>
+                  <td>Tanta</td>
+                  <td>19:07</td>
+                  <td>19:10</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>Gharbiya</td>
+                </tr>
+                <tr>
+                  <td>Alexandria </td>
+                  <td>20:35</td>
+                  <td>20:40</td>
+                  <td>5</td>
+                  <td>1</td>
+                  <td>Alexandria<i class="fas fa-flag"></i></td>
+                </tr>
+                <tr>
+                  <td>Cairo</td>
+                  <td>starts</td>
+                  <td>00:05</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Cairo</td>
+                </tr>
+                <tr>
+                  <td>Tanta</td>
+                  <td>19:07</td>
+                  <td>19:10</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>Gharbiya</td>
+                </tr>
+                <tr>
+                  <td>Alexandria </td>
+                  <td>20:35</td>
+                  <td>20:40</td>
+                  <td>5</td>
+                  <td>1</td>
+                  <td>Alexandria</td>
+                </tr>
+                <tr>
+                  <td>Cairo</td>
+                  <td>starts</td>
+                  <td>00:05</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Cairo</td>
+                </tr>
+                <tr>
+                  <td>Tanta</td>
+                  <td>19:07</td>
+                  <td>19:10</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>Gharbiya<i class="fas fa-flag"></i></td>
+                </tr>
+                <tr>
+                  <td>Alexandria </td>
+                  <td>20:35</td>
+                  <td>20:40</td>
+                  <td>5</td>
+                  <td>1</td>
+                  <td>Alexandria</td>
+                </tr>
+                <tr>
+                  <td>Cairo</td>
+                  <td>starts</td>
+                  <td>00:05</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Cairo</td>
+                </tr>
+                <tr>
+                  <td>Tanta</td>
+                  <td>19:07</td>
+                  <td>19:10</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>Gharbiya<i class="fas fa-flag"></i></td>
+                </tr>
+                <tr>
+                  <td>Alexandria </td>
+                  <td>20:35</td>
+                  <td>20:40</td>
+                  <td>5</td>
+                  <td>1</td>
+                  <td>Alexandria</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div className={`${css.reviewContainer} container`}>
+        <div className={css.review}>
+          <h2>Rating and Reviews of 02461</h2>
+          <div className={css.mainReview}>
+            <div className={css.totalRate}>3.6</div>
+            <div className={css.numberOfReviews}>15 Reviews</div>
+          </div>
+          <div className={css.subReviews}>
+            <div className={css.cleanliness}>
+              <div>Cleanliness</div>
+              <div>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+              </div>
+            </div>
+            <div className={css.onTime}>
+              <div>On Time</div>
+              <div>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+              </div>
+            </div>
+            <div className={css.onTime}>
+              <div>Comforts</div>
+              <div>
+                <i className={`${css.active} fas fa-star`}></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+                <i className="far fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={css.footerContainer}>
+        <Footer />
+      </div>
+  
     </div>
   );
 }

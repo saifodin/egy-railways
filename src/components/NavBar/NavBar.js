@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import Logo from '../Logo/Logo'
 import NavigationItem from './NavigationItem/NavigationItem'
@@ -37,13 +37,14 @@ const Navbar = props => {
     <nav className={`container ${css.Navbar} ${extraCss}`}>
 
       <div onClick={GoToHomePage}>
-        <Logo className={`${css.Logo}`} extraStyle={props.extraStyle}/>
+        <Logo className={`${css.Logo}`} extraStyle={props.extraStyle} />
       </div>
 
       <ul>
         {/* add new page here and in App.js */}
         <NavigationItem to="/trains-between-stations" extraStyle={props.extraStyle}>Trains</NavigationItem>
         <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
+        <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/SignIn" extraStyle={props.extraStyle}>Sign in</NavigationItem>
         <NavigationItem to="/CreateAccount" extraStyle={props.extraStyle}>Create an account</NavigationItem>
       </ul>

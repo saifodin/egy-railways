@@ -1,0 +1,106 @@
+.liveTrain .mainPart .main .segments {
+  display: flex;
+  flex: 1 1 0%;
+  padding: 24px;
+  > div {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #132968;
+    font-weight: bold;
+    .piece {
+      > div {
+        &:nth-of-type(1) {
+          height: 20px;
+          max-height: 20px;
+        }
+
+        &:nth-of-type(2) {
+          height: 30px;
+          max-height: 30px;
+          margin: 6px 0px;
+        }
+        &:nth-of-type(3) {
+          height: 20px;
+          max-height: 20px;
+        }
+        &:nth-of-type(4) {
+          height: 80px;
+          max-height: 80px;
+        }
+      }
+    }
+    .piece.start {
+      height: 110px;
+      max-height: 110px;
+      > div {
+        &:nth-of-type(1) {
+          height: 20px;
+          max-height: 20px;
+        }
+
+        &:nth-of-type(2) {
+          height: 80px;
+          max-height: 80px;
+          margin: 0px 0px;
+        }
+      }
+    }
+    .piece.end {
+      height: 20px;
+      max-height: 20px;
+      > div {
+        &:nth-of-type(1) {
+          height: 20px;
+          max-height: 20px;
+        }
+      }
+    }
+    
+    .piece {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 168px;
+      max-height: 168px;
+      align-items: center;
+      .verLine {
+        flex: 1 1 0%;
+        background-color: #a1a9c3;
+        width: 2px;
+        &.first {
+          flex: 1 1 0%;
+          background-color: white;
+          width: 0px;
+          border-right: 2px dashed #a1a9c3;
+        }
+      }
+      i {
+        color: #425486;
+        font-size: 16px;
+      }
+      .circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid #425486;
+      }
+    }
+
+    .middle {
+      font-size: 14px;
+      color: #a1a9c3;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .shapes {
+    margin: 0px 10px 0px 15px;
+  }
+  .info {
+    .piece {
+      align-items: flex-start;
+    }
+  }
+}

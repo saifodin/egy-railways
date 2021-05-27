@@ -11,13 +11,13 @@
   flex: 1;
   flex-direction: row;
   display: flex;
-  min-height: 95px;
+  min-height: 85px;
   border: 1px solid #ccc;
   float: left;
   cursor: pointer;
   border-radius: 6px;
-  padding: 10px;
-  margin: 0 10px;
+  padding: 5px;
+  margin: 0 5px;
   box-shadow: 2px 2.5px 5px -1px #ccc;
   background: #ffffff;
   margin-top: 50px;
@@ -31,6 +31,64 @@
 .servicesBoxes .serviceBox .imgBox {
   width: 10%;
   margin: auto 5px;
+  position: relative;
+}
+
+.servicesBoxes .serviceBox .imgBox .flash {
+  position: absolute;
+  left: 24px;
+  top: -16px;
+  border: 0;
+  background: none;
+  padding: 6px;
+  height: 40px;
+  width: 40px;
+}
+
+.servicesBoxes .serviceBox:last-of-type .imgBox .flash {
+  left: 16px;
+}
+
+.servicesBoxes .serviceBox .imgBox .flash div {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0;
+  background: #4edc24;
+  border-radius: 50%;
+  margin-left: 4px;
+  z-index: 999;
+}
+
+.servicesBoxes .serviceBox .imgBox .flash span {
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+  transform-origin: 50% 50%;
+  left: -1px;
+  top: 1px;
+  background: #4edc24;
+  opacity: 0;
+
+  width: 30px;
+  height: 30px;
+
+  animation: flash 1s ease-out infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes flash {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  to {
+    /* width: 20px;
+    height: 20px; */
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 .servicesBoxes .serviceBox .txtBox {
@@ -71,7 +129,7 @@
   .MainServices .servicesBoxes::-webkit-scrollbar {
     /* display: none; */
   }
-  
+
   .MainServices .servicesBoxes::-webkit-scrollbar {
     height: 5px;
     cursor: pointer;

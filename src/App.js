@@ -7,7 +7,8 @@ import Home from './pages/Home/Home';
 import SignIn from './pages/SignIn/SignIn.js';
 import TrainsBetweenStations from './pages/TrainsBetweenStations/TrainsBetweenStations';
 import CreateAccount from './pages/CreateAccount/CreateAccount.js';
-import Train from './pages/Train/Train'
+import Train from './pages/Train/Train';
+import LiveTrain from './pages/LiveTrain/LiveTrain'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/trains-between-stations" component={TrainsBetweenStations} />
           <Route path="/train" component={Train} />
+          <Route path="/live-train" component={LiveTrain} />
           <Route path="/SignIn" component={SignIn} />
           <Route path="/CreateAccount" component={CreateAccount} />
           <Redirect to="/" />

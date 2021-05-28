@@ -47,6 +47,7 @@
         }
       }
     }
+
     .piece.end {
       height: 20px;
       max-height: 20px;
@@ -67,24 +68,27 @@
       align-items: center;
       .verLine {
         flex: 1 1 0%;
-        background-color: #a1a9c3;
+        // background-color: #a1a9c3;
+        background-color: var(--l);
         width: 2px;
         &.first {
           flex: 1 1 0%;
           background-color: white;
           width: 0px;
-          border-right: 2px dashed #a1a9c3;
+          border-right: 2px dashed var(--l);
         }
       }
       i {
-        color: #425486;
+        // color: #425486;
+        color: var(--l);
         font-size: 16px;
       }
       .circle {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        border: 2px solid #425486;
+        // border: 2px solid #425486;
+        border: 2px solid var(--l);
       }
     }
 
@@ -100,8 +104,52 @@
       }
     }
   }
+
   .shapes {
     margin: 0px 10px 0px 15px;
+
+    > .piece.colored {
+      // .verLine {
+      //   background-color: #a1a9c3;
+      //   &.first {
+      //     border-right: 2px dashed #a1a9c3;
+      //     background-color: white;
+      //   }
+      // }
+      // i {
+      //   color: #425486;
+      // }
+      // .circle {
+      //   border: 2px solid #425486;
+      // }
+
+      .verLine {
+        background-color: #a1a9c3;
+        &.first {
+          border-right: 2px dashed #a1a9c3;
+          background-color: white;
+        }
+      }
+      i {
+        color: #425486;
+      }
+      .circle {
+        border: 2px solid #425486;
+      }
+
+      // .train ~ .verLine.first {
+      //   border-right: 2px dashed var(--l);
+      //
+    }
+
+    > .piece.colored.train {
+      .start i {
+        color: var(--l);
+      }
+      .verLine.first {
+        border-right: 2px dashed var(--l);
+      }
+    }
   }
   .info {
     .piece {

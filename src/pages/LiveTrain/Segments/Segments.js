@@ -14,8 +14,28 @@ const Segments = (props) => {
   // const timeNow = new Date().toLocaleString('en-GB').slice(-8);
   //// "08:48:47"
 
-  //between tanta to sidiGaber
-  const timeNow = "19:30:00"
+  //* time in specific station
+  // const timeNow = "17:28:00" // not moving yet 
+  // const timeNow = "18:10:00" // in cairo
+  // const timeNow = "19:07:00" // arrive tanta now
+  // const timeNow = "19:10:00" // depart from tanta
+  // const timeNow = "20:28:00" // arrive sidi gaber
+  // const timeNow = "20:30:00" //depart sidi gaber
+  // const timeNow = "20:35:00" // arrive alex
+  const timeNow = "20:40:00" // depart alex
+  // const timeNow = "22:35:00" // arrive ism
+
+
+  // const timeNow = "18:11:00" // between cairo & tanta 
+  // const timeNow = "18:09:00" // waiting in tant
+  // const timeNow = "19:12:00" // between tanta & sidi gaber
+  // const timeNow = "19:29:00" // waiting in sidi gaber
+  // const timeNow = "20:31:00" // between sidi  & alex
+  // const timeNow = "20:37:00" // waiting in alex
+  // const timeNow = "20:40:00" // between alex & ism
+
+
+
 
   const time24To12 = (time) => {
     //// time = "18:00:00"
@@ -34,7 +54,6 @@ const Segments = (props) => {
     // time[0] = time[0] % 12
     // if (time[0] % 12 !== 0) time[0] = 12
     time[0] = time[0] % 12 || 12;
-    console.log(time)
     //// time = [6, ":", "00", "PM"]
 
     // 6 => "06"
@@ -79,6 +98,34 @@ const Segments = (props) => {
     return result
   }
 
+  const isPastDate = (timeDate) => {
+    //// startTime = "18:10:00"
+    //// endTime = "18:17:00"
+
+    let timeNowIn = timeNow
+    timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
+    timeDate = timeDate.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeDate];
+    //// startTime = ["18:10:00", "18", ":", "10", ":00"]
+    //// endTime = ["18:10:00", "18", ":", "17", ":00"]
+
+    // Remove "18:00:00" and ":00" 
+    timeNowIn = timeNowIn.slice(1, 4);
+    timeDate = timeDate.slice(1, 4);
+    //// startTime = ["18", ":", "10"]
+    //// endTime = ["18", ":", "17"]
+
+    // get minutes of startTime and endTime // (hour.int * 60 ) + (min.int)
+    timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
+    timeDate = (parseInt(timeDate[0], 10) * 60) + parseInt(timeDate[2], 10);
+    //// startTime = 1090 //m
+    //// endTime = 1097  //m
+
+    // to get subtract minutes
+    let result = timeDate - timeNowIn >= 0 ? true : false;
+    //// result = 7
+
+    return result
+  }
 
   let dataPieces = [];
   for (let key = 0; key < routeStations.length; key++) {
@@ -136,36 +183,85 @@ const Segments = (props) => {
     }
   }
 
+
   let shapesPieces = [];
+  let color = "";
   for (let key = 0; key < routeStations.length; key++) {
     if (key === 0) {
-      shapesPieces.push(
-        <div className="piece start">
-          <div className="start"><div className="circle"></div></div>
-          <div className="verLine"></div>
-        </div>
-      )
-    } else if (key < routeStations.length - 1) {
-      shapesPieces.push(
-        <div className="piece">
-          <div className="start"><i class="fas fa-map-marker-alt"></i></div>
-          <div className="verLine first"></div>
-          <div className="end"><div className="circle"></div></div>
-          <div className="verLine second"></div>
-        </div>
-      )
+      if (isPastDate(routeStations[key].departs)) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece start ${color}`}>
+            <div className="start train"><TrainIcon widthHight="18px" /></div>
+            <div className="verLine"></div>
+          </div>
+        )
+      }
+      else {
+        shapesPieces.push(
+          <div className={`piece start ${color}`}>
+            <div className="start"><div className="circle"></div></div>
+            <div className="verLine"></div>
+          </div>
+        )
+      }
     }
+
+    else if (key < routeStations.length - 1) {
+      if (routeStations[key].arrives === timeNow) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece ${color}`}>
+            <div className="start"><TrainIcon widthHight="18px" /></div>
+            <div className="verLine first"></div>
+            <div className="end"><div className="circle"></div></div>
+            <div className="verLine second"></div>
+          </div>
+        )
+      }
+      else if (routeStations[key].departs === timeNow) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece ${color} train`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+            <div className="verLine first"></div>
+            <div className="end train"><TrainIcon widthHight="18px" /></div>
+            <div className="verLine second"></div>
+          </div>
+        )
+      }
+
+      else {
+        shapesPieces.push(
+          <div className={`piece ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+            <div className="verLine first"></div>
+            <div className="end"><div className="circle"></div></div>
+            <div className="verLine second"></div>
+          </div>
+        )
+      }
+    }
+
     else {
-      shapesPieces.push(
-        <div className="piece end">
-          <div className="start"><i class="fas fa-map-marker-alt"></i></div>
-        </div>
-      )
+      if (routeStations[key].arrives === timeNow) {
+        shapesPieces.push(
+          <div className={`piece end ${color}`}>
+            <div className="start train"><TrainIcon widthHight="18px" /></div>
+          </div>
+        )
+      } else {
+        shapesPieces.push(
+          <div className={`piece end ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          </div>
+        )
+      }
     }
   }
 
 
-  /* <div className="start"><TrainIcon widthHight="18px" /></div> */
+  /* <div className="start train"><TrainIcon widthHight="18px" /></div> */
 
   return (
     <div className="segments">
@@ -181,7 +277,7 @@ const Segments = (props) => {
       <div className="info">
         {infoPieces}
       </div>
-      
+
     </div>
   );
 }

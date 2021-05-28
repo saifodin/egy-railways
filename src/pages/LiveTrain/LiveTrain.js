@@ -51,6 +51,13 @@ const LiveTrain = () => {
         arrives: "20:35:00",
         departs: "20:40:00",
         stopTime: 5
+      },
+      {
+        name: "ismailia",
+        orderInRoute: 4,
+        arrives: "22:35:00",
+        departs: "22:40:00",
+        stopTime: 5
       }
     ]
   }

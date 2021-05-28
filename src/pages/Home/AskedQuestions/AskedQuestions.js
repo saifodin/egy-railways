@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import Panel from './Panel/Panel'
 import css from './AskedQuestions.module.css'
 

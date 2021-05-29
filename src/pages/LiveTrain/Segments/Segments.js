@@ -4,10 +4,10 @@ import './Segments.scss'
 
 
 const Segments = (props) => {
+
+  //#region - variables
   const routeStations = props.routeStations;
   const timeNow = new Date().toLocaleString('en-GB').slice(-8);
-  //// "08:48:47"
-
   //#region - comments - timeNow test cases for test
   //* time in specific station
   // const timeNow = "17:28:00" // not moving yet 
@@ -29,9 +29,7 @@ const Segments = (props) => {
   // const timeNow = "20:37:00" // waiting in alex
   // const timeNow = "20:41:00" // between alex & ism
   //#endregion
-
-
-
+  //#endregion
 
   const time24To12 = (time) => {
     //// time = "18:00:00"

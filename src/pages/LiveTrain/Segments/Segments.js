@@ -5,15 +5,10 @@ import './Segments.scss'
 
 const Segments = (props) => {
   const routeStations = props.routeStations;
-
-  // 0: {name: "Cairo", orderInRoute: 1, arrives: "18:00:00", departs: "18:10:00", stopTime: 10}
-  // 1: {name: "Tanta", orderInRoute: 2, arrives: "19:07:00", departs: "19:10:00", stopTime: 3}
-  // 2: {name: "Sidi Gaber", orderInRoute: 3, arrives: "20:28:00", departs: "20:30:00", stopTime: 2}
-  // 3: {name: "Alexandria", orderInRoute: 4, arrives: "20:35:00", departs: "20:40:00", stopTime: 5}
-
-  // const timeNow = new Date().toLocaleString('en-GB').slice(-8);
+  const timeNow = new Date().toLocaleString('en-GB').slice(-8);
   //// "08:48:47"
 
+  //#region - comments - timeNow test cases for test
   //* time in specific station
   // const timeNow = "17:28:00" // not moving yet 
   // const timeNow = "18:10:00" // in cairo
@@ -22,17 +17,18 @@ const Segments = (props) => {
   // const timeNow = "20:28:00" // arrive sidi gaber
   // const timeNow = "20:30:00" //depart sidi gaber
   // const timeNow = "20:35:00" // arrive alex
-  const timeNow = "20:40:00" // depart alex
+  // const timeNow = "20:40:00" // depart alex
   // const timeNow = "22:35:00" // arrive ism
 
 
   // const timeNow = "18:11:00" // between cairo & tanta 
-  // const timeNow = "18:09:00" // waiting in tant
+  // const timeNow = "19:09:00" // waiting in tant
   // const timeNow = "19:12:00" // between tanta & sidi gaber
-  // const timeNow = "19:29:00" // waiting in sidi gaber
+  // const timeNow = "20:29:00" // waiting in sidi gaber
   // const timeNow = "20:31:00" // between sidi  & alex
   // const timeNow = "20:37:00" // waiting in alex
-  // const timeNow = "20:40:00" // between alex & ism
+  // const timeNow = "20:41:00" // between alex & ism
+  //#endregion
 
 
 
@@ -127,6 +123,29 @@ const Segments = (props) => {
     return result
   }
 
+  const isTimeBetween = (startTime, endTime) => {
+    let timeNowIn = timeNow
+    timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
+    startTime = startTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [startTime];
+    endTime = endTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [endTime];
+
+
+    timeNowIn = timeNowIn.slice(1, 4);
+    startTime = startTime.slice(1, 4);
+    endTime = endTime.slice(1, 4);
+
+    timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
+    startTime = (parseInt(startTime[0], 10) * 60) + parseInt(startTime[2], 10);
+    endTime = (parseInt(endTime[0], 10) * 60) + parseInt(endTime[2], 10);
+
+    if (timeNowIn > startTime && endTime > timeNowIn) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  //#region - generate dataPieces inside <div className = "data">
   let dataPieces = [];
   for (let key = 0; key < routeStations.length; key++) {
     if (key === 0) {
@@ -154,7 +173,9 @@ const Segments = (props) => {
       )
     }
   }
+  //#endregion
 
+  //#region - generate infoPieces inside <div className = "info">
   let infoPieces = [];
   for (let key = 0; key < routeStations.length; key++) {
     if (key === 0) {
@@ -182,21 +203,43 @@ const Segments = (props) => {
       )
     }
   }
+  //#endregion
 
-
+  //#region - generate shapesPieces inside <div className = "shapes">
   let shapesPieces = [];
   let color = "";
   for (let key = 0; key < routeStations.length; key++) {
+
+    //* first shape
     if (key === 0) {
+      //  1 - train in depart station (train on circle)
       if (isPastDate(routeStations[key].departs)) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece start ${color}`}>
-            <div className="start train"><TrainIcon widthHight="18px" /></div>
+            <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine"></div>
           </div>
         )
       }
+      // 2 - train between the station and the next station (train on center of solid line)
+      else if (isTimeBetween((routeStations[key].departs), (routeStations[key + 1].arrives))) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece start trainBetween ${color}`}>
+            <div className="start"><div className="circle"></div></div>
+            <div className="verLineWithTrain">
+              <div className="halfVarLine firstHalf"></div>
+              <div className="trainContainer">
+                <TrainIcon widthHight="18px" color="white" />
+                <div className="flash"><div><span></span></div></div>
+              </div>
+              <div className="halfVarLine secondHalf"></div>
+            </div>
+          </div>
+        )
+      }
+      // 3 - not have any train
       else {
         shapesPieces.push(
           <div className={`piece start ${color}`}>
@@ -207,18 +250,40 @@ const Segments = (props) => {
       }
     }
 
+    //* between first shape and last shapes
     else if (key < routeStations.length - 1) {
+      //  1 - train in arrives station (train on mapMarker)
       if (routeStations[key].arrives === timeNow) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece ${color}`}>
-            <div className="start"><TrainIcon widthHight="18px" /></div>
+            <div className="start train"><TrainIcon widthHight="18px" /></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
             <div className="verLine second"></div>
           </div>
         )
       }
+      // 2 - train in center waiting (train on center of dashed line)
+      else if (isTimeBetween((routeStations[key].arrives), (routeStations[key].departs))) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece trainBetween dashed ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+            <div className="verLineWithTrain first">
+              <div className="halfVarLine firstHalf"></div>
+              <div className="trainContainer">
+                <TrainIcon widthHight="18px" color="white" />
+                <div className="flash"><div><span></span></div></div>
+              </div>
+              <div className="halfVarLine secondHalf"></div>
+            </div>
+            <div className="end"><div className="circle"></div></div>
+            <div className="verLine second"></div>
+          </div>
+        )
+      }
+      // 3 - train in departs station (train on circle)
       else if (routeStations[key].departs === timeNow) {
         color = "colored"
         shapesPieces.push(
@@ -230,7 +295,26 @@ const Segments = (props) => {
           </div>
         )
       }
-
+      // 4 - train between the station and the next station (train on center of solid line)
+      else if (isTimeBetween((routeStations[key].departs), (routeStations[key + 1].arrives))) {
+        color = "colored"
+        shapesPieces.push(
+          <div className={`piece trainBetween solid ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+            <div className="verLine first"></div>
+            <div className="end"><div className="circle"></div></div>
+            <div className="verLineWithTrain second">
+              <div className="halfVarLine firstHalf"></div>
+              <div className="trainContainer">
+                <TrainIcon widthHight="18px" color="white" />
+                <div className="flash"><div><span></span></div></div>
+              </div>
+              <div className="halfVarLine secondHalf"></div>
+            </div>
+          </div>
+        )
+      }
+      // 5 - not have any train
       else {
         shapesPieces.push(
           <div className={`piece ${color}`}>
@@ -243,14 +327,18 @@ const Segments = (props) => {
       }
     }
 
+    //* last shape
     else {
+      //  1 - train in arrives station (train on mapMarker)
       if (routeStations[key].arrives === timeNow) {
         shapesPieces.push(
           <div className={`piece end ${color}`}>
             <div className="start train"><TrainIcon widthHight="18px" /></div>
           </div>
         )
-      } else {
+      }
+      // 2 - not have any train
+      else {
         shapesPieces.push(
           <div className={`piece end ${color}`}>
             <div className="start"><i class="fas fa-map-marker-alt"></i></div>
@@ -258,10 +346,9 @@ const Segments = (props) => {
         )
       }
     }
+
   }
-
-
-  /* <div className="start train"><TrainIcon widthHight="18px" /></div> */
+  //#endregion
 
   return (
     <div className="segments">

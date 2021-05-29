@@ -8,6 +8,8 @@
     font-size: 16px;
     color: #132968;
     font-weight: bold;
+
+    // manage hights of div in piece
     .piece {
       > div {
         &:nth-of-type(1) {
@@ -29,36 +31,36 @@
           max-height: 80px;
         }
       }
-    }
+      &.start {
+        height: 110px;
+        max-height: 110px;
+        > div {
+          &:nth-of-type(1) {
+            height: 20px;
+            max-height: 20px;
+          }
 
-    .piece.start {
-      height: 110px;
-      max-height: 110px;
-      > div {
-        &:nth-of-type(1) {
-          height: 20px;
-          max-height: 20px;
+          &:nth-of-type(2) {
+            height: 80px;
+            max-height: 80px;
+            margin: 0px 0px;
+          }
         }
+      }
 
-        &:nth-of-type(2) {
-          height: 80px;
-          max-height: 80px;
-          margin: 0px 0px;
+      &.end {
+        height: 20px;
+        max-height: 20px;
+        > div {
+          &:nth-of-type(1) {
+            height: 20px;
+            max-height: 20px;
+          }
         }
       }
     }
 
-    .piece.end {
-      height: 20px;
-      max-height: 20px;
-      > div {
-        &:nth-of-type(1) {
-          height: 20px;
-          max-height: 20px;
-        }
-      }
-    }
-
+    // manage styles
     .piece {
       display: flex;
       flex-direction: column;
@@ -68,7 +70,6 @@
       align-items: center;
       .verLine {
         flex: 1 1 0%;
-        // background-color: #a1a9c3;
         background-color: var(--l);
         width: 2px;
         &.first {
@@ -78,8 +79,8 @@
           border-right: 2px dashed var(--l);
         }
       }
+
       i {
-        // color: #425486;
         color: var(--l);
         font-size: 16px;
       }
@@ -87,8 +88,10 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        // border: 2px solid #425486;
         border: 2px solid var(--l);
+      }
+      .trainContainer {
+        position: absolute;
       }
     }
 
@@ -108,21 +111,8 @@
   .shapes {
     margin: 0px 10px 0px 15px;
 
+    //change line color
     > .piece.colored {
-      // .verLine {
-      //   background-color: #a1a9c3;
-      //   &.first {
-      //     border-right: 2px dashed #a1a9c3;
-      //     background-color: white;
-      //   }
-      // }
-      // i {
-      //   color: #425486;
-      // }
-      // .circle {
-      //   border: 2px solid #425486;
-      // }
-
       .verLine {
         background-color: #a1a9c3;
         &.first {
@@ -136,12 +126,9 @@
       .circle {
         border: 2px solid #425486;
       }
-
-      // .train ~ .verLine.first {
-      //   border-right: 2px dashed var(--l);
-      //
     }
 
+    //change line color, no train yet
     > .piece.colored.train {
       .start i {
         color: var(--l);
@@ -150,7 +137,169 @@
         border-right: 2px dashed var(--l);
       }
     }
+
+    // style train in center of line, first piece
+    > .piece .verLineWithTrain {
+      position: relative;
+      flex: 1 1 0%;
+      .halfVarLine {
+        height: 50%;
+        background-color: var(--l);
+        width: 2px;
+      }
+      .trainContainer {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 40px;
+        transform: translate(-50%, -50%);
+        width: 22px;
+        height: 22px;
+        background-color: var(--l);
+        border-radius: 50%;
+      }
+    }
+
+    // color .piece children when train between line, first piece
+    > .piece.start.trainBetween {
+      .start .circle {
+        border-color: var(--l);
+      }
+      .verLineWithTrain .halfVarLine.secondHalf {
+        background-color: #a1a9c3;
+      }
+    }
+
+    // style train in center of line dashed or line solid, middle piece
+    > .piece .verLineWithTrain.first {
+      .halfVarLine {
+        width: 0px;
+        border-right: 2px dashed var(--l);
+        background-color: white;
+      }
+      .trainContainer {
+        top: 15px;
+      }
+    }
+
+    // color .piece children when train between dashed line. middle piece
+    > .piece.trainBetween.dashed {
+      .start i {
+        color: var(--l);
+      }
+
+      .verLineWithTrain.first .halfVarLine.secondHalf {
+        border-color: #a1a9c3;
+      }
+    }
+
+    // color .piece children when train between solid line. middle piece
+    > .piece.trainBetween.solid {
+      .start i {
+        color: var(--l);
+      }
+      .verLine.first {
+        border-color: var(--l);
+      }
+      .end .circle {
+        border-color: var(--l);
+      }
+      .verLineWithTrain.second .halfVarLine.secondHalf {
+        background-color: #a1a9c3;
+      }
+    }
+
+    // Flash on train, when train between line
+    .flash {
+      position: absolute;
+      left: -2px;
+      top: -5px;
+      border: 0;
+      background: none;
+      padding: 6px;
+      height: 40px;
+      width: 40px;
+      z-index: -1;
+      // z-index: 99;
+      div {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 0;
+        background: var(--l);
+        border-radius: 50%;
+        margin-left: 4px;
+        // z-index: 999;
+      }
+      span {
+        content: "";
+        position: absolute;
+        border-radius: 100%;
+        transform-origin: 50% 50%;
+        left: -1px;
+        top: 1px;
+        background: var(--l);
+        opacity: 0;
+
+        width: 30px;
+        height: 30px;
+
+        animation: flash 0.8s ease-out infinite;
+        // animation-delay: 0s;
+      }
+      @keyframes flash {
+        from {
+          transform: scale(0);
+          opacity: 1;
+        }
+
+        to {
+          /* width: 20px;
+          height: 20px; */
+          transform: scale(2.5);
+          opacity: 0;
+        }
+      }
+    }
+
+    // flash on train, when train in station
+    .trainStopContainer div {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        border-radius: 100%;
+        transform-origin: 50% 50%;
+        left: 7px;
+        top: 6px;
+        background: var(--l);
+        opacity: 0;
+
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        // z-index: -1;
+
+        animation: flash2 0.8s ease-out infinite;
+        // animation-delay: 0s;
+      }
+      @keyframes flash2 {
+        from {
+          transform: scale(0);
+          opacity: 1;
+        }
+
+        to {
+          /* width: 20px;
+          height: 20px; */
+          transform: scale(15);
+          opacity: 0;
+        }
+      }
+    }
   }
+
   .info {
     .piece {
       align-items: flex-start;

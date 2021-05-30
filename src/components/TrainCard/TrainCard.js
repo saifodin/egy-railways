@@ -141,10 +141,10 @@ const TrainCard = props => {
       </div>
     </li>
   )
-  //* when trainCard called by train page
+  //* when trainCard called by train page, or called by liveTrain page
   if (props.forTrainPage) {
     trainCard = (
-      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage}`}>
+      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage} ${css.liveTrainPage}`}>
         <div className={css.trainData}>
 
           <div className={css.trainCardTop}>

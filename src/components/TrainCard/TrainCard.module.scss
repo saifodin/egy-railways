@@ -407,7 +407,6 @@
       margin-bottom: 20px;
     }
   }
-
   .trainAvail {
     .daysBoxes {
       @media (max-width: 767px) {
@@ -420,12 +419,12 @@
         &::-webkit-scrollbar {
           height: 5px;
         }
-    
+
         &::-webkit-scrollbar-track {
           box-shadow: inset 1px 0px 0px 0px white;
           background-color: var(--c);
         }
-    
+
         &::-webkit-scrollbar-thumb {
           background: var(--c);
           border-radius: 50px;
@@ -482,7 +481,6 @@
       border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
       padding-bottom: 20px;
       margin-bottom: 20px;
-      // justify-content: space-between;
       .rating {
         display: inline;
         color: var(--b);
@@ -570,6 +568,21 @@
           margin-top: 10px;
           margin-left: 0px;
         }
+      }
+    }
+  }
+}
+
+// ***** another styles for props.forTrainPage with props.liveTrainPage  *****
+
+.trainCard.forTrainPage.liveTrainPage {
+  margin-top: 0px;
+  width: 100%;
+  border: none;
+  .trainData {
+    .trainCardTop {
+      .classes {
+        display: none;
       }
     }
   }

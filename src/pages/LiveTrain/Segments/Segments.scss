@@ -1,4 +1,4 @@
-.liveTrain .mainPart .main .segments {
+.liveTrain .mainPart .mainContent .segments {
   display: flex;
   flex: 1 1 0%;
   padding: 24px;
@@ -79,7 +79,7 @@
       align-items: center;
       &.first {
         font-size: 12px;
-        color: #7e7a79;
+        opacity: 0.6;
       }
     }
   }
@@ -306,6 +306,30 @@
   .info {
     .piece {
       align-items: flex-start;
+      .stationInfo {
+        font-size: 14px;
+        // opacity: 0.6;
+        color: #a1a9c3;
+        font-weight: 500;
+        text-transform: capitalize;
+        // margin-top: -5px;
+        //* style second .stationInfo in middle info
+        // & ~ .stationInfo {
+        //   font-size: 14px;
+        //   opacity: 1;
+        //   margin-top: 0px;
+        // }
+      }
+      //* style second .stationInfo in start and end info
+      // &.start,
+      // &.end {
+      //   .stationInfo {
+      //     font-size: 14px;
+      //     color: #a1a9c3;
+      //     opacity: 1;
+      //     margin-top: 0px;
+      //   }
+      // }
     }
   }
 }

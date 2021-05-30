@@ -17,7 +17,7 @@ const Segments = (props) => {
   // const timeNow = "20:28:00" // arrive sidi gaber
   // const timeNow = "20:30:00" //depart sidi gaber
   // const timeNow = "20:35:00" // arrive alex
-  // const timeNow = "20:40:00" // depart alex
+  // const timeNow = "20:40:00" // not moving
   // const timeNow = "22:35:00" // arrive ism
 
 
@@ -26,8 +26,7 @@ const Segments = (props) => {
   // const timeNow = "19:12:00" // between tanta & sidi gaber
   // const timeNow = "20:29:00" // waiting in sidi gaber
   // const timeNow = "20:31:00" // between sidi  & alex
-  // const timeNow = "20:37:00" // waiting in alex
-  // const timeNow = "20:41:00" // between alex & ism
+
   //#endregion
   //#endregion
 
@@ -143,18 +142,23 @@ const Segments = (props) => {
     }
   }
 
-  //#region - generate dataPieces inside <div className = "data">
-  let dataPieces = [];
+  //#region - generate timePieces inside <div className = "time">
+  let timePieces = [];
   for (let key = 0; key < routeStations.length; key++) {
+
+    //* first time
     if (key === 0) {
-      dataPieces.push(
+      timePieces.push(
         <div className="piece start">
           <div className="start">{time24To12(routeStations[key].departs)}</div>
           <div className="middle">{subTwoTimes(routeStations[key].departs, routeStations[key + 1].arrives)}</div>
         </div>
       )
-    } else if (key < routeStations.length - 1) {
-      dataPieces.push(
+    }
+
+    //* between first time and last time
+    else if (key < routeStations.length - 1) {
+      timePieces.push(
         <div className="piece">
           <div className="start">{time24To12(routeStations[key].arrives)}</div>
           <div className="middle first">{subTwoTimes(routeStations[key].arrives, routeStations[key].departs).slice(-3)}</div>
@@ -163,43 +167,16 @@ const Segments = (props) => {
         </div>
       )
     }
+
+    //* last time
     else {
-      dataPieces.push(
+      timePieces.push(
         <div className="piece end">
           <div className="start">{time24To12(routeStations[key].arrives)}</div>
         </div>
       )
     }
-  }
-  //#endregion
 
-  //#region - generate infoPieces inside <div className = "info">
-  let infoPieces = [];
-  for (let key = 0; key < routeStations.length; key++) {
-    if (key === 0) {
-      infoPieces.push(
-        <div className="piece start">
-          <div className="start">{routeStations[key].name}</div>
-          <div></div>
-        </div>
-      )
-    } else if (key < routeStations.length - 1) {
-      infoPieces.push(
-        <div className="piece">
-          <div className="start">{routeStations[key].name}</div>
-          <div></div>
-          <div className="end">{routeStations[key].name}</div>
-          <div></div>
-        </div>
-      )
-    }
-    else {
-      infoPieces.push(
-        <div className="piece end">
-          <div className="start">{routeStations[key].name}</div>
-        </div>
-      )
-    }
   }
   //#endregion
 
@@ -211,7 +188,7 @@ const Segments = (props) => {
     //* first shape
     if (key === 0) {
       //  1 - train in depart station (train on circle)
-      if (isPastDate(routeStations[key].departs)) {
+      if (isPastDate(routeStations[key].departs) || !isPastDate(routeStations[routeStations.length - 1].arrives)) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece start ${color}`}>
@@ -255,7 +232,7 @@ const Segments = (props) => {
         color = "colored"
         shapesPieces.push(
           <div className={`piece ${color}`}>
-            <div className="start train"><TrainIcon widthHight="18px" /></div>
+            <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
             <div className="verLine second"></div>
@@ -288,7 +265,7 @@ const Segments = (props) => {
           <div className={`piece ${color} train`}>
             <div className="start"><i class="fas fa-map-marker-alt"></i></div>
             <div className="verLine first"></div>
-            <div className="end train"><TrainIcon widthHight="18px" /></div>
+            <div className="end train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine second"></div>
           </div>
         )
@@ -331,7 +308,7 @@ const Segments = (props) => {
       if (routeStations[key].arrives === timeNow) {
         shapesPieces.push(
           <div className={`piece end ${color}`}>
-            <div className="start train"><TrainIcon widthHight="18px" /></div>
+            <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
           </div>
         )
       }
@@ -348,11 +325,50 @@ const Segments = (props) => {
   }
   //#endregion
 
+  //#region - generate infoPieces inside <div className = "info">
+
+  let infoPieces = [];
+  for (let key = 0; key < routeStations.length; key++) {
+
+    //* first info
+    if (key === 0) {
+      infoPieces.push(
+        <div className="piece start">
+          <div className="start">{routeStations[key].name}</div>
+          <div className="stationInfo">departure from {routeStations[key].name}</div>
+        </div>
+      )
+    }
+
+    //* between first info and last info
+    else if (key < routeStations.length - 1) {
+      infoPieces.push(
+        <div className="piece">
+          <div className="start">{routeStations[key].name}</div>
+          <div className="stationInfo">arrival to {routeStations[key].name}</div>
+          <div className="end">{routeStations[key].name}</div>
+          <div className="stationInfo">departure from {routeStations[key].name}</div>
+        </div>
+      )
+    }
+
+    //* last info
+    else {
+      infoPieces.push(
+        <div className="piece end">
+          <div className="start">{routeStations[key].name}</div>
+        </div>
+      )
+    }
+
+  }
+  //#endregion
+
   return (
     <div className="segments">
 
       <div className="date">
-        {dataPieces}
+        {timePieces}
       </div>
 
       <div className="shapes">

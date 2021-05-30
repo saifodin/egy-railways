@@ -1,11 +1,13 @@
 import React from 'react';
 import './LiveTrain.scss';
 import Navbar from '../../components/Navbar/Navbar'
+import TrainCard from '../../components/TrainCard/TrainCard'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Segments from './Segments/Segments'
 // import Footer from '../../components/Footer/Footer'
 
 const LiveTrain = () => {
+
   const trainData = {
     number: "921",
     noOfStations: 4,
@@ -55,6 +57,13 @@ const LiveTrain = () => {
     ]
   }
 
+  const weekDayToday = new Date().toLocaleString('en-US', { weekday: "short" }).toLowerCase();
+
+  if (trainData.weekdaysRuns[weekDayToday]) {
+    console.log("not working")
+  }
+
+
   return (
     <div className="liveTrain">
 
@@ -68,15 +77,47 @@ const LiveTrain = () => {
       </div>
 
       <div className="mainPart container">
-        <div className="main">
+        <div className="runningStatus">
           <h2>{trainData.number} Running Status</h2>
-          <Segments routeStations={trainData.routeStations} />
+          <div className="mainContent">
+            <div className="segmentsContainer">
+              <Segments routeStations={trainData.routeStations} />
+            </div>
+            <div class="refreshButton">
+              <i class="fas fa-redo"></i>
+              <div class="u-ib text u-v-align-middle">Refresh</div>
+            </div>
+          </div>
         </div>
         <div className="side">
-          side
+          <TrainCard forTrainPage liveTrainPage />
+          <span> all train information <span class="anchor"></span></span>
+          <div className="trainStatus">
+            <div className="title">
+              <h2>Train Status</h2>
+              <div className="flash"><div><span></span></div></div>
+            </div>
+            <div className="content">
+              <div>
+                <div className="icon"><i class="fas fa-bolt fa-2x fa-fw"></i></div>
+                <div className="textContent">
+                  <div>Train Status</div>
+                  <div>Not working Today</div>
+                  <div>first day of work is <span>Sunday</span></div>
+                </div>
+              </div>
+              <div>
+                <div className="icon"><i class="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
+                <div className="textContent">
+                  <div>Train location</div>
+                  <div>Waiting in <span>Tanta</span>Station</div>
+                  <div>The train departs after<span> 4m</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   );
 }

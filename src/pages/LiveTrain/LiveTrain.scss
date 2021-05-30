@@ -54,31 +54,41 @@
 
 .liveTrain .mainPart .mainContent {
   display: flex;
-  .segmentsContainer {
-    // height: auto;
-  }
-  .refreshButton {
-    margin: 24px;
-    margin-left: auto;
+  justify-content: space-between;
+  // .segmentsContainer {
+  // }
+  .refreshAndTime {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 20px;
     height: 21px;
-    font-size: 12px;
-    border: 1px solid var(--l);
-    color: var(--l);
-    padding: 2px 0;
-    border-radius: 3px;
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    i {
-      margin-right: 5px;
-      transform: scaleX(-1);
+    align-items: center;
+    margin-right: 10px;
+    .refreshButton {
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 21px;
+      font-size: 12px;
+      border: 1px solid var(--l);
+      color: var(--l);
+      padding: 2px 0;
+      border-radius: 3px;
+      width: 80px;
+      text-align: center;
+      cursor: pointer;
+      i {
+        margin-right: 5px;
+        transform: scaleX(-1);
+      }
+      &:hover {
+        color: var(--b);
+        background-color: var(--l);
+      }
     }
-    &:hover {
-      color: var(--b);
-      background-color: var(--l);
+    .lastUpdate {
+      font-size: 10px;
+      color: black;
     }
   }
 }
@@ -113,9 +123,8 @@
 }
 
 .liveTrain .mainPart .side .trainStatus {
-  // height: 100px;
   margin-top: 30px;
-  height: 300px;
+  // height: 300px;
   position: relative;
   z-index: 2;
   &::after {
@@ -217,11 +226,11 @@
             font-size: 14px;
             margin-top: 5px;
             // color: #f13637; //red
-            color: #f13637;
-            span{
-
+            color: #3dc13c;
+            span {
             }
           }
+
           &:nth-of-type(3) {
             font-size: 12px;
             margin-top: 3px;
@@ -231,6 +240,15 @@
               color: #3dc13c;
             }
           }
+        }
+        .red {
+          color: #f13637 !important; //red
+        }
+        .orange {
+          color: #f39c11 !important;
+        }
+        .underline {
+          border-bottom: 1px solid;
         }
       }
     }

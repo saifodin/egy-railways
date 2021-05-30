@@ -7,27 +7,7 @@ const Segments = (props) => {
 
   //#region - variables
   const routeStations = props.routeStations;
-  const timeNow = new Date().toLocaleString('en-GB').slice(-8);
-  //#region - comments - timeNow test cases for test
-  //* time in specific station
-  // const timeNow = "17:28:00" // not moving yet 
-  // const timeNow = "18:10:00" // in cairo
-  // const timeNow = "19:07:00" // arrive tanta now
-  // const timeNow = "19:10:00" // depart from tanta
-  // const timeNow = "20:28:00" // arrive sidi gaber
-  // const timeNow = "20:30:00" //depart sidi gaber
-  // const timeNow = "20:35:00" // arrive alex
-  // const timeNow = "20:40:00" // not moving
-  // const timeNow = "22:35:00" // arrive ism
-
-
-  // const timeNow = "18:11:00" // between cairo & tanta 
-  // const timeNow = "19:09:00" // waiting in tant
-  // const timeNow = "19:12:00" // between tanta & sidi gaber
-  // const timeNow = "20:29:00" // waiting in sidi gaber
-  // const timeNow = "20:31:00" // between sidi  & alex
-
-  //#endregion
+  const timeNow = props.timeNow
   //#endregion
 
   const time24To12 = (time) => {
@@ -114,7 +94,7 @@ const Segments = (props) => {
     //// endTime = 1097  //m
 
     // to get subtract minutes
-    let result = timeDate - timeNowIn >= 0 ? true : false;
+    let result = timeDate - timeNowIn > 0 ? true : false;
     //// result = 7
 
     return result
@@ -187,8 +167,8 @@ const Segments = (props) => {
 
     //* first shape
     if (key === 0) {
-      //  1 - train in depart station (train on circle)
-      if (isPastDate(routeStations[key].departs) || !isPastDate(routeStations[routeStations.length - 1].arrives)) {
+      //  1 - train in depart station (train on circle), will start Now, will start after 1h, train finish
+      if (routeStations[key].departs === timeNow || isPastDate(routeStations[key].departs) || !isPastDate(routeStations[routeStations.length - 1].departs)) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece start ${color}`}>

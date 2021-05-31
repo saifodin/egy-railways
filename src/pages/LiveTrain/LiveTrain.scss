@@ -1,7 +1,6 @@
 .liveTrain {
   & {
     background-color: #f1f2f6;
-    height: 2000px;
   }
 }
 
@@ -55,8 +54,6 @@
 .liveTrain .mainPart .mainContent {
   display: flex;
   justify-content: space-between;
-  // .segmentsContainer {
-  // }
   .refreshAndTime {
     display: flex;
     margin-top: 20px;
@@ -124,7 +121,6 @@
 
 .liveTrain .mainPart .side .trainStatus {
   margin-top: 30px;
-  // height: 300px;
   position: relative;
   z-index: 2;
   &::after {
@@ -134,69 +130,72 @@
     background-color: var(--b);
     position: absolute;
     top: 50%;
-    transform: translateX(-50%) rotate(45deg);
+    transform: translateX(-35%) rotate(45deg);
     rotate: 45deg;
     left: 0px;
     box-shadow: #13296833 -4px 4px 5px -2px;
     z-index: -1;
   }
   .title {
-    position: relative;
+    border-bottom: 1px solid rgb(220, 223, 233);
     h2 {
+      position: relative;
+      display: block;
+      width: 150px;
+      margin: auto;
       text-align: center;
       font-weight: bold;
       font-size: 18px;
       line-height: 28px;
       color: var(--a);
-      border-bottom: 1px solid rgb(220, 223, 233);
       padding: 10px 20px;
-    }
-    .flash {
-      position: absolute;
-      right: 130px;
-      top: -5px;
-      border: 0;
-      background: none;
-      padding: 6px;
-      height: 40px;
-      width: 40px;
-      div {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        margin-right: 0;
-        background: var(--l);
-        border-radius: 50%;
-        margin-left: 4px;
-        z-index: 999;
+      .flash {
+        position: absolute;
+        right: 15px;
+        top: -3px;
+        border: 0;
+        background: none;
+        padding: 6px;
+        height: 40px;
+        width: 40px;
         span {
-          content: "";
-          position: absolute;
-          border-radius: 100%;
-          transform-origin: 50% 50%;
-          left: 13px;
-          top: 1px;
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          margin-right: 0;
           background: var(--l);
-          opacity: 0;
+          border-radius: 50%;
+          margin-left: 4px;
+          z-index: 999;
+          span {
+            content: "";
+            position: absolute;
+            border-radius: 100%;
+            transform-origin: 50% 50%;
+            left: 9px;
+            top: 7px;
+            background: var(--l);
+            opacity: 0;
 
-          width: 30px;
-          height: 30px;
+            width: 30px;
+            height: 30px;
 
-          animation: flashH2 1s ease-out infinite;
-          animation-delay: 0.2s;
+            animation: flashH2 1s ease-out infinite;
+            animation-delay: 0.2s;
+          }
         }
-      }
-      @keyframes flashH2 {
-        from {
-          transform: scale(0);
-          opacity: 1;
-        }
+        @keyframes flashH2 {
+          from {
+            transform: scale(0);
+            opacity: 1;
+          }
 
-        to {
-          /* width: 20px;
-          height: 20px; */
-          transform: scale(1);
-          opacity: 0;
+          to {
+            /* width: 20px;
+            height: 20px; */
+            transform: scale(1);
+            opacity: 0;
+          }
         }
       }
     }
@@ -209,15 +208,16 @@
     > div {
       display: flex;
       flex-direction: row;
-      margin-bottom: 30px;
+      &:last-of-type {
+        margin-top: 25px;
+      }
       .icon {
         margin-right: 20px;
-        color: var(--m);
+        color: var(--d);
       }
       .textContent {
         div {
           font-weight: 500;
-          // text-transform: capitalize;
           &:nth-of-type(1) {
             font-size: 18px;
             color: var(--a);
@@ -225,10 +225,7 @@
           &:nth-of-type(2) {
             font-size: 14px;
             margin-top: 5px;
-            // color: #f13637; //red
             color: #3dc13c;
-            span {
-            }
           }
 
           &:nth-of-type(3) {
@@ -236,13 +233,12 @@
             margin-top: 3px;
             color: #a1a9c3;
             span {
-              // color: #3f66fb;
               color: #3dc13c;
             }
           }
         }
         .red {
-          color: #f13637 !important; //red
+          color: #f13637 !important;
         }
         .orange {
           color: #f39c11 !important;
@@ -253,4 +249,60 @@
       }
     }
   }
+}
+
+.liveTrain .mainPart,
+#media {
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
+  > div {
+    &:first-of-type {
+      @media (max-width: 767px) {
+        flex: 1;
+        max-width: 100%;
+      }
+    }
+    &:last-of-type {
+      @media (max-width: 767px) {
+        margin-bottom: 30px;
+      }
+    }
+  }
+  .mainContent {
+    @media (max-width: 991px) {
+      flex-direction: column-reverse;
+    }
+    .refreshAndTime {
+      @media (max-width: 991px) {
+        justify-content: flex-end;
+      }
+      @media (max-width: 419px) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .side {
+    .trainStatus {
+      &::after {
+        @media (max-width: 991px) {
+          display: none;
+        }
+      }
+      .content {
+        > div {
+          &:last-of-type {
+            margin-top: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+//***
+
+.liveTrain .footerContainer {
+  margin-top: 100px;
 }

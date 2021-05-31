@@ -1,126 +1,21 @@
 import React from 'react';
 import TrainIcon from '../../../assets/imgs/iconsSvg/TrainIcon'
 import './Segments.scss'
+import {
+  timeNow,
+  trainData,
+  weekDayToday,
+  time24To12,
+  subTwoTimes,
+  isPastDate,
+  isTimeBetween
+} from '../../../shared/utility'
 
 
-const Segments = (props) => {
+const Segments = () => {
 
-  //#region - variables
-  const routeStations = props.routeStations;
-  const timeNow = props.timeNow
-  //#endregion
+  const routeStations = trainData.routeStations;
 
-  const time24To12 = (time) => {
-    //// time = "18:00:00"
-
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-    //// time = ["18:00:00", "18", ":", "00", ":00"]
-
-    // Remove "18:00:00" and ":00" 
-    time = time.slice(1, 4);
-    //// time = ["18", ":", "00"]
-
-    // time[3] = "null + AM" if time[0] < 12 
-    time[3] = time[0] < 12 ? ' AM' : ' PM';
-    //// time = ["23", ":", "00", "PM"]
-
-    // time[0] = time[0] % 12
-    // if (time[0] % 12 !== 0) time[0] = 12
-    time[0] = time[0] % 12 || 12;
-    //// time = [6, ":", "00", "PM"]
-
-    // 6 => "06"
-    time[0] = time[0] < 10 ? `0${time[0]}` : time[0]
-    //// time = ["06", ":", "00", "PM"]
-
-    time = time.join('');
-    //// time = "06:00 PM"
-
-    return time
-  }
-
-  const subTwoTimes = (startTime, endTime) => {
-    //// startTime = "18:10:00"
-    //// endTime = "18:17:00"
-
-    startTime = startTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [startTime];
-    endTime = endTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [endTime];
-    //// startTime = ["18:10:00", "18", ":", "10", ":00"]
-    //// endTime = ["18:10:00", "18", ":", "17", ":00"]
-
-    // Remove "18:00:00" and ":00" 
-    startTime = startTime.slice(1, 4);
-    endTime = endTime.slice(1, 4);
-    //// startTime = ["18", ":", "10"]
-    //// endTime = ["18", ":", "17"]
-
-    // get minutes of startTime and endTime // (hour.int * 60 ) + (min.int)
-    startTime = (parseInt(startTime[0], 10) * 60) + parseInt(startTime[2], 10);
-    endTime = (parseInt(endTime[0], 10) * 60) + parseInt(endTime[2], 10);
-    //// startTime = 1090 //m
-    //// endTime = 1097  //m
-
-    // to get subtract minutes
-    let result = endTime - startTime;
-    //// result = 7
-
-    // get 0h7m => then git 0h07m 
-    result = `${Math.floor(result / 60)}h${result > 10 ? result % 60 : `0${result % 60}`}m`
-    //// result = "0h07m"
-
-    return result
-  }
-
-  const isPastDate = (timeDate) => {
-    //// startTime = "18:10:00"
-    //// endTime = "18:17:00"
-
-    let timeNowIn = timeNow
-    timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
-    timeDate = timeDate.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeDate];
-    //// startTime = ["18:10:00", "18", ":", "10", ":00"]
-    //// endTime = ["18:10:00", "18", ":", "17", ":00"]
-
-    // Remove "18:00:00" and ":00" 
-    timeNowIn = timeNowIn.slice(1, 4);
-    timeDate = timeDate.slice(1, 4);
-    //// startTime = ["18", ":", "10"]
-    //// endTime = ["18", ":", "17"]
-
-    // get minutes of startTime and endTime // (hour.int * 60 ) + (min.int)
-    timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
-    timeDate = (parseInt(timeDate[0], 10) * 60) + parseInt(timeDate[2], 10);
-    //// startTime = 1090 //m
-    //// endTime = 1097  //m
-
-    // to get subtract minutes
-    let result = timeDate - timeNowIn > 0 ? true : false;
-    //// result = 7
-
-    return result
-  }
-
-  const isTimeBetween = (startTime, endTime) => {
-    let timeNowIn = timeNow
-    timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
-    startTime = startTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [startTime];
-    endTime = endTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [endTime];
-
-
-    timeNowIn = timeNowIn.slice(1, 4);
-    startTime = startTime.slice(1, 4);
-    endTime = endTime.slice(1, 4);
-
-    timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
-    startTime = (parseInt(startTime[0], 10) * 60) + parseInt(startTime[2], 10);
-    endTime = (parseInt(endTime[0], 10) * 60) + parseInt(endTime[2], 10);
-
-    if (timeNowIn > startTime && endTime > timeNowIn) {
-      return true
-    } else {
-      return false
-    }
-  }
 
   //#region - generate timePieces inside <div className = "time">
   let timePieces = [];
@@ -168,7 +63,12 @@ const Segments = (props) => {
     //* first shape
     if (key === 0) {
       //  1 - train in depart station (train on circle), will start Now, will start after 1h, train finish
-      if (routeStations[key].departs === timeNow || isPastDate(routeStations[key].departs) || !isPastDate(routeStations[routeStations.length - 1].departs)) {
+      if (
+        routeStations[key].departs === timeNow ||
+        isPastDate(routeStations[key].departs) ||
+        !isPastDate(routeStations[routeStations.length - 1].departs) ||
+        !trainData.weekdaysRuns[weekDayToday]
+      ) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece start ${color}`}>
@@ -207,8 +107,19 @@ const Segments = (props) => {
 
     //* between first shape and last shapes
     else if (key < routeStations.length - 1) {
-      //  1 - train in arrives station (train on mapMarker)
-      if (routeStations[key].arrives === timeNow) {
+      // 1 - today is not workDay - not have any train === else
+      if (!trainData.weekdaysRuns[weekDayToday]) {
+        shapesPieces.push(
+          <div className={`piece ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+            <div className="verLine first"></div>
+            <div className="end"><div className="circle"></div></div>
+            <div className="verLine second"></div>
+          </div>
+        )
+      }
+      // 2 - train in arrives station (train on mapMarker)
+      else if (routeStations[key].arrives === timeNow) {
         color = "colored"
         shapesPieces.push(
           <div className={`piece ${color}`}>
@@ -219,7 +130,7 @@ const Segments = (props) => {
           </div>
         )
       }
-      // 2 - train in center waiting (train on center of dashed line)
+      // 3 - train in center waiting (train on center of dashed line)
       else if (isTimeBetween((routeStations[key].arrives), (routeStations[key].departs))) {
         color = "colored"
         shapesPieces.push(
@@ -238,7 +149,7 @@ const Segments = (props) => {
           </div>
         )
       }
-      // 3 - train in departs station (train on circle)
+      // 4 - train in departs station (train on circle)
       else if (routeStations[key].departs === timeNow) {
         color = "colored"
         shapesPieces.push(
@@ -250,7 +161,7 @@ const Segments = (props) => {
           </div>
         )
       }
-      // 4 - train between the station and the next station (train on center of solid line)
+      // 5 - train between the station and the next station (train on center of solid line)
       else if (isTimeBetween((routeStations[key].departs), (routeStations[key + 1].arrives))) {
         color = "colored"
         shapesPieces.push(
@@ -269,7 +180,7 @@ const Segments = (props) => {
           </div>
         )
       }
-      // 5 - not have any train
+      // 6 - not have any train
       else {
         shapesPieces.push(
           <div className={`piece ${color}`}>
@@ -284,15 +195,23 @@ const Segments = (props) => {
 
     //* last shape
     else {
-      //  1 - train in arrives station (train on mapMarker)
-      if (routeStations[key].arrives === timeNow) {
+      // 1 - today is not workDay - not have any train === else
+      if (!trainData.weekdaysRuns[weekDayToday]) {
+        shapesPieces.push(
+          <div className={`piece end ${color}`}>
+            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          </div>
+        )
+      }
+      //  2 - train in arrives station (train on mapMarker)
+      else if (routeStations[key].arrives === timeNow) {
         shapesPieces.push(
           <div className={`piece end ${color}`}>
             <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
           </div>
         )
       }
-      // 2 - not have any train
+      // 3 - not have any train
       else {
         shapesPieces.push(
           <div className={`piece end ${color}`}>
@@ -301,7 +220,6 @@ const Segments = (props) => {
         )
       }
     }
-
   }
   //#endregion
 

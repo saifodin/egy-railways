@@ -17,7 +17,7 @@ import './Shape.scss'
 // "Eltawfiqiuh"
 
 const railroads = [];
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < 5; i++) {
   railroads.push(
     <img src={Railroad} alt="Railroad" />
   )
@@ -40,68 +40,23 @@ const Shape = () => {
       <div className="firstWayTrains">
 
         <div className="northStations">
-          <div className="linesContainer">
-            {/* train */}
-            <div className="line">
-              <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>arrives in</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
+          <div className="piece train">
+            <div className="railroadsContainer">{railroads}</div>
+            <div className="trainContainer">
+              <TrainIcon widthHight="18px" color="white" />
+              <div className="flash"><div><span></span></div></div>
+              <div className="trainInfo">
+                <span>3124</span>
+                <span>departs after</span>
+                <span>99h02m</span>
               </div>
             </div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
         </div>
 
@@ -129,67 +84,23 @@ const Shape = () => {
         </div>
 
         <div className="southStations">
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
+          </div>
+          <div className="piece train">
+            <div className="railroadsContainer">{railroads}</div>
+            <div className="trainContainer">
+              <TrainIcon widthHight="18px" color="white" />
+              <div className="flash"><div><span></span></div></div>
+              <div className="trainInfo">
+                <span>3124</span>
+                <span>departs after</span>
+                <span>99h02m</span>
               </div>
             </div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-          </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            {/* train */}
-            <div className="line">
-              <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>departed since</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
         </div>
 
@@ -264,67 +175,23 @@ const Shape = () => {
       <div className="secondWayTrains">
 
         <div className="northStations">
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
+          <div className="piece train">
+            <div className="railroadsContainer">{railroads}</div>
+            <div className="trainContainer">
+              <TrainIcon widthHight="18px" color="white" />
+              <div className="flash"><div><span></span></div></div>
+              <div className="trainInfo">
+                <span>3124</span>
+                <span>departs after</span>
+                <span>99h02m</span>
               </div>
             </div>
           </div>
-          <div className="linesContainer">
-            {/* train */}
-            <div className="line">
-              <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>arrives in</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
         </div>
 
@@ -352,70 +219,24 @@ const Shape = () => {
         </div>
 
         <div className="southStations">
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
+          <div className="piece train">
+            <div className="railroadsContainer">{railroads}</div>
+            <div className="trainContainer">
+              <TrainIcon widthHight="18px" color="white" />
+              <div className="flash"><div><span></span></div></div>
+              <div className="trainInfo">
+                <span>3124</span>
+                <span>departs after</span>
+                <span>99h02m</span>
               </div>
             </div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            {/* train */}
-            <div className="line">
-              <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>departed since</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
-          <div className="linesContainer">
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-
+          <div className="piece">
+            <div className="railroadsContainer">{railroads}</div>
           </div>
-
         </div>
 
       </div>

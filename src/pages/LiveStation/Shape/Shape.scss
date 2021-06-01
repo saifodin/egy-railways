@@ -70,12 +70,11 @@
 // global styles
 .shape .trainContainer {
   & {
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 70px;
-    transform: translate(-50%, -50%);
+    top: 50px;
     width: 22px;
     height: 22px;
     background-color: var(--l);
@@ -171,7 +170,7 @@
 }
 
 .shape .southStations .trainContainer {
-  top: 30px;
+  top: 10px;
 }
 // change global style
 .shape .secondWayTrains .trainContainer .trainInfo {
@@ -202,13 +201,12 @@
 .shape .arrowsContainers {
   overflow: hidden;
   height: 100%;
-  margin: 0px 25px;
   &:last-of-type {
     transform: rotate(180deg);
   }
   i {
+    margin-right: 50px;
     font-size: 114px;
-    margin-right: 77px;
     color: var(--m);
     opacity: 0.2;
   }
@@ -249,23 +247,24 @@
       .station {
         .stationName {
           font-size: 18px;
-          // color: var(--d);
-          // color: #132968;
           background-color: #132a68b1;
           color: white;
           font-weight: bold;
+        }
+        i {
+          color: var(--f);
         }
       }
       .verLine {
         background-color: white;
         width: 0px;
-        border-right: 2px dashed var(--l);
+        border-right: 2px dashed var(--f);
       }
       .circle {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        border: 2px solid var(--l);
+        border: 2px solid var(--f);
       }
     }
   }
@@ -275,7 +274,21 @@
 .shape .secondWayTrains {
   .northStations,
   .southStations {
-    .linesContainer {
+    align-items: center;
+    .piece {
+      display: block;
+      position: relative;
+      .railroadsContainer {
+        height: 100%;
+        overflow: hidden;
+        > img {
+          display: block;
+          width: 58px;
+        }
+      }
+      .trainContainer {
+        transform: translate(18px, 0);
+      }
       .line {
         .piece {
           .verLine {
@@ -290,10 +303,9 @@
 
   .theStation {
     align-items: flex-end;
-    // flex-direction: row;
     .box {
       background-color: white;
-      border: 2px solid var(--m);
+      border: 2px solid #132a68b1;
       width: 150px;
       flex-direction: row;
       justify-content: space-between;
@@ -305,17 +317,12 @@
           background-color: var(--m);
           width: 40px;
         }
-        &.left {
-          img {
-          }
-        }
       }
       .train {
         height: 100%;
         position: relative;
         img {
           width: 100%;
-          background-repeat: repeat-y;
           overflow: hidden;
         }
         .trainContainer {

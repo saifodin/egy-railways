@@ -75,6 +75,42 @@
   }
 }
 
+.liveStation .mainPart .runningStatus,
+#media {
+  &::after {
+    @media (max-width: 575px) {
+      content: ".";
+      width: 100%;
+      background-color: white;
+      color: transparent;
+      margin-left: 70px;
+    }
+  }
+  .mainContent {
+    @media (max-width: 575px) {
+      overflow-x: scroll;
+
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 1px 0px 0px 0px white;
+        background-color: var(--c);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--c);
+        border-radius: 50px;
+        box-shadow: inset 2px 2px 3px 0px #b4b3b5;
+      }
+    }
+    .shapeContainer {
+      min-width: 492px;
+    }
+  }
+}
+
 //***
 
 .liveStation .footerContainer {

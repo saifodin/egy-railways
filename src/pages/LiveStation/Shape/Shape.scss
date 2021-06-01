@@ -65,6 +65,77 @@
   }
 }
 
+.shape,
+#flex_hight_width,
+#media {
+  & {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 800px;
+  }
+  // .firstWayTrains,.stations,.secondWayTrains {
+  > div {
+    display: flex;
+    flex-direction: column;
+    // .northStations,.theStation,.southStations {
+    > div {
+      display: flex;
+      flex-direction: column;
+      // .piece {
+      > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100px;
+        > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+    .theStation {
+      // .piece {
+      > div {
+        height: 200px;
+      }
+    }
+    .southStations {
+      // .piece {
+      > div {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+  .stations {
+    width: 200px;
+    @media (max-width: 767px) {
+      width: 100px;
+    }
+  }
+  .firstWayTrains,
+  .secondWayTrains {
+    // width: 100px;
+    .northStations,
+    .southStations {
+      .linesContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        .line {
+          display: flex;
+          width: 50px;
+          .piece {
+            height: 100px;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}
+
 //***
 
 // global styles
@@ -169,6 +240,7 @@
   }
 }
 
+// change global style
 .shape .southStations .trainContainer {
   top: 10px;
 }
@@ -212,12 +284,20 @@
   }
 }
 
+.shape .arrowsContainers,
+#media {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
 .shape .stations {
   // .northStations,.theStation,.southStations {
   > div {
     .piece {
       .station {
         position: relative;
+        width: 100%;
         i {
           font-size: 16px;
           margin-left: 1px;
@@ -229,10 +309,11 @@
           color: white;
           font-weight: bold;
           background-color: var(--l);
-          width: 150px;
+          width: 85%;
           text-align: center;
           border-radius: 5px;
           margin-bottom: 6px;
+          white-space: nowrap;
         }
       }
       .verLine {

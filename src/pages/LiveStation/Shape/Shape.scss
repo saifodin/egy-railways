@@ -1,8 +1,11 @@
 .shape,
 #flex_hight_width {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  & {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 800px;
+  }
   // .firstWayTrains,.stations,.secondWayTrains {
   > div {
     display: flex;
@@ -38,11 +41,11 @@
     }
   }
   .stations {
-    width: 150px;
+    width: 200px;
   }
   .firstWayTrains,
   .secondWayTrains {
-    width: 300px;
+    // width: 100px;
     .northStations,
     .southStations {
       .linesContainer {
@@ -62,8 +65,153 @@
   }
 }
 
+//***
+
+// global styles
+.shape .trainContainer {
+  & {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 70px;
+    transform: translate(-50%, -50%);
+    width: 22px;
+    height: 22px;
+    background-color: var(--l);
+    border-radius: 50%;
+  }
+  .flash {
+    position: absolute;
+    left: -2px;
+    top: -5px;
+    border: 0;
+    background: none;
+    padding: 6px;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    div {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 0;
+      background: var(--l);
+      border-radius: 50%;
+      margin-left: 4px;
+    }
+    span {
+      content: "";
+      position: absolute;
+      border-radius: 100%;
+      transform-origin: 50% 50%;
+      left: -1px;
+      top: 1px;
+      background: var(--l);
+      opacity: 0;
+
+      width: 30px;
+      height: 30px;
+
+      animation: flash 0.8s ease-out infinite;
+    }
+    @keyframes flash {
+      from {
+        transform: scale(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+  }
+  .trainInfo {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90px;
+    height: 45px;
+    color: var(--a);
+    font-size: 12px;
+    right: 33px;
+    z-index: -2;
+    &::after {
+      content: "";
+      width: 15px;
+      height: 15px;
+      background-color: var(--b);
+      position: absolute;
+      top: 37%;
+      transform: translateX(-35%) rotate(45deg);
+      right: -9px;
+      box-shadow: #13296833 3px -2px 4px -2px;
+      z-index: -3;
+    }
+
+    > span {
+      &:first-of-type {
+        font-size: 14px;
+        color: var(--a);
+        margin-bottom: 2px;
+      }
+      &:nth-of-type(2) {
+        color: var(--m);
+      }
+      &:last-of-type {
+        font-size: 10px;
+        color: #3dc13c;
+      }
+    }
+  }
+}
+
+.shape .southStations .trainContainer {
+  top: 30px;
+}
+// change global style
+.shape .secondWayTrains .trainContainer .trainInfo {
+  left: 33px;
+  &::after {
+    top: 37%;
+    transform: translateX(35%) rotate(45deg);
+    box-shadow: #13296833 -3px 2px 4px -2px;
+    left: -9px;
+  }
+}
+// change global style
+.shape .theStation .trainContainer .trainInfo > span:last-of-type {
+  color: #f39c11;
+}
+// change global style
+.shape .firstWayTrains .southStations .trainContainer .trainInfo > span:last-of-type,
+.shape .secondWayTrains .northStations .trainContainer .trainInfo > span:last-of-type {
+  color: #f13637;
+}
+
+//**********
+
 .shape {
   padding: 25px;
+}
+
+.shape .arrowsContainers {
+  overflow: hidden;
+  height: 100%;
+  margin: 0px 25px;
+  &:last-of-type {
+    transform: rotate(180deg);
+  }
+  i {
+    font-size: 114px;
+    margin-right: 77px;
+    color: var(--m);
+    opacity: 0.2;
+  }
 }
 
 .shape .stations {
@@ -73,14 +221,20 @@
       .station {
         position: relative;
         i {
-          font-size: 24px;
+          font-size: 16px;
           margin-left: 1px;
           color: var(--d);
         }
         .stationName {
-          font-size: 14px;
-          color: #132968;
+          font-size: 16px;
+          // color: #132968;
+          color: white;
           font-weight: bold;
+          background-color: var(--l);
+          width: 150px;
+          text-align: center;
+          border-radius: 5px;
+          margin-bottom: 6px;
         }
       }
       .verLine {
@@ -95,7 +249,10 @@
       .station {
         .stationName {
           font-size: 18px;
-          color: var(--d);
+          // color: var(--d);
+          // color: #132968;
+          background-color: #132a68b1;
+          color: white;
           font-weight: bold;
         }
       }
@@ -105,8 +262,8 @@
         border-right: 2px dashed var(--l);
       }
       .circle {
-        width: 16px;
-        height: 16px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         border: 2px solid var(--l);
       }
@@ -116,126 +273,11 @@
 
 .shape .firstWayTrains,
 .shape .secondWayTrains {
-  width: 300px;
   .northStations,
   .southStations {
     .linesContainer {
-      .arrowIcon {
-        font-size: 114px;
-        margin-right: 77px;
-        color: var(--m);
-        opacity: 0.1;
-      }
       .line {
         .piece {
-          .trainContainer {
-            & {
-              position: relative;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              top: 60px;
-              transform: translate(-50%, -50%);
-              width: 22px;
-              height: 22px;
-              background-color: var(--l);
-              border-radius: 50%;
-            }
-            .flash {
-              position: absolute;
-              left: -2px;
-              top: -5px;
-              border: 0;
-              background: none;
-              padding: 6px;
-              height: 40px;
-              width: 40px;
-              z-index: -1;
-              // z-index: 99;
-              div {
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                margin-right: 0;
-                background: var(--l);
-                border-radius: 50%;
-                margin-left: 4px;
-                // z-index: 999;
-              }
-              span {
-                content: "";
-                position: absolute;
-                border-radius: 100%;
-                transform-origin: 50% 50%;
-                left: -1px;
-                top: 1px;
-                background: var(--l);
-                opacity: 0;
-
-                width: 30px;
-                height: 30px;
-
-                animation: flash 0.8s ease-out infinite;
-                // animation-delay: 0s;
-              }
-              @keyframes flash {
-                from {
-                  transform: scale(0);
-                  opacity: 1;
-                }
-
-                to {
-                  /* width: 20px;
-                  height: 20px; */
-                  transform: scale(2.5);
-                  opacity: 0;
-                }
-              }
-            }
-            .trainInfo {
-              position: absolute;
-              background-color: rgb(255, 255, 255);
-              box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              width: 60px;
-              height: 45px;
-              color: var(--a);
-              font-size: 12px;
-              right: 33px;
-              z-index: -2;
-              &::after {
-                content: "";
-                width: 15px;
-                height: 15px;
-                background-color: var(--b);
-                position: absolute;
-                top: 37%;
-                transform: translateX(-35%) rotate(45deg);
-                right: -9px;
-                box-shadow: #13296833 3px -2px 4px -2px;
-                z-index: -3;
-              }
-
-              > span {
-                // font-size: 12px;
-                &:first-of-type {
-                  font-size: 14px;
-                  color: var(--a);
-                  margin-bottom: 2px;
-                }
-                &:nth-of-type(2) {
-                  color: var(--m);
-                }
-                &:last-of-type {
-                  // f13637
-                  font-size: 11px;
-                  color: #3dc13c;
-                }
-              }
-            }
-          }
           .verLine {
             flex: 1 1 0%;
             background-color: #a1a9c3;
@@ -248,12 +290,14 @@
 
   .theStation {
     align-items: flex-end;
+    // flex-direction: row;
     .box {
       background-color: white;
       border: 2px solid var(--m);
       width: 150px;
       flex-direction: row;
       justify-content: space-between;
+      box-sizing: border-box;
       .chair {
         align-items: flex-start;
         width: 40px;
@@ -264,6 +308,20 @@
         &.left {
           img {
           }
+        }
+      }
+      .train {
+        height: 100%;
+        position: relative;
+        img {
+          width: 100%;
+          background-repeat: repeat-y;
+          overflow: hidden;
+        }
+        .trainContainer {
+          position: absolute;
+          top: 50%;
+          transform: translate(0%, -50%);
         }
       }
     }

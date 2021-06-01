@@ -7,12 +7,12 @@ export const trainData = {
     "3A"
   ],
   weekdaysRuns: {
-    sat: false,
+    sat: true,
     sun: false, //
-    mon: true,
+    mon: false,
     tue: false,
     wed: false,
-    thu: true,
+    thu: false,
     fri: false
   },
   routeStations: [
@@ -54,10 +54,10 @@ export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 // timeNow = "17:28:00" // not moving yet 
 // timeNow = "18:10:00" // in cairo
 // timeNow = "18:11:00" // between cairo & tanta 
-// timeNow = "19:07:00" // arrive tanta now
+timeNow = "19:07:00" // arrive tanta now
 // timeNow = "19:09:00" // waiting in tant
 // timeNow = "19:10:00" // depart from tanta
-timeNow = "19:12:00" // between tanta & sidi gaber
+// timeNow = "19:12:00" // between tanta & sidi gaber
 // timeNow = "20:28:00" // arrive sidi gaber
 // timeNow = "20:29:00" // waiting in sidi gaber
 // timeNow = "20:30:00" //depart sidi gaber

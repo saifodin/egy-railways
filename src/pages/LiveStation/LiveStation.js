@@ -21,7 +21,7 @@ const LiveStation = () => {
       <div className="mainPart container">
         <div className="runningStatus">
 
-          <h2> Tanta Station Live </h2>
+          <h2> Abu Homs Station Live </h2>
 
           <div className="mainContent">
 

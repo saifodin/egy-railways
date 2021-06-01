@@ -3,6 +3,7 @@ import TrainIcon from '../../../assets/imgs/iconsSvg/TrainIcon';
 // import Chair from '../../../assets/imgs/otherSvg/chair.svg';
 import chairLeft from '../../../assets/imgs/otherSvg/chairLeft.svg';
 import chairRight from '../../../assets/imgs/otherSvg/chairRight.svg';
+import Railroad from '../../../assets/imgs/otherSvg/Railroad.svg';
 import './Shape.scss'
 
 // "Alexandria"
@@ -15,15 +16,31 @@ import './Shape.scss'
 // "Etay Elbarrowd"
 // "Eltawfiqiuh"
 
+const railroads = [];
+for (let i = 0; i < 7; i++) {
+  railroads.push(
+    <img src={Railroad} alt="Railroad" />
+  )
+}
+
+const arrowIcons = [];
+for (let i = 0; i < 9; i++) {
+  arrowIcons.push(
+    <i class="fas fa-angle-double-down"></i>
+  )
+}
+
 const Shape = () => {
   return (
     <div className="shape">
+      <div className="arrowsContainers">
+        {arrowIcons}
+      </div>
 
       <div className="firstWayTrains">
 
         <div className="northStations">
           <div className="linesContainer">
-            <div className="arrowIcon"><i class="fas fa-angle-double-down"></i></div>
             {/* train */}
             <div className="line">
               <div className="piece">
@@ -52,36 +69,11 @@ const Shape = () => {
             </div>
           </div>
           <div className="linesContainer">
-            <div className="arrowIcon"><i class="fas fa-angle-double-down"></i></div>
             <div className="line">
               <div className="piece">
                 <div className="verLine"></div>
               </div>
             </div>
-            {/* train */}
-            <div className="line">
-              <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>arrives in</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="line">
-              <div className="piece">
-                <div className="verLine"></div>
-              </div>
-            </div>
-          </div>
-          <div className="linesContainer">
-            <div className="arrowIcon"><i class="fas fa-angle-double-down"></i></div>
             <div className="line">
               <div className="piece">
                 <div className="verLine"></div>
@@ -92,20 +84,21 @@ const Shape = () => {
                 <div className="verLine"></div>
               </div>
             </div>
-            {/* train */}
+          </div>
+          <div className="linesContainer">
             <div className="line">
               <div className="piece">
-                <div className="verLine">
-                  <div className="trainContainer">
-                    <TrainIcon widthHight="18px" color="white" />
-                    <div className="flash"><div><span></span></div></div>
-                    <div className="trainInfo">
-                      <span>3124</span>
-                      <span>arrives in</span>
-                      <span>99h02m</span>
-                    </div>
-                  </div>
-                </div>
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
               </div>
             </div>
 
@@ -117,7 +110,18 @@ const Shape = () => {
             <div className="chair left">
               <img src={chairLeft} alt="chair"></img>
             </div>
-            <div>train</div>
+            <div className="train">
+              {railroads}
+              <div className="trainContainer">
+                <TrainIcon widthHight="18px" color="white" />
+                <div className="flash"><div><span></span></div></div>
+                <div className="trainInfo">
+                  <span>3124</span>
+                  <span>departs after</span>
+                  <span>99h02m</span>
+                </div>
+              </div>
+            </div>
             <div className="chair right">
               <img src={chairRight} alt="chair"></img>
             </div>
@@ -125,9 +129,68 @@ const Shape = () => {
         </div>
 
         <div className="southStations">
-          <div>station1</div>
-          <div>station2</div>
-          <div>station3</div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            {/* train */}
+            <div className="line">
+              <div className="piece">
+                <div className="verLine">
+                  <div className="trainContainer">
+                    <TrainIcon widthHight="18px" color="white" />
+                    <div className="flash"><div><span></span></div></div>
+                    <div className="trainInfo">
+                      <span>3124</span>
+                      <span>departed since</span>
+                      <span>99h02m</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -201,19 +264,164 @@ const Shape = () => {
       <div className="secondWayTrains">
 
         <div className="northStations">
-          <div>station1</div>
-          <div>station2</div>
-          <div>station3</div>
-        </div>
-        <div className="theStation">
-          <div>BigStation</div>
-        </div>
-        <div className="southStations">
-          <div>station1</div>
-          <div>station2</div>
-          <div>station3</div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            {/* train */}
+            <div className="line">
+              <div className="piece">
+                <div className="verLine">
+                  <div className="trainContainer">
+                    <TrainIcon widthHight="18px" color="white" />
+                    <div className="flash"><div><span></span></div></div>
+                    <div className="trainInfo">
+                      <span>3124</span>
+                      <span>arrives in</span>
+                      <span>99h02m</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <div className="theStation">
+          <div className="box">
+            <div className="chair left">
+              <img src={chairLeft} alt="chair"></img>
+            </div>
+            <div className="train">
+              {railroads}
+              <div className="trainContainer">
+                <TrainIcon widthHight="18px" color="white" />
+                <div className="flash"><div><span></span></div></div>
+                <div className="trainInfo">
+                  <span>3124</span>
+                  <span>departs after</span>
+                  <span>99h02m</span>
+                </div>
+              </div>
+            </div>
+            <div className="chair right">
+              <img src={chairRight} alt="chair"></img>
+            </div>
+          </div>
+        </div>
+
+        <div className="southStations">
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            {/* train */}
+            <div className="line">
+              <div className="piece">
+                <div className="verLine">
+                  <div className="trainContainer">
+                    <TrainIcon widthHight="18px" color="white" />
+                    <div className="flash"><div><span></span></div></div>
+                    <div className="trainInfo">
+                      <span>3124</span>
+                      <span>departed since</span>
+                      <span>99h02m</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+          </div>
+          <div className="linesContainer">
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+            <div className="line">
+              <div className="piece">
+                <div className="verLine"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div className="arrowsContainers">
+        {arrowIcons}
       </div>
 
     </div>
@@ -221,17 +429,3 @@ const Shape = () => {
 }
 
 export default Shape;
-
-
-{/* <div className="piece">
-<div className="station"><div className="circle"></div></div>
-<div className="verLine"></div>
-</div>
-<div className="piece">
-<div className="station"><div className="circle"></div></div>
-<div className="verLine"></div>
-</div>
-<div className="piece">
-<div className="station"><div className="circle"></div></div>
-<div className="verLine"></div>
-</div> */}

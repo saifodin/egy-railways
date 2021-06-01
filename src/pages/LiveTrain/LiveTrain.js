@@ -152,6 +152,7 @@ const LiveTrain = () => {
       </div>
 
       <div className="mainPart container">
+    
         <div className="runningStatus">
 
           <h2>{trainData.number} Running Status</h2>
@@ -173,6 +174,7 @@ const LiveTrain = () => {
           </div>
 
         </div>
+    
         <div className="side">
           <TrainCard forTrainPage liveTrainPage />
           <span> all train information <span class="anchor"></span></span>
@@ -184,6 +186,7 @@ const LiveTrain = () => {
             {content}
           </div >
         </div >
+    
       </div >
 
       <div className="footerContainer">

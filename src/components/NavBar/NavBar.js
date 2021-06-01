@@ -14,15 +14,6 @@ const Navbar = props => {
   }
   //#endregion
 
-  //#region comments how add extra styles based on current location
-  //// import { useLocation } from "react-router-dom";
-  // const location = useLocation();
-  // let extraCss = "";
-  // if (location.pathname === '/trains-between-stations') {
-  //   extraCss = css.trainsBetweenStations;
-  // }
-  //#endregion
-
   //#region add extra styles based on props
   let extraCss = "";
   if (props.extraStyle === 'whiteBackground') {
@@ -45,6 +36,7 @@ const Navbar = props => {
         <NavigationItem to="/trains-between-stations" extraStyle={props.extraStyle}>Trains</NavigationItem>
         <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
+        <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem>
         <NavigationItem to="/SignIn" extraStyle={props.extraStyle}>Sign in</NavigationItem>
         <NavigationItem to="/CreateAccount" extraStyle={props.extraStyle}>Create an account</NavigationItem>
       </ul>

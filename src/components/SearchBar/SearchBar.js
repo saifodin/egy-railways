@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import css from './SearchBar.module.scss'
+import StationIcon from '../../assets/imgs/iconsSvg/StationIcon.svg';
+
 
 const SearchBar = props => {
   // <SearchBar extraStyle="flat" searchOn="stations"/>
   // <SearchBar extraStyle="flat" searchOn="trains"/>
+  // <SearchBar extraStyle="flat" searchOn="station"/>
+
 
 
   //#region generate date today, tomorrow,...
@@ -44,12 +48,15 @@ const SearchBar = props => {
 
   //#region add extra styles based on props
   let extraStyle = "";
+  let searchOn = "";
   if (props.extraStyle === 'flat') {
     extraStyle = css.flat;
   }
-  let searchOn = "";
   if (props.searchOn === 'trains') {
     searchOn = css.trains;
+  }
+  if (props.searchOn === 'LiveStation') {
+    searchOn = css.liveStation;
   }
   //#endregion
 
@@ -127,6 +134,18 @@ const SearchBar = props => {
         <div className={css.inputContainer}>
           <i className="fas fa-map-marker-alt"></i>
           <input className="input-field" type="text" placeholder="To: City, Station" value="End In: Alexandria" disabled />
+        </div>
+
+        <button className={css.searchButton}>Search Train</button>
+
+      </form>
+    )
+  } else if (props.searchOn === "LiveStation") {
+    form = (
+      <form>
+        <div className={css.inputContainer}>
+          <img src={StationIcon} alt="Station Icon" />
+          <input type="text" placeholder="Station Name" defaultValue="Tanta - Elgarbia" />
         </div>
 
         <button className={css.searchButton}>Search Train</button>

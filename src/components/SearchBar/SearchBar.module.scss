@@ -340,3 +340,24 @@
     }
   }
 }
+
+// ***** another styles for searchOn="liveStation" *****
+.SearchBar.liveStation {
+  form {
+    .inputContainer {
+      img {
+        position: absolute;
+        font-size: 20px;
+        top: 11px;
+        left: 8px;
+        height: 27px;
+        width: 27px;
+        pointer-events: none;
+      }
+      min-width: 60%;
+      input {
+        padding-left: 42px;
+      }
+    }
+  }
+}

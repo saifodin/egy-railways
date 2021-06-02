@@ -4,8 +4,12 @@ import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Footer from '../../components/Footer/Footer'
 import Shape from './Shape/Shape'
+import { dbTrainsArray } from '../../firebase/database'
 
 const LiveStation = () => {
+
+  console.log(dbTrainsArray)
+
   return (
     <div className="liveStation">
 

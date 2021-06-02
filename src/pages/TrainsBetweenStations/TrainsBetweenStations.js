@@ -72,7 +72,7 @@ const TrainsBetweenStations = _ => {
                 <div>
                   <input type="checkbox" id="morning" name="morning" />
                   <label for="morning">
-                    <div class={css.innerSection}>
+                    <div className={css.innerSection}>
                       <img alt="morning" src={pngMorning} />
                       <p>05 AM - 11 AM</p>
                     </div>
@@ -82,7 +82,7 @@ const TrainsBetweenStations = _ => {
                 <div>
                   <input type="checkbox" id="afternoon" name="afternoon" />
                   <label for="afternoon">
-                    <div class={css.innerSection}>
+                    <div className={css.innerSection}>
                       <img alt="afternoon" src={pngAfternoon} />
                       <p>11 AM - 05 PM</p>
                     </div>
@@ -92,7 +92,7 @@ const TrainsBetweenStations = _ => {
                 <div>
                   <input type="checkbox" id="evening" name="evening" />
                   <label for="evening">
-                    <div class={css.innerSection}>
+                    <div className={css.innerSection}>
                       <img alt="evening" src={pngEvening} />
                       <p>05 PM - 11 PM</p>
                     </div>
@@ -102,7 +102,7 @@ const TrainsBetweenStations = _ => {
                 <div>
                   <input type="checkbox" id="night" name="night" />
                   <label for="night">
-                    <div class={css.innerSection}>
+                    <div className={css.innerSection}>
                       <img alt="night" src={pngNight} />
                       <p>11 PM - 05 AM</p>
                     </div>

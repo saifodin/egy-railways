@@ -41,10 +41,10 @@ const Train = () => {
                     <option value="Sidi Gaber">Sidi Gaber</option>
                     <option value="Alexandria">Alexandria</option>
                   </select>
-                  <i class="fas fa-chevron-down"></i>
+                  <i className="fas fa-chevron-down"></i>
                 </div>
 
-                <i class="far fa-arrow-alt-circle-right"></i>
+                <i className="far fa-arrow-alt-circle-right"></i>
 
                 <div>
                   <i className="fas fa-map-marker-alt"></i>
@@ -56,7 +56,7 @@ const Train = () => {
                     <option value="Sidi Gaber">Sidi Gaber</option>
                     <option value="Alexandria" selected>Alexandria</option>
                   </select>
-                  <i class="fas fa-chevron-down"></i>
+                  <i className="fas fa-chevron-down"></i>
                 </div>
               </form>
 
@@ -121,7 +121,7 @@ const Train = () => {
                   <td>00:05</td>
                   <td>-</td>
                   <td>1</td>
-                  <td>Cairo<i class="fas fa-flag"></i></td>
+                  <td>Cairo<i className="fas fa-flag"></i></td>
                 </tr>
                 <tr>
                   <td>Tanta</td>
@@ -137,7 +137,7 @@ const Train = () => {
                   <td>20:40</td>
                   <td>5</td>
                   <td>1</td>
-                  <td>Alexandria<i class="fas fa-flag"></i></td>
+                  <td>Alexandria<i className="fas fa-flag"></i></td>
                 </tr>
                 <tr>
                   <td>Cairo</td>
@@ -177,7 +177,7 @@ const Train = () => {
                   <td>19:10</td>
                   <td>3</td>
                   <td>1</td>
-                  <td>Gharbiya<i class="fas fa-flag"></i></td>
+                  <td>Gharbiya<i className="fas fa-flag"></i></td>
                 </tr>
                 <tr>
                   <td>Alexandria </td>
@@ -201,7 +201,7 @@ const Train = () => {
                   <td>19:10</td>
                   <td>3</td>
                   <td>1</td>
-                  <td>Gharbiya<i class="fas fa-flag"></i></td>
+                  <td>Gharbiya<i className="fas fa-flag"></i></td>
                 </tr>
                 <tr>
                   <td>Alexandria </td>

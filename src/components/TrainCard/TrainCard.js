@@ -40,15 +40,15 @@ const TrainCard = props => {
         <div className={css.trainData}>
           <div className={css.trainCardTags}>
             <div>
-              <i class="fas fa-star"></i>
+              <i className="fas fa-star"></i>
               <p>Top Rated</p>
             </div>
             {/* <div>
-          <i class="fas fa-star"></i>
+          <i className="fas fa-star"></i>
           <p>Fastest</p>
         </div>
         <div>
-          <i class="fas fa-star"></i>
+          <i className="fas fa-star"></i>
           <p>Cheapest</p>
         </div> */}
           </div>
@@ -135,7 +135,7 @@ const TrainCard = props => {
           </div>
           <button>Train Details</button>
           <div className={css.closeButton} onClick={_ => setIsAvailOpen(false)}>
-            <i class="fas fa-times"></i>
+            <i className="fas fa-times"></i>
           </div>
         </div>
       </div>

@@ -4,11 +4,10 @@ import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Footer from '../../components/Footer/Footer'
 import Shape from './Shape/Shape'
-import { dbTrainsArray } from '../../firebase/database'
 
 const LiveStation = () => {
 
-  console.log(dbTrainsArray)
+  // console.log(dbTrainsArray)
 
   return (
     <div className="liveStation">
@@ -30,8 +29,8 @@ const LiveStation = () => {
           <div className="mainContent">
 
             <div className="refreshAndTime">
-              <div class="refreshButton">
-                <i class="fas fa-redo"></i>
+              <div className="refreshButton">
+                <i className="fas fa-redo"></i>
                 <div>Refresh</div>
               </div>
               <div className="lastUpdate">last update at </div>

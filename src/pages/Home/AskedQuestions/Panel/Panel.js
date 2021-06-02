@@ -14,14 +14,14 @@ const Panel = (props) => {
     <div className={css.panel}>
 
       <a href={_ => { }} onClick={panelToggleHandler}>
-        <div class={css.panelHeading}>
-          <h4 class={css.panelTitle}>{props.title}</h4>
-          <span class={`${css.anchor} ${anchorOpen}`}></span>
+        <div className={css.panelHeading}>
+          <h4 className={css.panelTitle}>{props.title}</h4>
+          <span className={`${css.anchor} ${anchorOpen}`}></span>
         </div>
       </a>
 
       <div className={`${panelBodyClass} ${css.panelClose}`} id="collapse4">
-        <div class={css.panelBody}>
+        <div className={css.panelBody}>
           {props.body}
         </div>
       </div>

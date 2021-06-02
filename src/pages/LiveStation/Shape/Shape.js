@@ -1,38 +1,169 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TrainIcon from '../../../assets/imgs/iconsSvg/TrainIcon';
-// import Chair from '../../../assets/imgs/otherSvg/chair.svg';
 import chairLeft from '../../../assets/imgs/otherSvg/chairLeft.svg';
 import chairRight from '../../../assets/imgs/otherSvg/chairRight.svg';
 import Railroad from '../../../assets/imgs/otherSvg/Railroad.svg';
+// import { dbTrainsArray } from '../../../firebase/database';
+import firebase from '../../../firebase/firebase';
 import './Shape.scss'
 
-// "Alexandria"
-// "Sidi Gaber"
-// "Kafr Aldawaar"
-
-// "Abu Homs"
-
-// "Damanhur"
-// "Etay Elbarrowd"
-// "Eltawfiqiuh"
-
-const railroads = [];
-for (let i = 0; i < 5; i++) {
-  railroads.push(
-    <img src={Railroad} alt="Railroad" />
-  )
-}
-
-const arrowIcons = [];
-for (let i = 0; i < 9; i++) {
-  arrowIcons.push(
-    <i class="fas fa-angle-double-down"></i>
-  )
-}
-
 const Shape = () => {
+
+  console.log("Shape.js")
+
+
+  const [trainsArray, setTrainsArray] = useState([])
+  const db = firebase.firestore();
+
+  useEffect(_ => {
+
+    db.collection("trains")
+      .get().then((querySnapshot) => {
+        let arr = [];
+        querySnapshot.docs.map((doc) =>
+          arr.push({ id: doc.id, value: doc.data() })
+        );
+        setTrainsArray(arr)
+      });
+  }, [db]);
+
+
+  const selectedStation = "Abu Homs";
+  const allStations = [
+    "Alexandria",
+    "Sidi Gaber",
+    "Kafr Aldawaar",
+    "Abu Homs",
+    "Damanhur",
+    "Etay Elbarrowd",
+    "Eltawfiqiuh",
+    "Kafr Elzyat",
+    "Tanta",
+    "Barkih alsabe",
+    "Quesna",
+    "Banha",
+    "Tookh",
+    "Qaha",
+    "Qalyoub",
+    "Shubra",
+    "Cairo"
+  ];
+
+  const selectedStationIndex = allStations.indexOf(selectedStation);
+
+  //#region - create northStationsArrays, southStationsArrays
+  let northStationsArrays = [];
+  for (let i = selectedStationIndex - 1; i !== selectedStationIndex - 4; i--) {
+    if (allStations[i]) {
+      northStationsArrays.push(
+        allStations[i]
+      )
+    }
+  }
+  northStationsArrays.reverse()
+
+
+  let southStationsArrays = [];
+  for (let i = selectedStationIndex + 1; i !== selectedStationIndex + 4; i++) {
+    if (allStations[i]) {
+      southStationsArrays.push(
+        allStations[i]
+      )
+    }
+  }
+  //#endregion
+
+  //#region - generate stations_northStations_pieces, stations_southStations_pieces
+  let stations_northStations_pieces = [];
+  for (const key in northStationsArrays) {
+    stations_northStations_pieces.push(
+      <div className="piece" key={key}>
+        <div className="station">
+          <div className="stationName">{northStationsArrays[key]}</div>
+          <i className="fas fa-map-marker-alt"></i>
+        </div>
+        <div className="verLine"></div>
+      </div>
+    )
+  }
+
+  let stations_southStations_pieces = [];
+  for (const key in northStationsArrays) {
+    stations_southStations_pieces.push(
+      <div className="piece" key={key}>
+        <div className="station">
+          <div className="stationName">{northStationsArrays[key]}</div>
+          <i className="fas fa-map-marker-alt"></i>
+        </div>
+        <div className="verLine"></div>
+      </div>
+    )
+  };
+  //#endregion
+
+  //#region - generate multiple imgs, railRoad and arrowIcons
+  const railroads = [];
+  for (let i = 0; i < 5; i++) {
+    railroads.push(
+      <img src={Railroad} alt="Railroad" key={i} />
+    )
+  }
+  const arrowIcons = [];
+  for (let i = 0; i < 17; i++) {
+    arrowIcons.push(
+      <i className="fas fa-angle-double-down" key={i}></i>
+    )
+  }
+  //#endregion
+
+
+  if (trainsArray.length) {
+
+    console.log(trainsArray)
+    console.log(trainsArray[0])
+    // console.log(trainsArray[0].value.stopStation.length)
+
+    // if (trainsArray[9].value.stopStation[0].name === "Cairo") {
+    //   console.log(trainsArray[0].value.stopStation[0].name)
+    // }
+
+    // for (const key in trainsArray) {
+    //   for (let i = 0; i < trainsArray[key].value.stopStation.length; i++) {
+    //     if (trainsArray[key].value.stopStation[i].name === "Cairo") {
+    //       console.log(key)
+    //       // break
+    //     }
+    //   }
+    // }
+  }
+
+  // let trainsInOurScope = []
+  // for (const iterator of dbTrainsArray) {
+  //   console.log(iterator)
+  //   console.table(iterator)
+  //   break
+  // }
+
+  // console.log(trainsArray)
+  // console.log(trainsArray[0])
+
+
+  // for (const key in dbTrainsArray) {
+  //   for (let i = 0; i < dbTrainsArray[key].stopStation.length; i++) {
+  //     if (dbTrainsArray[key].stopStation[i].name === "Cairo") {
+  //       console.log(key)
+  //       break
+  //     }
+  //   }
+  // }
+
+
+
+
+
   return (
     <div className="shape">
+
       <div className="arrowsContainers">
         {arrowIcons}
       </div>
@@ -109,65 +240,20 @@ const Shape = () => {
       <div className="stations">
 
         <div className="northStations">
-
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Alexandria</div>
-              <i className="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Sidi Gaber</div>
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Kafr Aldawaar</div>
-              <i className="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-
+          {stations_northStations_pieces}
         </div>
-
         <div className="theStation">
           <div className="piece">
             <div className="station">
-              <div className="stationName">Abu Homs</div>
+              <div className="stationName">{selectedStation}</div>
               <i className="fas fa-map-marker-alt"></i>
             </div>
             <div className="verLine"></div>
             <div className="circle"></div>
           </div>
         </div>
-
         <div className="southStations">
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Damanhur</div>
-              <i className="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Etay Elbarrowd</div>
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-          <div className="piece">
-            <div className="station">
-              <div className="stationName">Eltawfiqiuh</div>
-              <i className="fas fa-map-marker-alt"></i>
-            </div>
-            <div className="verLine"></div>
-          </div>
-
+          {stations_southStations_pieces}
         </div>
 
       </div>

@@ -123,7 +123,7 @@ const SearchBar = props => {
       <form>
         <div className={css.inputContainer}>
           <i className="fas fa-subway"></i>
-          <input type="text" placeholder="Train Number" value="02461" />
+          <input type="text" placeholder="Train Number" defaultValue="02461" />
         </div>
 
         <div className={css.inputContainer}>

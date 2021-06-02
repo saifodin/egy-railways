@@ -1,5 +1,5 @@
-import db from './firebase'
-const dbTrains = db.collection("trains")
+// import db from './firebase'
+// const dbTrains = db.collection("trains")
 
 
 //#region - comments - get all trains
@@ -12,15 +12,12 @@ const dbTrains = db.collection("trains")
 //#endregion
 
 //#region - comments - get all trains and save to obj
-const dbTrainsArray = [];
-dbTrains.get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, " => ", doc.data());
-    dbTrainsArray.push(doc.data())
-  });
-});
-console.log(dbTrainsArray)
+// const dbTrainsArray = [];
+// dbTrains.get().then((querySnapshot) => {
+//   querySnapshot.forEach((doc) => {
+//     dbTrainsArray.push(doc.data())
+//   });
+// });
 //#endregion
 
 //#region - comments - how to get one train from trains
@@ -51,6 +48,6 @@ console.log(dbTrainsArray)
 //   });
 //#endregion
 
-export{
-  dbTrainsArray,
-}
+// export {
+//   dbTrainsArray,
+// }

@@ -24,7 +24,7 @@ const Segments = () => {
     //* first time
     if (key === 0) {
       timePieces.push(
-        <div className="piece start">
+        <div className="piece start" key={key}>
           <div className="start">{time24To12(routeStations[key].departs)}</div>
           <div className="middle">{subTwoTimes(routeStations[key].departs, routeStations[key + 1].arrives)}</div>
         </div>
@@ -34,7 +34,7 @@ const Segments = () => {
     //* between first time and last time
     else if (key < routeStations.length - 1) {
       timePieces.push(
-        <div className="piece">
+        <div className="piece" key={key}>
           <div className="start">{time24To12(routeStations[key].arrives)}</div>
           <div className="middle first">{subTwoTimes(routeStations[key].arrives, routeStations[key].departs).slice(-3)}</div>
           <div className="end">{time24To12(routeStations[key].departs)}</div>
@@ -46,7 +46,7 @@ const Segments = () => {
     //* last time
     else {
       timePieces.push(
-        <div className="piece end">
+        <div className="piece end" key={key}>
           <div className="start">{time24To12(routeStations[key].arrives)}</div>
         </div>
       )
@@ -71,7 +71,7 @@ const Segments = () => {
       ) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece start ${color}`}>
+          <div className={`piece start ${color}`} key={key}>
             <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine"></div>
           </div>
@@ -81,7 +81,7 @@ const Segments = () => {
       else if (isTimeBetween((routeStations[key].departs), (routeStations[key + 1].arrives))) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece start trainBetween ${color}`}>
+          <div className={`piece start trainBetween ${color}`} key={key}>
             <div className="start"><div className="circle"></div></div>
             <div className="verLineWithTrain">
               <div className="halfVarLine firstHalf"></div>
@@ -97,7 +97,7 @@ const Segments = () => {
       // 3 - not have any train
       else {
         shapesPieces.push(
-          <div className={`piece start ${color}`}>
+          <div className={`piece start ${color}`} key={key}>
             <div className="start"><div className="circle"></div></div>
             <div className="verLine"></div>
           </div>
@@ -110,8 +110,8 @@ const Segments = () => {
       // 1 - today is not workDay - not have any train === else
       if (!trainData.weekdaysRuns[weekDayToday]) {
         shapesPieces.push(
-          <div className={`piece ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
             <div className="verLine second"></div>
@@ -122,7 +122,7 @@ const Segments = () => {
       else if (routeStations[key].arrives === timeNow) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece ${color}`}>
+          <div className={`piece ${color}`} key={key}>
             <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
@@ -134,8 +134,8 @@ const Segments = () => {
       else if (isTimeBetween((routeStations[key].arrives), (routeStations[key].departs))) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece trainBetween dashed ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece trainBetween dashed ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
             <div className="verLineWithTrain first">
               <div className="halfVarLine firstHalf"></div>
               <div className="trainContainer">
@@ -153,8 +153,8 @@ const Segments = () => {
       else if (routeStations[key].departs === timeNow) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece ${color} train`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece ${color} train`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
             <div className="verLine first"></div>
             <div className="end train trainStopContainer"><TrainIcon widthHight="18px" /></div>
             <div className="verLine second"></div>
@@ -165,8 +165,8 @@ const Segments = () => {
       else if (isTimeBetween((routeStations[key].departs), (routeStations[key + 1].arrives))) {
         color = "colored"
         shapesPieces.push(
-          <div className={`piece trainBetween solid ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece trainBetween solid ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
             <div className="verLineWithTrain second">
@@ -183,8 +183,8 @@ const Segments = () => {
       // 6 - not have any train
       else {
         shapesPieces.push(
-          <div className={`piece ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
             <div className="verLine first"></div>
             <div className="end"><div className="circle"></div></div>
             <div className="verLine second"></div>
@@ -198,15 +198,15 @@ const Segments = () => {
       // 1 - today is not workDay - not have any train === else
       if (!trainData.weekdaysRuns[weekDayToday]) {
         shapesPieces.push(
-          <div className={`piece end ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece end ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
           </div>
         )
       }
       //  2 - train in arrives station (train on mapMarker)
       else if (routeStations[key].arrives === timeNow) {
         shapesPieces.push(
-          <div className={`piece end ${color}`}>
+          <div className={`piece end ${color}`} key={key}>
             <div className="start train trainStopContainer"><TrainIcon widthHight="18px" /></div>
           </div>
         )
@@ -214,8 +214,8 @@ const Segments = () => {
       // 3 - not have any train
       else {
         shapesPieces.push(
-          <div className={`piece end ${color}`}>
-            <div className="start"><i class="fas fa-map-marker-alt"></i></div>
+          <div className={`piece end ${color}`} key={key}>
+            <div className="start"><i className="fas fa-map-marker-alt"></i></div>
           </div>
         )
       }
@@ -231,7 +231,7 @@ const Segments = () => {
     //* first info
     if (key === 0) {
       infoPieces.push(
-        <div className="piece start">
+        <div className="piece start" key={key}>
           <div className="start">{routeStations[key].name}</div>
           <div className="stationInfo">departure from {routeStations[key].name}</div>
         </div>
@@ -241,7 +241,7 @@ const Segments = () => {
     //* between first info and last info
     else if (key < routeStations.length - 1) {
       infoPieces.push(
-        <div className="piece">
+        <div className="piece" key={key}>
           <div className="start">{routeStations[key].name}</div>
           <div className="stationInfo">arrival to {routeStations[key].name}</div>
           <div className="end">{routeStations[key].name}</div>
@@ -253,12 +253,11 @@ const Segments = () => {
     //* last info
     else {
       infoPieces.push(
-        <div className="piece end">
+        <div className="piece end" key={key}>
           <div className="start">{routeStations[key].name}</div>
         </div>
       )
     }
-
   }
   //#endregion
 

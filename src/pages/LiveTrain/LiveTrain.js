@@ -34,7 +34,7 @@ const LiveTrain = () => {
       content = (
         <div className="content">
           <div>
-            <div className="icon"><i class="fas fa-bolt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-bolt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train Status</div>
               <div className="red">Not Started Yet</div>
@@ -51,7 +51,7 @@ const LiveTrain = () => {
       if (isWaiting().result || timeNow === isWaiting().departs) {
         secondDiv = (
           <div>
-            <div className="icon"><i class="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
               <div className="orange">Waiting in <span className="underline">{isWaiting().station}</span> Station</div>
@@ -64,7 +64,7 @@ const LiveTrain = () => {
       else if (timeNow === trainData.routeStations[trainData.routeStations.length - 1].departs) {
         secondDiv = (
           <div>
-            <div className="icon"><i class="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
               <div className="orange">Stop in <span className="underline">{isWaiting().station}</span> Station</div>
@@ -77,7 +77,7 @@ const LiveTrain = () => {
       else {
         secondDiv = (
           <div>
-            <div className="icon"><i class="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
               <div className="orange">Going To <span className="underline">{isBetweenStations().nextStation}</span> Station</div>
@@ -90,7 +90,7 @@ const LiveTrain = () => {
       content = (
         <div className="content">
           <div>
-            <div className="icon"><i class="fas fa-bolt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-bolt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train Status</div>
               <div>Running Now</div>
@@ -107,7 +107,7 @@ const LiveTrain = () => {
       content = (
         <div className="content">
           <div>
-            <div className="icon"><i class="fas fa-bolt fa-2x fa-fw"></i></div>
+            <div className="icon"><i className="fas fa-bolt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train Status</div>
               <div className="red">Finish Its Journey</div>
@@ -126,7 +126,7 @@ const LiveTrain = () => {
     content = (
       <div className="content">
         <div>
-          <div className="icon"><i class="fas fa-bolt fa-2x fa-fw"></i></div>
+          <div className="icon"><i className="fas fa-bolt fa-2x fa-fw"></i></div>
           <div className="textContent">
             <div>Train Status</div>
             <div className="red">Not working Today</div>
@@ -164,8 +164,8 @@ const LiveTrain = () => {
             </div>
 
             <div className="refreshAndTime">
-              <div class="refreshButton">
-                <i class="fas fa-redo"></i>
+              <div className="refreshButton">
+                <i className="fas fa-redo"></i>
                 <div>Refresh</div>
               </div>
               <div className="lastUpdate">last update at {time24To12(timeNow)}</div>
@@ -177,7 +177,7 @@ const LiveTrain = () => {
     
         <div className="side">
           <TrainCard forTrainPage liveTrainPage />
-          <span> all train information <span class="anchor"></span></span>
+          <span> all train information <span className="anchor"></span></span>
           <div className="trainStatus">
             <div className="title">
               <h2>Train Status<span className="flash"><span><span></span></span></span></h2>

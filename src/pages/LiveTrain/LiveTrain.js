@@ -181,7 +181,6 @@ const LiveTrain = () => {
           <div className="trainStatus">
             <div className="title">
               <h2>Train Status<span className="flash"><span><span></span></span></span></h2>
-              {/* <div className="flash"><div><span></span></div></div> */}
             </div>
             {content}
           </div >

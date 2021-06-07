@@ -11,24 +11,22 @@ const Shape = () => {
 
   console.log("Shape.js")
 
+  const selectedStation = "Tanta";
 
   const [trainsArray, setTrainsArray] = useState([])
+
   const db = firebase.firestore();
-
   useEffect(_ => {
-
-    db.collection("trains")
-      .get().then((querySnapshot) => {
-        let arr = [];
-        querySnapshot.docs.map((doc) =>
-          arr.push({ id: doc.id, value: doc.data() })
-        );
-        setTrainsArray(arr)
-      });
+    db.collection("trains").get().then((querySnapshot) => {
+      let arr = [];
+      querySnapshot.docs.map((doc) =>
+        arr.push({ id: doc.id, value: doc.data() })
+      );
+      setTrainsArray(arr)
+    });
   }, [db]);
 
 
-  const selectedStation = "Abu Homs";
   const allStations = [
     "Alexandria",
     "Sidi Gaber",
@@ -88,11 +86,11 @@ const Shape = () => {
   }
 
   let stations_southStations_pieces = [];
-  for (const key in northStationsArrays) {
+  for (const key in southStationsArrays) {
     stations_southStations_pieces.push(
       <div className="piece" key={key}>
         <div className="station">
-          <div className="stationName">{northStationsArrays[key]}</div>
+          <div className="stationName">{southStationsArrays[key]}</div>
           <i className="fas fa-map-marker-alt"></i>
         </div>
         <div className="verLine"></div>
@@ -116,49 +114,33 @@ const Shape = () => {
   }
   //#endregion
 
+  const stationsOnScope = [...northStationsArrays, ...southStationsArrays]
+  console.log(stationsOnScope)
 
   if (trainsArray.length) {
 
-    console.log(trainsArray)
-    console.log(trainsArray[0])
-    // console.log(trainsArray[0].value.stopStation.length)
-
-    // if (trainsArray[9].value.stopStation[0].name === "Cairo") {
-    //   console.log(trainsArray[0].value.stopStation[0].name)
+    // * print value keys to check spill of fields
+    // for (const key in trainsArray) {
+    // console.log(Object.keys(trainsArray[key].value))
     // }
 
+    // * print value to check all documents
     // for (const key in trainsArray) {
+    //   console.log(trainsArray[key])
+    // }
+
+
+    // for (const key in trainsArray) {
+    //   console.log(trainsArray[key].id)
     //   for (let i = 0; i < trainsArray[key].value.stopStation.length; i++) {
-    //     if (trainsArray[key].value.stopStation[i].name === "Cairo") {
-    //       console.log(key)
-    //       // break
+    //     console.log(trainsArray[key].value.stopStation[i].arrivalTime)
+    //     if (trainsArray[key].value.stopStation[i].arrivalTime === selectedStation) {
+    //       console.log(trainsArray[key].id)
     //     }
     //   }
     // }
+    
   }
-
-  // let trainsInOurScope = []
-  // for (const iterator of dbTrainsArray) {
-  //   console.log(iterator)
-  //   console.table(iterator)
-  //   break
-  // }
-
-  // console.log(trainsArray)
-  // console.log(trainsArray[0])
-
-
-  // for (const key in dbTrainsArray) {
-  //   for (let i = 0; i < dbTrainsArray[key].stopStation.length; i++) {
-  //     if (dbTrainsArray[key].stopStation[i].name === "Cairo") {
-  //       console.log(key)
-  //       break
-  //     }
-  //   }
-  // }
-
-
-
 
 
   return (

@@ -10,6 +10,7 @@ import CreateAccount from './pages/CreateAccount/CreateAccount.js';
 import Train from './pages/Train/Train';
 import LiveTrain from './pages/LiveTrain/LiveTrain'
 import LiveStation from './pages/LiveStation/LiveStation'
+import Statistics from './pages/Statistics/Statistics'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/train" component={Train} />
           <Route path="/live-train" component={LiveTrain} />
           <Route path="/live-station" component={LiveStation} />
+          <Route path="/statistics" component={Statistics} />
           <Route path="/SignIn" component={SignIn} />
           <Route path="/CreateAccount" component={CreateAccount} />
           <Redirect to="/" />

@@ -8,7 +8,7 @@ export const trainData = {
   ],
   weekdaysRuns: {
     sat: true,
-    sun: false, //
+    sun: false,
     mon: false,
     tue: false,
     wed: false,
@@ -49,13 +49,32 @@ export const trainData = {
 
 export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 
-//#region - comments - timeNow test cases for test
-//* time in specific station
+//#region - comments - timeNow test cases for test liveStation
+//* firstWay
+// timeNow = "07:40:00" // 902 in kafr -> tanta
+// timeNow = "07:54:00" // 902 waiting in tanta
+// timeNow = "08:00:00" // 902 tanta -> Barkih alsabe
+// timeNow = "08:20:00" // 902 Barkih alsabe -> Quesna
+// timeNow = "08:30:00" // 902 Quesna -> Banha
+
+timeNow = "17:28:00" // 118 outNorth firstWay, 922 waiting in tanta, weekDayToday = "thu" 
+
+//* secondWay
+// timeNow = "06:48:00" // 903 in Banha -> Quesna
+// timeNow = "07:00:00" // 903 in Quesna -> Barkih alsabe
+// timeNow = "07:20:00" // 903 in Barkih alsabe -> tanta
+// timeNow = "07:29:00" // 903 waiting in tanta
+// timeNow = "07:40:00" // 903 tanta -> kafr
+
+
+//#endregion
+
+//#region - comments - timeNow test cases for test liveTrain
 // timeNow = "17:28:00" // not moving yet 
 // timeNow = "18:10:00" // in cairo
 // timeNow = "18:11:00" // between cairo & tanta 
-timeNow = "19:07:00" // arrive tanta now
-// timeNow = "19:09:00" // waiting in tant
+// timeNow = "19:07:00" // arrive tanta now
+// timeNow = "19:09:00" // waiting in tanta
 // timeNow = "19:10:00" // depart from tanta
 // timeNow = "19:12:00" // between tanta & sidi gaber
 // timeNow = "20:28:00" // arrive sidi gaber
@@ -67,8 +86,9 @@ timeNow = "19:07:00" // arrive tanta now
 // timeNow = "20:42:00" // not moving
 //#endregion
 
-export const weekDayToday = new Date().toLocaleString('en-US', { weekday: "short" }).toLowerCase();
+export let weekDayToday = new Date().toLocaleString('en-US', { weekday: "short" }).toLowerCase();
 //// "sun"
+weekDayToday = "thu"
 
 export const NameNextDayWork = _ => {
 
@@ -182,6 +202,9 @@ export const isPastDate = (timeDate) => {
   // to get subtract minutes
   let result = timeDate - timeNowIn > 0 ? true : false;
   //// result = 7
+
+  // timeNow = "17:28:00"
+  // console.log(isPastDate("20:00:00")) //true
 
   return result
 }

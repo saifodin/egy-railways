@@ -4,12 +4,20 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 800px;
+    height: 1200px;
+    // overflow: hidden;
   }
   // .firstWayTrains,.stations,.secondWayTrains {
   > div {
     display: flex;
     flex-direction: column;
+    .out {
+      min-height: 170px;
+      margin-bottom: 28px;
+      .piece {
+        height: 100%;
+      }
+    }
     // .northStations,.theStation,.southStations {
     > div {
       display: flex;
@@ -68,70 +76,10 @@
 .shape,
 #flex_hight_width,
 #media {
-  & {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 800px;
-  }
   // .firstWayTrains,.stations,.secondWayTrains {
-  > div {
-    display: flex;
-    flex-direction: column;
-    // .northStations,.theStation,.southStations {
-    > div {
-      display: flex;
-      flex-direction: column;
-      // .piece {
-      > div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100px;
-        > div {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    }
-    .theStation {
-      // .piece {
-      > div {
-        height: 200px;
-      }
-    }
-    .southStations {
-      // .piece {
-      > div {
-        flex-direction: column-reverse;
-      }
-    }
-  }
   .stations {
-    width: 200px;
     @media (max-width: 767px) {
       width: 100px;
-    }
-  }
-  .firstWayTrains,
-  .secondWayTrains {
-    // width: 100px;
-    .northStations,
-    .southStations {
-      .linesContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        .line {
-          display: flex;
-          width: 50px;
-          .piece {
-            height: 100px;
-            display: flex;
-          }
-        }
-      }
     }
   }
 }
@@ -239,7 +187,108 @@
     }
   }
 }
+// global styles
+.outNorthStations,
+.outSouthStations {
+  display: block !important;
+  position: relative;
+  .trainContainer {
+    position: relative;
+    top: 0px;
+    margin-top: 15px;
+    margin-left: 62px;
+    z-index: 1;
+    &:not(:nth-child(2)) {
+      margin-top: 35px;
+    }
+    .trainInfo {
+      z-index: -2;
+    }
+    .fromTo {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      width: 90px;
+      height: 45px;
+      background-color: rgb(255, 255, 255);
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      color: var(--a);
+      font-size: 16px;
+      left: 33px;
+      z-index: -2;
+      &::after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: var(--b);
+        position: absolute;
+        top: 37%;
+        transform: translateX(35%) rotate(45deg);
+        left: -9px;
+        box-shadow: #13296833 -3px 2px 4px -2px;
+        z-index: -3;
+      }
+      > span {
+        font-size: 14px;
+        white-space: nowrap;
+        color: var(--m);
+        &:nth-child(2) {
+          font-size: 12px;
+          color: var(--l);
+        }
+      }
+    }
+    .flash {
+      z-index: -1;
+      > div {
+        height: 0;
+        width: 0;
+        span {
+          left: -2px;
+          top: 1px;
+          animation: flashOut 0.8s ease-out infinite;
+        }
+      }
+      @keyframes flashOut {
+        from {
+          transform: scale(0);
+          opacity: 1;
+        }
 
+        to {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+    }
+  }
+  .railroadsContainer {
+    position: absolute;
+    margin-left: 46px;
+    img {
+      width: 58px;
+      margin: auto;
+    }
+  }
+}
+// change global style
+.secondWayTrains {
+  .outNorthStations,
+  .outSouthStations {
+    .trainContainer {
+      .fromTo {
+        left: -100px;
+        z-index: -2;
+        &::after {
+          transform: translateX(-35%) rotate(45deg);
+          left: 83px;
+          box-shadow: #13296833 3px -2px 4px -2px;
+          z-index: -3;
+        }
+      }
+    }
+  }
+}
 // change global style
 .shape .southStations .trainContainer {
   top: 10px;
@@ -260,7 +309,9 @@
 }
 // change global style
 .shape .firstWayTrains .southStations .trainContainer .trainInfo > span:last-of-type,
-.shape .secondWayTrains .northStations .trainContainer .trainInfo > span:last-of-type {
+.shape .firstWayTrains .outSouthStations .trainContainer .trainInfo > span:last-of-type,
+.shape .secondWayTrains .northStations .trainContainer .trainInfo > span:last-of-type,
+.shape .secondWayTrains .outNorthStations .trainContainer .trainInfo > span:last-of-type {
   color: #f13637;
 }
 
@@ -280,8 +331,9 @@
     margin-right: 50px;
     // font-size: 114px;
     font-size: 50px;
-    color: var(--m);
-    opacity: 0.2;
+    // color: var(--m);
+    // opacity: 0.4;
+    color: #28aa2b36;
   }
 }
 

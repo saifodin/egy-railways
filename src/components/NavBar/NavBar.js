@@ -37,6 +37,7 @@ const Navbar = props => {
         <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem>
+        <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>
         <NavigationItem to="/SignIn" extraStyle={props.extraStyle}>Sign in</NavigationItem>
         <NavigationItem to="/CreateAccount" extraStyle={props.extraStyle}>Create an account</NavigationItem>
       </ul>

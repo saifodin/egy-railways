@@ -47,6 +47,38 @@ export const trainData = {
   ]
 }
 
+export const stationsName = {
+  "Alexandria": [
+    { "name": "Alexandria", "isCapital": true, "order": 1 },
+    { "name": "Sidi Gaber", "isCapital": false, "order": 2 }
+  ],
+  "Beheira": [
+    { "name": "Kafr Aldawaar", "isCapital": false, "order": 3 },
+    { "name": "Abu Homs", "isCapital": false, "order": 4 },
+    { "name": "Damanhur", "isCapital": true, "order": 5 },
+    { "name": "Etay Elbarrowd", "isCapital": false, "order": 6 },
+    { "name": "Eltawfiqiuh", "isCapital": false, "order": 7 }
+  ],
+  "Gharbiya": [
+    { "name": "Kafr Elzyat", "isCapital": false, "order": 8 },
+    { "name": "Tanta", "isCapital": true, "order": 9 }
+  ],
+  "Menoufia": [
+    { "name": "Barkih alsabe", "isCapital": false, "order": 10 },
+    { "name": "Quesna", "isCapital": false, "order": 11 }
+  ],
+  "Qalyubia": [
+    { "name": "Banha", "isCapital": true, "order": 12 },
+    { "name": "Tookh", "isCapital": false, "order": 13 },
+    { "name": "Qaha", "isCapital": false, "order": 14 },
+    { "name": "Qalyoub", "isCapital": false, "order": 15 },
+    { "name": "Shubra", "isCapital": false, "order": 16 }
+  ],
+  "Cairo": [
+    { "name": "Cairo", "isCapital": true, "order": 17 }
+  ],
+}
+
 export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 
 //#region - comments - timeNow test cases for test liveStation
@@ -283,3 +315,34 @@ export const isTimeBetween = (startTime, endTime) => {
     return false
   }
 }
+
+
+export const createDateFormat = index => {
+  // 0 => today
+  // 1 => tomorrow
+  // 2 => afterTomorrow
+
+  const day = new Date();
+
+  day.setDate(day.getDate() + index)
+
+  const dateFormateDigit = day.toLocaleDateString('en-GB')
+  //// 26/06/2021
+  const monthName = day.toLocaleString('en-US', { month: 'short' })
+  //// Jun
+  const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
+  //// Sat
+  const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
+  //// 26
+  const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
+  //// 26 Jun Sat
+
+
+  return {
+    dateFormat,
+    weekDayName,
+    monthName,
+    dayDigit,
+    dateFormateDigit
+  };
+};

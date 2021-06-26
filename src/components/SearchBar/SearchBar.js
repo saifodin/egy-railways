@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import css from './SearchBar.module.scss'
 import StationIcon from '../../assets/imgs/iconsSvg/StationIcon.svg';
+import { stationsName, createDateFormat } from '../../shared/utility'
+import { useHistory } from "react-router-dom"
 
 
 const SearchBar = props => {
@@ -9,41 +11,77 @@ const SearchBar = props => {
   // <SearchBar extraStyle="flat" searchOn="station"/>
 
 
+  const [fromStationValue, setFromStationValue] = useState(null);
+  const [toStationValue, setToStationValue] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(0); //// 0 === today
+  // const [dateValue, setDateValue] = useState((day + selectedDate).toLocaleDateString('en-GB'))
+  // const [dateValue, setDateValue] = useState(createDateFormat(selectedDate).dateFormateDigit)
+  // const [dateValue, setDateValue] = useState()
+
+  //#region generate options in datalist
+
+  let optionsFrom = []
+  let optionsTo = []
+  let governorates = Object.keys(stationsName)
+  for (const x in governorates) {
+    for (const y in Object.keys(stationsName[governorates[x]])) {
+      //// gov = governorates[x]
+      //// station = stationsName[governorates[x]][y].name
+      if (stationsName[governorates[x]][y].name !== toStationValue) {
+        optionsFrom.push(
+          <option key={`${x}${y}`} placeholder="sdf" value={stationsName[governorates[x]][y].name}>{governorates[x]}</option>
+        )
+      }
+      if (stationsName[governorates[x]][y].name !== fromStationValue) {
+        optionsTo.push(
+          <option key={`${x}${y}`} placeholder="sdf" value={stationsName[governorates[x]][y].name}>{governorates[x]}</option>
+        )
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region - when Submit form
+  const history = useHistory();
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (props.searchOn === "stations") {
+      history.push(`/trains-between-stations?from=${fromStationValue}&to=${toStationValue}&date=${createDateFormat(selectedDate).dateFormateDigit}`);
+    }
+  }
+  //#endregion
 
   //#region generate date today, tomorrow,...
-  const [selectedDate, setSelectedDate] = useState(0);
-  const createDateFormat = index => {
-    // 0 => today
-    // 1 => tomorrow
-    // 2 => afterTomorrow
+  // const createDateFormat = index => {
+  //   // 0 => today
+  //   // 1 => tomorrow
+  //   // 2 => afterTomorrow
 
-    // const tomorrow = new Date()
-    // tomorrow.setDate(tomorrow.getDate() + 1)
+  //   const day = new Date();
 
-    // const afterTomorrow = new Date()
-    // afterTomorrow.setDate(afterTomorrow.getDate() + 2)
+  //   day.setDate(day.getDate() + index)
 
-    // console.log(day)
-    // console.log(tomorrow)
-    // console.log(afterTomorrow)
+  //   const dateFormateDigit = day.toLocaleDateString('en-GB')
+  //   //// 26/06/2021
+  //   const monthName = day.toLocaleString('en-US', { month: 'short' })
+  //   //// Jun
+  //   const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
+  //   //// Sat
+  //   const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
+  //   //// 26
+  //   const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
+  //   //// 26 Jun Sat
 
-    const day = new Date();
 
-    day.setDate(day.getDate() + index)
-
-
-    const monthName = day.toLocaleString('en-US', { month: 'short' })
-    const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
-    const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
-    const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
-
-    return {
-      dateFormat,
-      weekDayName,
-      monthName,
-      dayDigit,
-    };
-  };
+  //   return {
+  //     dateFormat,
+  //     weekDayName,
+  //     monthName,
+  //     dayDigit,
+  //     dateFormateDigit
+  //   };
+  // };
   //#endregion 
 
   //#region add extra styles based on props
@@ -64,15 +102,21 @@ const SearchBar = props => {
   let form = "";
   if (props.searchOn === "stations") {
     form = (
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <div className={css.inputContainer}>
           <i className={`far fa-circle`}></i>
-          <input type="text" placeholder="From: City, Station" />
+          <input type="text" list="fromStation" placeholder="From: City, Station" onChange={e => setFromStationValue(e.target.value)} />
+          <datalist id="fromStation" className={css.datalist}>
+            {optionsFrom}
+          </datalist>
         </div>
 
         <div className={css.inputContainer}>
           <i className="fas fa-map-marker-alt"></i>
-          <input className="input-field" type="text" placeholder="To: City, Station" />
+          <input className="input-field" list="toStation" type="text" placeholder="To: City, Station" onChange={e => setToStationValue(e.target.value)} />
+          <datalist id="toStation" className={css.datalist}>
+            {optionsTo}
+          </datalist>
         </div>
 
         <div className={`${css.inputContainer} ${css.inputDateContainer}`}>
@@ -118,7 +162,8 @@ const SearchBar = props => {
 
       </form>
     )
-  } else if (props.searchOn === "trains") {
+  }
+  else if (props.searchOn === "trains") {
     form = (
       <form>
         <div className={css.inputContainer}>
@@ -140,7 +185,8 @@ const SearchBar = props => {
 
       </form>
     )
-  } else if (props.searchOn === "LiveStation") {
+  }
+  else if (props.searchOn === "LiveStation") {
     form = (
       <form>
         <div className={css.inputContainer}>

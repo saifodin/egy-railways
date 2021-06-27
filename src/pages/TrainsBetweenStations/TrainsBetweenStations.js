@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import css from './TrainsBetweenStations.module.scss'
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -9,10 +9,84 @@ import pngMorning from '../../assets/imgs/time/morning.png'
 import pngAfternoon from '../../assets/imgs/time/afternoon.png'
 import pngEvening from '../../assets/imgs/time/evening.png'
 import pngNight from '../../assets/imgs/time/night.png'
+import { stationsName } from '../../shared/utility'
 
 
 const TrainsBetweenStations = _ => {
   console.log("TrainsBetweenStations.js")
+
+  let params = new URLSearchParams(window.location.search);
+  const fromUrl = params.get('from')
+  const toUrl = params.get('to')
+  const dateUrl = params.get('date')
+  console.log(fromUrl)
+  console.log(toUrl)
+  console.log(dateUrl)
+  const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
+  console.log(trainsDb)
+
+
+
+  let isAlexToCairo = null;
+
+  //* to know did you want a train from alex->cairo or cairo->alex
+  for (const value of stationsName) {
+    console.log(value)
+    if (value === fromUrl || value === toUrl) {
+      if (value === fromUrl) {
+        isAlexToCairo = true;
+      }
+      else {
+        isAlexToCairo = false;
+      }
+      break;
+    }
+  }
+  console.log(isAlexToCairo)
+
+  //* get all trains that have same direction
+  let trainInMyDir = []
+  if (isAlexToCairo) {
+    for (const val of trainsDb) {
+      if (val.value.stopStation[0].name === "Alexandria") {
+        trainInMyDir.push(val)
+      }
+    }
+  }
+  else {
+    for (const val of trainsDb) {
+      if (val.value.stopStation[0].name === "Cairo") {
+        trainInMyDir.push(val)
+      }
+    }
+  }
+
+  console.log(trainInMyDir)
+
+  //* search first for fromUrl, if you found it search after that index for toUrl (not search form beginning) 
+  let ourTrains = []
+  for (const val of trainInMyDir) {
+    let foundFromUrl = false
+    for (const i in val.value.stopStation) {
+      if (!foundFromUrl && val.value.stopStation[i].name === fromUrl) {
+        foundFromUrl = true
+      }
+      if (foundFromUrl) {
+        if (val.value.stopStation[i].name === toUrl) {
+          ourTrains.push(val)
+        }
+      }
+    }
+  }
+
+  console.log(ourTrains)
+
+
+
+
+  // console.log(trainInMyDir[0].value.stopStation[0].name)
+
+
 
   return (
     <div className={css.TrainsBetweenStations}>
@@ -21,7 +95,7 @@ const TrainsBetweenStations = _ => {
         <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
         <div className={css.SearchBarContainer}>
-          <SearchBar extraStyle="flat" searchOn="stations"/>
+          <SearchBar extraStyle="flat" searchOn="stations" />
         </div>
         <div className={css.line}></div>
       </div>

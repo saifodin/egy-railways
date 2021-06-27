@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import css from './SearchBar.module.scss'
 import StationIcon from '../../assets/imgs/iconsSvg/StationIcon.svg';
-import { stationsName, createDateFormat } from '../../shared/utility'
+import { stationsAndGov, createDateFormat } from '../../shared/utility'
 import { useHistory } from "react-router-dom"
 
 
@@ -14,27 +14,24 @@ const SearchBar = props => {
   const [fromStationValue, setFromStationValue] = useState(null);
   const [toStationValue, setToStationValue] = useState(null);
   const [selectedDate, setSelectedDate] = useState(0); //// 0 === today
-  // const [dateValue, setDateValue] = useState((day + selectedDate).toLocaleDateString('en-GB'))
-  // const [dateValue, setDateValue] = useState(createDateFormat(selectedDate).dateFormateDigit)
-  // const [dateValue, setDateValue] = useState()
 
-  //#region generate options in datalist
+  //#region - generate options in datalist
 
   let optionsFrom = []
   let optionsTo = []
-  let governorates = Object.keys(stationsName)
+  let governorates = Object.keys(stationsAndGov)
   for (const x in governorates) {
-    for (const y in Object.keys(stationsName[governorates[x]])) {
+    for (const y in Object.keys(stationsAndGov[governorates[x]])) {
       //// gov = governorates[x]
-      //// station = stationsName[governorates[x]][y].name
-      if (stationsName[governorates[x]][y].name !== toStationValue) {
+      //// station = stationsAndGov[governorates[x]][y].name
+      if (stationsAndGov[governorates[x]][y].name !== toStationValue) {
         optionsFrom.push(
-          <option key={`${x}${y}`} placeholder="sdf" value={stationsName[governorates[x]][y].name}>{governorates[x]}</option>
+          <option key={`${x}${y}`} placeholder="sdf" value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
         )
       }
-      if (stationsName[governorates[x]][y].name !== fromStationValue) {
+      if (stationsAndGov[governorates[x]][y].name !== fromStationValue) {
         optionsTo.push(
-          <option key={`${x}${y}`} placeholder="sdf" value={stationsName[governorates[x]][y].name}>{governorates[x]}</option>
+          <option key={`${x}${y}`} placeholder="sdf" value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
         )
       }
     }
@@ -52,7 +49,7 @@ const SearchBar = props => {
   }
   //#endregion
 
-  //#region generate date today, tomorrow,...
+  //#region - generate date today, tomorrow,...
   // const createDateFormat = index => {
   //   // 0 => today
   //   // 1 => tomorrow
@@ -84,7 +81,7 @@ const SearchBar = props => {
   // };
   //#endregion 
 
-  //#region add extra styles based on props
+  //#region - add extra styles based on props
   let extraStyle = "";
   let searchOn = "";
   if (props.extraStyle === 'flat') {
@@ -98,7 +95,7 @@ const SearchBar = props => {
   }
   //#endregion
 
-  //#region transform from search stations to search Trains
+  //#region - generate <form/> depends on props.searchOn
   let form = "";
   if (props.searchOn === "stations") {
     form = (

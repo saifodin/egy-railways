@@ -131,6 +131,7 @@ const Shape = () => {
         arr.push({ id: doc.id, value: doc.data() })
       );
       setTrainsArray(arr)
+      window.localStorage.setItem('trainsDb', JSON.stringify(arr));
     });
 
     // db.collection("trains").doc("new-train-03").set({

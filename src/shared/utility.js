@@ -47,7 +47,7 @@ export const trainData = {
   ]
 }
 
-export const stationsName = {
+export const stationsAndGov = {
   "Alexandria": [
     { "name": "Alexandria", "isCapital": true, "order": 1 },
     { "name": "Sidi Gaber", "isCapital": false, "order": 2 }
@@ -78,6 +78,26 @@ export const stationsName = {
     { "name": "Cairo", "isCapital": true, "order": 17 }
   ],
 }
+
+export const stationsName = [
+  "Alexandria",
+  "Sidi Gaber",
+  "Kafr Aldawaar",
+  "Abu Homs",
+  "Damanhur",
+  "Etay Elbarrowd",
+  "Eltawfiqiuh",
+  "Kafr Elzyat",
+  "Tanta",
+  "Barkih alsabe",
+  "Quesna",
+  "Banha",
+  "Tookh",
+  "Qaha",
+  "Qalyoub",
+  "Shubra",
+  "Cairo"
+]
 
 export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 

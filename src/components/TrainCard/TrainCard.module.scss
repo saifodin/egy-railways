@@ -154,6 +154,7 @@
 
 .trainData .trainCardMiddle .fareClasses .classes {
   display: flex;
+  min-width: 112px;
   > div {
     input {
       display: none;

@@ -3,9 +3,28 @@ import DayBox from '../DayBox/DayBox'
 import css from './TrainCard.module.scss'
 
 const TrainCard = props => {
-  // <TrainCard />  // in TrainsBetweenStations.js
+  // <TrainCard id name departTime arrivalTime dateUrl journeyTime numberOfStops p1A p2A p3A weekDayRuns isTopRated isCheapest isFastest /> // in TrainsCards.js
   // <TrainCard forTrainPage /> // in train.js
 
+  /*
+    <TrainCard
+    key={val.id}
+    id={val.id}
+    name={val.value.number}
+    departTime={val.value.departTime}
+    arrivalTime={val.value.arrivalTime}
+    dateUrl={digitDateToNice(dateUrl)}
+    journeyTime={val.value.journeyTime}
+    numberOfStops={val.value.numberOfStops}
+    p1A={val.value.fareClassess["1A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p1A : null}
+    p2A={val.value.fareClassess["2A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p2A : null}
+    p3A={val.value.fareClassess["3A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p3A : null}
+    weekDayRuns={val.value.weekDayRuns}
+    isTopRated={FastestId === val.value.number ? true : false}
+    isCheapest={CheapestId === val.value.number ? true : false}
+    isFastest={TopRatedId === val.value.number ? true : false}
+  />
+  */
 
   //#region add extra styles when Avail Closed
   const [isAvailOpen, setIsAvailOpen] = useState(false);
@@ -13,17 +32,17 @@ const TrainCard = props => {
   //#endregion
 
   //#region get price when click on Name of fare class 
-  const [fare, setFare] = useState(20)
+  const [fare, setFare] = useState(null)
   const changeFare = trainClassName => {
     switch (trainClassName) {
       case "1A":
-        setFare(20)
+        setFare(props.p1A)
         break;
       case "2A":
-        setFare(60)
+        setFare(props.p2A)
         break;
       case "3A":
-        setFare(120)
+        setFare(props.p3A)
         break;
       default:
         break;
@@ -39,31 +58,37 @@ const TrainCard = props => {
 
         <div className={css.trainData}>
           <div className={css.trainCardTags}>
-            <div>
-              <i className="fas fa-star"></i>
-              <p>Top Rated</p>
-            </div>
-            {/* <div>
-          <i className="fas fa-star"></i>
-          <p>Fastest</p>
-        </div>
-        <div>
-          <i className="fas fa-star"></i>
-          <p>Cheapest</p>
-        </div> */}
+            {/* {props.isTopRated &&
+              <div>
+                <i className="fas fa-star"></i>
+                <p>Top Rated</p>
+              </div>
+            } */}
+            {props.isFastest &&
+              <div>
+                <i className="fas fa-star"></i>
+                <p>Fastest</p>
+              </div>
+            }
+            {props.isCheapest &&
+              <div>
+                <i className="fas fa-star"></i>
+                <p>Cheapest</p>
+              </div>
+            }
           </div>
 
           <div className={css.trainCardTop}>
-            <span className={css.trainNo}>02461</span>
+            <span className={css.trainNo}>{props.name}</span>
             <div className={css.weekDays}>
               <ul className="reset">
-                <li className={css.noRun}>S</li>
-                <li>S</li>
-                <li className={css.noRun}>M</li>
-                <li>T</li>
-                <li className={css.noRun}>W</li>
-                <li className={css.noRun}>T</li>
-                <li>F</li>
+                {props.weekDayRuns.sat ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.sun ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.mon ? <li>M</li> : <li className={css.noRun}>M</li>}
+                {props.weekDayRuns.tue ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.wed ? <li>W</li> : <li className={css.noRun}>W</li>}
+                {props.weekDayRuns.thu ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.fri ? <li>F</li> : <li className={css.noRun}>F</li>}
               </ul>
             </div>
           </div>
@@ -72,20 +97,23 @@ const TrainCard = props => {
 
             <div className={css.timeInfo}>
               <div className={css.departureTimeInfo}>
-                <span>10:27<span>PM</span></span>
-                <span>02 May, Sun</span>
+                <span>{props.departTime.slice(0, props.departTime.length - 3)}<span>{props.departTime.slice(-2)}</span></span>
+                <span>{props.dateUrl}</span>
               </div>
               <div className={css.durationAndStops}>
-                <span className={css.duration}>0h13m</span>
+                <span className={css.duration}>{props.journeyTime}</span>
                 <div className={css.line}>
                   <span></span>
                   <span></span>
                 </div>
-                <span className={css.stops}>2 stops</span>
+                <span className={css.stops}>
+                  {props.numberOfStops}
+                  {props.numberOfStops > 1 ? " stops" : " stop"}
+                </span>
               </div>
               <div className={css.arrivalTimeInfo}>
-                <span>10:40<span>PM</span></span>
-                <span>02 May, Sun</span>
+                <span>{props.arrivalTime.slice(0, props.arrivalTime.length - 3)}<span>{props.arrivalTime.slice(-2)}</span></span>
+                <span>{props.dateUrl}</span>
               </div>
             </div>
 
@@ -93,25 +121,30 @@ const TrainCard = props => {
 
               <div className={css.classes}>
 
-                <div>
-                  <input onClick={_ => changeFare("1A")} type="radio" id="train-1A" name="train-class" defaultChecked />
-                  <label for="train-1A">1A</label>
-                </div>
+                {props.p1A &&
+                  <div div >
+                    <input onClick={_ => changeFare("1A")} type="radio" id={`train-${props.name}-1A`} name={`train-${props.name}-class`} defaultChecked />
+                    <label for={`train-${props.name}-1A`}>1A</label>
+                  </div>
+                }
+                {props.p2A &&
+                  <div>
+                    <input onClick={_ => changeFare("2A")} type="radio" id={`train-${props.name}-2A`} name={`train-${props.name}-class`} defaultChecked />
+                    <label for={`train-${props.name}-2A`}>2A</label>
+                  </div>
+                }
 
-                <div>
-                  <input onClick={_ => changeFare("2A")} type="radio" id="train-2A" name="train-class" />
-                  <label for="train-2A">2A</label>
-                </div>
-
-                <div>
-                  <input onClick={_ => changeFare("3A")} type="radio" id="train-3A" name="train-class" />
-                  <label for="train-3A">3A</label>
-                </div>
+                {props.p3A &&
+                  <div>
+                    <input onClick={_ => changeFare("3A")} type="radio" id={`train-${props.name}-3A`} name={`train-${props.name}-class`} defaultChecked />
+                    <label for={`train-${props.name}-3A`}>3A</label>
+                  </div>
+                }
 
               </div>
 
               <div className={css.fare}>
-                <span>{fare}</span>
+                <span>{fare ? fare : props.p3A ? props.p3A : props.p2A ? props.p2A : props.p1A ? props.p1A : null}</span>
                 <span>EGP</span>
               </div>
             </div>
@@ -119,7 +152,7 @@ const TrainCard = props => {
             <div className={css.AvailButton}>
               <button onClick={_ => setIsAvailOpen(true)}>
                 Check Availability
-             </button>
+              </button>
             </div>
 
           </div>
@@ -139,8 +172,9 @@ const TrainCard = props => {
           </div>
         </div>
       </div>
-    </li>
+    </li >
   )
+
   //* when trainCard called by train page, or called by liveTrain page
   if (props.forTrainPage) {
     trainCard = (

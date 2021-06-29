@@ -366,3 +366,91 @@ export const createDateFormat = index => {
     dateFormateDigit
   };
 };
+
+export const digitDateToNice = dateFormateDigit => {
+  //// "01/07/2021"
+
+  const dayNum = Number(dateFormateDigit.slice(0, 2))
+  //// 1
+  const monthIndex = Number(dateFormateDigit.slice(3, 5) - 1)
+  //// 6
+  const year = Number(dateFormateDigit.slice(6))
+  //// 2021
+
+  const day = new Date(year, monthIndex, dayNum);
+  //// object => Thu Jul 01 2021 00:00:00 GMT+0200 (Eastern European Standard Time)
+
+  const monthName = day.toLocaleString('en-US', { month: 'short' })
+  //// Jul
+  const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
+  //// Thu
+  const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
+  //// 01
+
+  return `${dayDigit} ${monthName}, ${weekDayName}`;
+  //// 01 Jul, Thu
+};
+
+export const knowWeekday = dateFormateDigit => {
+  //// "01/07/2021"
+
+  const day = Number(dateFormateDigit.slice(0, 2))
+  //// 1
+  const monthIndex = Number(dateFormateDigit.slice(3, 5) - 1)
+  //// 6
+  const year = Number(dateFormateDigit.slice(6))
+  //// 2021
+
+  const date = new Date(year, monthIndex, day);
+  //// object => Thu Jul 01 2021 00:00:00 GMT+0200 (Eastern European Standard Time)
+
+  return date.toLocaleString('en-US', { weekday: 'short' }).toLowerCase()
+  //// "thu"
+}
+
+export const ToMinOnly = hourAndMin => {
+  //// 2h04m
+
+  // know index of h 
+  const indexOfH = hourAndMin.indexOf('h')
+  //// 1
+
+
+  const hours = Number(hourAndMin.slice(0, indexOfH))
+  //// slice(0, 1) => Number(2) => 2
+  const min = Number(hourAndMin.slice(indexOfH + 1, hourAndMin.length - 1))
+  //// slice(2, 4) => Number(04) => 4
+
+  return hours * 60 + min
+
+}
+
+export const calFaresPrices = (station, anotherStation, numOfStops) => {
+
+  const stationsAndOrder = {
+    "Alexandria": 1,
+    "Sidi Gaber": 2,
+    "Kafr Aldawaar": 3,
+    "Abu Homs": 4,
+    "Damanhur": 5,
+    "Etay Elbarrowd": 6,
+    "Eltawfiqiuh": 7,
+    "Kafr Elzyat": 8,
+    "Tanta": 9,
+    "Barkih alsabe": 10,
+    "Quesna": 11,
+    "Banha": 12,
+    "Tookh": 13,
+    "Qaha": 14,
+    "Qalyoub": 15,
+    "Shubra": 16,
+    "Cairo": 17
+  }
+  const distance = Math.abs(stationsAndOrder[station] - stationsAndOrder[anotherStation])
+
+  return {
+    p1A: (distance * 10) - (numOfStops * 4),
+    p2A: (distance * 5) - (numOfStops * 2),
+    p3A: (distance * 3) - (numOfStops * 1)
+  }
+}

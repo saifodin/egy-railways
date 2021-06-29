@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import css from './TrainsBetweenStations.module.scss'
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -9,7 +9,7 @@ import pngMorning from '../../assets/imgs/time/morning.png'
 import pngAfternoon from '../../assets/imgs/time/afternoon.png'
 import pngEvening from '../../assets/imgs/time/evening.png'
 import pngNight from '../../assets/imgs/time/night.png'
-import { stationsName } from '../../shared/utility'
+import { stationsName, knowWeekday } from '../../shared/utility'
 
 
 const TrainsBetweenStations = _ => {
@@ -19,20 +19,20 @@ const TrainsBetweenStations = _ => {
   const fromUrl = params.get('from')
   const toUrl = params.get('to')
   const dateUrl = params.get('date')
-  console.log(fromUrl)
-  console.log(toUrl)
-  console.log(dateUrl)
+  // console.log(fromUrl)
+  // console.log(toUrl)
+  // console.log(dateUrl)
   const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
-  console.log(trainsDb)
+  // console.log(trainsDb)
 
 
 
-  let isAlexToCairo = null;
 
   //* to know did you want a train from alex->cairo or cairo->alex
+  let isAlexToCairo = null;
   for (const value of stationsName) {
-    console.log(value)
     if (value === fromUrl || value === toUrl) {
+      // found from station first then alex->cairo
       if (value === fromUrl) {
         isAlexToCairo = true;
       }
@@ -42,7 +42,6 @@ const TrainsBetweenStations = _ => {
       break;
     }
   }
-  console.log(isAlexToCairo)
 
   //* get all trains that have same direction
   let trainInMyDir = []
@@ -61,30 +60,28 @@ const TrainsBetweenStations = _ => {
     }
   }
 
-  console.log(trainInMyDir)
+  // console.log(trainInMyDir)
 
   //* search first for fromUrl, if you found it search after that index for toUrl (not search form beginning) 
   let ourTrains = []
   for (const val of trainInMyDir) {
     let foundFromUrl = false
-    for (const i in val.value.stopStation) {
-      if (!foundFromUrl && val.value.stopStation[i].name === fromUrl) {
-        foundFromUrl = true
-      }
-      if (foundFromUrl) {
-        if (val.value.stopStation[i].name === toUrl) {
-          ourTrains.push(val)
+    // if this train run in this day
+    if (val.value.weekDayRuns[knowWeekday(dateUrl)]) {
+      for (const i in val.value.stopStation) {
+        if (!foundFromUrl && val.value.stopStation[i].name === fromUrl) {
+          foundFromUrl = true
+        }
+        if (foundFromUrl) {
+          if (val.value.stopStation[i].name === toUrl) {
+            ourTrains.push(val)
+          }
         }
       }
     }
   }
 
-  console.log(ourTrains)
-
-
-
-
-  // console.log(trainInMyDir[0].value.stopStation[0].name)
+  // console.log(ourTrains)
 
 
 
@@ -190,7 +187,7 @@ const TrainsBetweenStations = _ => {
         </div>
 
         <div className={css.trainsCardsContainer}>
-          <TrainsCards />
+          <TrainsCards ourTrains={ourTrains} fromUrl={fromUrl} toUrl={toUrl} dateUrl={dateUrl} />
         </div>
       </div>
 

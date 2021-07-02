@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from './CheckBoxOrRadio.module.scss'
 
 
@@ -6,6 +6,8 @@ const CheckBoxOrRadio = (props) => {
   // <CheckBoxOrRadio isCheckBoxNotRadio={true} wordsInLabel={array} shapeOfStyles="basic" />
   // or
   // <CheckBoxOrRadio isCheckBoxNotRadio={false} wordsInLabel={array} nameOfRadio="gender" shapeOfStyles="basic" />
+
+
 
 
   //#region generate <li> with dynamic data, with radio or checkbox 
@@ -29,11 +31,11 @@ const CheckBoxOrRadio = (props) => {
     }
 
     items.push(
-      <li>
+      <li key={i}>
         {/*input => disable none */}
         <input type={typeName} id={word} name={radioName} />
         {/*label => the word */}
-        <label className={isCheckbox} for={word}>{word}</label>
+        <label onClick={_ => props.clickOnWhichLi(word)} className={isCheckbox} for={word}>{word}</label>
         {/*div => the circle or rectangle  */}
         <div className={isCheckbox}></div>
       </li>
@@ -46,8 +48,8 @@ const CheckBoxOrRadio = (props) => {
   if (props.shapeOfStyles === "basic") {
     extraStyle = css.basicStyles
   }
-  
   //#endregion
+
   return (
     <div className={`${css.CheckBoxOrRadioContainer} ${extraStyle}`}>
       <ul>

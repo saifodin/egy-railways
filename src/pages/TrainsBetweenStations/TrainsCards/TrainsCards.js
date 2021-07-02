@@ -1,13 +1,13 @@
 import React from 'react';
 import TrainCard from '../../../components/TrainCard/TrainCard';
 import css from './TrainsCards.module.scss'
-import { subTwoTimes, ToMinOnly, time24To12, digitDateToNice, calFaresPrices } from '../../../shared/utility'
+import { subTwoTimes, ToMinOnly, time24To12, digitDateToNice, calFaresPrices, time24ToMin } from '../../../shared/utility'
 
 const TrainsCards = (props) => {
   // <TrainsCards ourTrains={ourTrains} fromUrl={fromUrl} toUrl={toUrl} dateUrl={dateUrl} />
 
 
-  const ourTrains = props.ourTrains
+  let ourTrains = props.ourTrains
   const fromUrl = props.fromUrl
   const toUrl = props.toUrl
   const dateUrl = props.dateUrl
@@ -20,7 +20,7 @@ const TrainsCards = (props) => {
 
   console.log("ourTrains", ourTrains);
 
-  let OurTrainsWithExtra = [];
+  //# add extra items to ourTrains objects
   for (const val of ourTrains) {
     for (const i in val.value.stopStation) {
       if (val.value.stopStation[i].name === fromUrl) {
@@ -33,10 +33,14 @@ const TrainsCards = (props) => {
       }
     }
 
-    val.value.departTime = time24To12(departTime);
-    val.value.arrivalTime = time24To12(arrivalTime);
+    val.value.departTime12 = time24To12(departTime);
+    val.value.arrivalTime12 = time24To12(arrivalTime);
+    val.value.departTimeMin = time24ToMin(departTime);
+    val.value.arrivalTimeMin = time24ToMin(arrivalTime);
     val.value.numberOfStops = (indexTo - indexFrom - 1);
     val.value.journeyTime = subTwoTimes(departTime, arrivalTime);
+    val.value.journeyTimeMin = ToMinOnly(subTwoTimes(departTime, arrivalTime));
+
 
     if (val.value.fareClassess["3A"]) {
       cheapestPrice = calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p3A
@@ -60,11 +64,120 @@ const TrainsCards = (props) => {
     // if (!hightestRate || val.value.rate >= hightestRate) {
     //   TopRatedId = val.value.number
     // }
-
-    OurTrainsWithExtra.push(val)
   }
 
-  console.log("OurTrainsWithExtra", OurTrainsWithExtra)
+  console.log("ourTrains after extra", ourTrains);
+
+  //#region - sorted by filers
+
+  //* Sorted By
+  if (props.filterSorted === "DEPARTURE_TIME") {
+    ourTrains.sort((a, b) => (a.value.arrivalTimeMin - b.value.arrivalTimeMin))
+  } else if (props.filterSorted === "DURATION") {
+    ourTrains.sort((a, b) => (a.value.journeyTimeMin - b.value.journeyTimeMin))
+  } else if (props.filterSorted === "ARRIVAL_TIME") {
+    ourTrains.sort((a, b) => (a.value.arrivalTimeMin - b.value.arrivalTimeMin))
+  }
+
+  //* Class 2^3=8
+  let ourTrainClass = []
+  const filterClass = (fareClass, fareClass2) => {
+    for (const val of ourTrains) {
+      if (!fareClass2) {
+        if (val.value.fareClassess[fareClass]) {
+          ourTrainClass.push(val)
+        }
+      } else {
+        if (val.value.fareClassess[fareClass] || val.value.fareClassess[fareClass2]) {
+          ourTrainClass.push(val)
+        }
+      }
+    }
+  }
+  if (props.whichClassIsActive === "false,false,false" || props.whichClassIsActive === "true,true,true")
+    ourTrainClass = [...ourTrains]
+  else if (props.whichClassIsActive === "true,false,false")
+    filterClass("1A")
+  else if (props.whichClassIsActive === "false,true,false")
+    filterClass("2A")
+  else if (props.whichClassIsActive === "false,false,true")
+    filterClass("3A")
+
+  else if (props.whichClassIsActive === "true,true,false")
+    filterClass("1A", "2A")
+  else if (props.whichClassIsActive === "false,true,true")
+    filterClass("2A", "3A")
+  else if (props.whichClassIsActive === "true,false,true")
+    filterClass("1A", "2A")
+  else
+    ourTrainClass = [...ourTrains]
+  ourTrains = [...ourTrainClass]
+
+  //* Departure time 2^4=16
+  let ourTrainDep = []
+  const filterDep = (min1, min2, min3, min4) => {
+    for (const val of ourTrains) {
+      if (!min3) {
+        if (val.value.departTimeMin >= min1 && val.value.departTimeMin < min2) {
+          ourTrainDep.push(val)
+        }
+      } else {
+        if ((val.value.departTimeMin >= min1 && val.value.departTimeMin < min2) || (val.value.departTimeMin >= min3 && val.value.departTimeMin < min4)) {
+          ourTrainDep.push(val)
+        }
+      }
+
+    }
+  }
+  if (props.depTimeFilter === "false,false,false,false" || props.depTimeFilter === "true,true,true,true")
+    ourTrainDep = [...ourTrains]
+  else if (props.depTimeFilter === "true,false,false,false")
+    filterDep(5 * 60, 11 * 60)
+  else if ((props.depTimeFilter === "false,true,false,false"))
+    filterDep(11 * 60, 17 * 60)
+  else if ((props.depTimeFilter === "false,false,true,false"))
+    filterDep(17 * 60, 23 * 60)
+  else if ((props.depTimeFilter === "false,false,false,true"))
+    filterDep(23 * 60, 24 * 60, 0, 5 * 60)
+
+  else if (props.depTimeFilter === "true,true,false,false")
+    filterDep(5 * 60, 17 * 60)
+  else if (props.depTimeFilter === "true,true,true,false")
+    filterDep(5 * 60, 23 * 60)
+
+  else if (props.depTimeFilter === "false,true,true,false")
+    filterDep(11 * 60, 23 * 60)
+  else if (props.depTimeFilter === "false,true,true,true")
+    filterDep(11 * 60, 24 * 60, 0, 5 * 60)
+
+  else if (props.depTimeFilter === "false,false,true,true")
+    filterDep(17 * 60, 24 * 60, 0, 5 * 60)
+  else if (props.depTimeFilter === "true,false,true,true")
+    filterDep(17 * 60, 24 * 60, 0, 17 * 60)
+
+  else if (props.depTimeFilter === "true,false,false,true")
+    filterDep(23 * 60, 24 * 60, 0, 11 * 60)
+  else if (props.depTimeFilter === "true,true,false,true")
+    filterDep(23 * 60, 24 * 60, 0, 17 * 60)
+
+  else if (props.depTimeFilter === "true,false,true,false")
+    filterDep(5 * 60, 11 * 60, 17 * 60, 23 * 60)
+
+  else if (props.depTimeFilter === "false,true,false,true") {
+    for (const val of ourTrains) {
+      if (((val.value.departTimeMin >= (23 * 60) && val.value.departTimeMin < (24 * 60)) || (val.value.departTimeMin >= 0 && val.value.departTimeMin < (5 * 60))) || (val.value.departTimeMin >= (11 * 60) && val.value.departTimeMin < (17 * 60)))
+        ourTrainDep.push(val)
+    }
+  } 
+  
+  else ourTrainDep = [...ourTrains]
+  ourTrains = [...ourTrainDep]
+
+
+
+
+  //#endregion
+
 
 
 
@@ -76,11 +189,12 @@ const TrainsCards = (props) => {
           ourTrains.map((val) => {
             return (
               <TrainCard
+                forTrainsBetweenStations
                 key={val.id}
                 id={val.id}
                 name={val.value.number}
-                departTime={val.value.departTime}
-                arrivalTime={val.value.arrivalTime}
+                departTime={val.value.departTime12}
+                arrivalTime={val.value.arrivalTime12}
                 dateUrl={digitDateToNice(dateUrl)}
                 journeyTime={val.value.journeyTime}
                 numberOfStops={val.value.numberOfStops}

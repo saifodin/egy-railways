@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from './TrainsBetweenStations.module.scss'
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -15,6 +15,9 @@ import { stationsName, knowWeekday } from '../../shared/utility'
 const TrainsBetweenStations = _ => {
   console.log("TrainsBetweenStations.js")
 
+
+
+  //#region - get from, to, date, trainsDb values
   let params = new URLSearchParams(window.location.search);
   const fromUrl = params.get('from')
   const toUrl = params.get('to')
@@ -25,9 +28,9 @@ const TrainsBetweenStations = _ => {
   const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
   // console.log(trainsDb)
 
+  //#endregion
 
-
-
+  //#region - create ourTrains form trainsDb based on search inputs
   //* to know did you want a train from alex->cairo or cairo->alex
   let isAlexToCairo = null;
   for (const value of stationsName) {
@@ -51,16 +54,13 @@ const TrainsBetweenStations = _ => {
         trainInMyDir.push(val)
       }
     }
-  }
-  else {
+  } else {
     for (const val of trainsDb) {
       if (val.value.stopStation[0].name === "Cairo") {
         trainInMyDir.push(val)
       }
     }
   }
-
-  // console.log(trainInMyDir)
 
   //* search first for fromUrl, if you found it search after that index for toUrl (not search form beginning) 
   let ourTrains = []
@@ -80,9 +80,33 @@ const TrainsBetweenStations = _ => {
       }
     }
   }
+  //#endregion
 
-  // console.log(ourTrains)
+  //#region - change filters 
+  //* Sorted by
+  const [filterSorted, setFilterSorted] = useState("DEPARTURE_TIME");
 
+  //* Class
+  const [is1AActive, setIs1AActive] = useState(false)
+  const [is2AActive, setIs2AActive] = useState(false)
+  const [is3AActive, setIs3AActive] = useState(false)
+  const whichClassIsActive = `${[is1AActive, is2AActive, is3AActive]}`
+  const clickOnWhichLi = word => {
+    if (word === "1A")
+      setIs1AActive(prev => !prev)
+    else if (word === "2A")
+      setIs2AActive(prev => !prev)
+    else if (word === "3A")
+      setIs3AActive(prev => !prev)
+  }
+
+  //* Departure time
+  const [morning, setMorning] = useState(false)
+  const [afternoon, setAfternoon] = useState(false)
+  const [midDay, setEvening] = useState(false)
+  const [night, setNight] = useState(false)
+  const depTimeFilter = `${[morning, afternoon, midDay, night]}`
+  //#endregion
 
 
   return (
@@ -110,17 +134,17 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="radio" id="departure" name="sortedBy" value="departure" defaultChecked />
-                  <label for="departure">departure time</label>
+                  <label onClick={_ => setFilterSorted("DEPARTURE_TIME")} for="departure">departure time</label>
                 </div>
 
                 <div>
                   <input type="radio" id="duration" name="sortedBy" value="duration" />
-                  <label for="duration">duration</label>
+                  <label onClick={_ => setFilterSorted("DURATION")} for="duration">duration</label>
                 </div>
 
                 <div>
                   <input type="radio" id="arrival" name="sortedBy" value="arrival" />
-                  <label for="arrival">arrival time</label>
+                  <label onClick={_ => setFilterSorted("ARRIVAL_TIME")} for="arrival">arrival time</label>
                 </div>
 
               </div>
@@ -131,7 +155,13 @@ const TrainsBetweenStations = _ => {
             <div className={css.class}>
               <h4>Class</h4>
               <div className={css.checkBoxOrRadioContainer}>
-                <CheckBoxOrRadio shapeOfStyles="basic" isCheckBoxNotRadio={true} wordsInLabel={['1A', '2A', '3A']} nameOfRadio="gender" />
+                <CheckBoxOrRadio
+                  shapeOfStyles="basic"
+                  isCheckBoxNotRadio={true}
+                  wordsInLabel={['1A', '2A', '3A']}
+                  nameOfRadio="FilterClass"
+                  clickOnWhichLi={clickOnWhichLi}
+                />
               </div>
             </div>
             <span></span>
@@ -142,7 +172,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="morning" name="morning" />
-                  <label for="morning">
+                  <label for="morning" onClick={_ => setMorning(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="morning" src={pngMorning} />
                       <p>05 AM - 11 AM</p>
@@ -152,7 +182,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="afternoon" name="afternoon" />
-                  <label for="afternoon">
+                  <label for="afternoon" onClick={_ => setAfternoon(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="afternoon" src={pngAfternoon} />
                       <p>11 AM - 05 PM</p>
@@ -162,7 +192,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="evening" name="evening" />
-                  <label for="evening">
+                  <label for="evening" onClick={_ => setEvening(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="evening" src={pngEvening} />
                       <p>05 PM - 11 PM</p>
@@ -172,7 +202,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="night" name="night" />
-                  <label for="night">
+                  <label for="night" onClick={_ => setNight(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="night" src={pngNight} />
                       <p>11 PM - 05 AM</p>
@@ -182,12 +212,18 @@ const TrainsBetweenStations = _ => {
 
               </div>
             </div>
-
           </div>
         </div>
 
         <div className={css.trainsCardsContainer}>
-          <TrainsCards ourTrains={ourTrains} fromUrl={fromUrl} toUrl={toUrl} dateUrl={dateUrl} />
+          <TrainsCards
+            filterSorted={filterSorted}
+            whichClassIsActive={whichClassIsActive}
+            depTimeFilter={depTimeFilter}
+            ourTrains={ourTrains}
+            fromUrl={fromUrl}
+            toUrl={toUrl}
+            dateUrl={dateUrl} />
         </div>
       </div>
 

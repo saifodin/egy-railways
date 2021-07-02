@@ -167,7 +167,7 @@ export const NameNextDayWork = _ => {
     }
   }
 }
-
+//* "18:00:00" => "06:00 PM"
 export const time24To12 = (time) => {
   //// time = "18:00:00"
 
@@ -196,7 +196,20 @@ export const time24To12 = (time) => {
 
   return time
 }
+//* "18:00:00" => 1080
+export const time24ToMin = time => {
+  //// time = "18:00:00"
 
+  time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  //// time = ["18:00:00", "18", ":", "00", ":00"]
+
+  // Remove "18:00:00" and ":00" 
+  time = time.slice(1, 4);
+  //// time = ["18", ":", "00"]
+
+  return Number(time[0]) * 60 + Number(time[2])
+}
+//* "18:10:00","18:17:00" => "0h07m"
 export const subTwoTimes = (startTime, endTime) => {
   //// startTime = "18:10:00"
   //// endTime = "18:17:00"
@@ -261,6 +274,28 @@ export const isPastDate = (timeDate) => {
   return result
 }
 
+export const isTimeBetween = (startTime, endTime) => {
+  let timeNowIn = timeNow
+  timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
+  startTime = startTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [startTime];
+  endTime = endTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [endTime];
+
+
+  timeNowIn = timeNowIn.slice(1, 4);
+  startTime = startTime.slice(1, 4);
+  endTime = endTime.slice(1, 4);
+
+  timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
+  startTime = (parseInt(startTime[0], 10) * 60) + parseInt(startTime[2], 10);
+  endTime = (parseInt(endTime[0], 10) * 60) + parseInt(endTime[2], 10);
+
+  if (timeNowIn > startTime && endTime > timeNowIn) {
+    return true
+  } else {
+    return false
+  }
+}
+
 export const isTimeBetweenOrEqual = (startTime, endTime) => {
   let timeNowIn = timeNow
   timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
@@ -313,30 +348,7 @@ export const isBetweenStations = () => {
     result: false
   }
 }
-
-export const isTimeBetween = (startTime, endTime) => {
-  let timeNowIn = timeNow
-  timeNowIn = timeNowIn.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeNowIn];
-  startTime = startTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [startTime];
-  endTime = endTime.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [endTime];
-
-
-  timeNowIn = timeNowIn.slice(1, 4);
-  startTime = startTime.slice(1, 4);
-  endTime = endTime.slice(1, 4);
-
-  timeNowIn = (parseInt(timeNowIn[0], 10) * 60) + parseInt(timeNowIn[2], 10);
-  startTime = (parseInt(startTime[0], 10) * 60) + parseInt(startTime[2], 10);
-  endTime = (parseInt(endTime[0], 10) * 60) + parseInt(endTime[2], 10);
-
-  if (timeNowIn > startTime && endTime > timeNowIn) {
-    return true
-  } else {
-    return false
-  }
-}
-
-
+//* 0 => "26 Jun Sat"
 export const createDateFormat = index => {
   // 0 => today
   // 1 => tomorrow
@@ -366,7 +378,7 @@ export const createDateFormat = index => {
     dateFormateDigit
   };
 };
-
+//* "01/07/2021" => "01 Jul, Thu"
 export const digitDateToNice = dateFormateDigit => {
   //// "01/07/2021"
 
@@ -390,7 +402,7 @@ export const digitDateToNice = dateFormateDigit => {
   return `${dayDigit} ${monthName}, ${weekDayName}`;
   //// 01 Jul, Thu
 };
-
+//* "01/07/2021" => "thu"
 export const knowWeekday = dateFormateDigit => {
   //// "01/07/2021"
 
@@ -407,7 +419,7 @@ export const knowWeekday = dateFormateDigit => {
   return date.toLocaleString('en-US', { weekday: 'short' }).toLowerCase()
   //// "thu"
 }
-
+//* "2h04m" => "124"
 export const ToMinOnly = hourAndMin => {
   //// 2h04m
 
@@ -415,13 +427,13 @@ export const ToMinOnly = hourAndMin => {
   const indexOfH = hourAndMin.indexOf('h')
   //// 1
 
-
   const hours = Number(hourAndMin.slice(0, indexOfH))
   //// slice(0, 1) => Number(2) => 2
   const min = Number(hourAndMin.slice(indexOfH + 1, hourAndMin.length - 1))
   //// slice(2, 4) => Number(04) => 4
 
   return hours * 60 + min
+  //// 124
 
 }
 

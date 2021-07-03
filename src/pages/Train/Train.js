@@ -64,19 +64,19 @@ const Train = () => {
             <div className={css.fareAndPrice}>
               <div>
                 <input type="radio" id="oneTrain-1A" name="oneTrain-class" defaultChecked />
-                <label for="oneTrain-1A">1A<span>20</span></label>
+                <label htmlFor="oneTrain-1A">1A<span>20</span></label>
                 <div className={css.border}></div>
               </div>
 
               <div>
                 <input type="radio" id="oneTrain-2A" name="oneTrain-class" />
-                <label for="oneTrain-2A">2A<span>60</span></label>
+                <label htmlFor="oneTrain-2A">2A<span>60</span></label>
                 <div className={css.border}></div>
               </div>
 
               <div>
                 <input type="radio" id="oneTrain-3A" name="oneTrain-class" />
-                <label for="oneTrain-3A">3A<span>120</span></label>
+                <label htmlFor="oneTrain-3A">3A<span>120</span></label>
                 <div className={css.border}></div>
               </div>
             </div>

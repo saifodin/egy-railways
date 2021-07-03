@@ -1,7 +1,9 @@
 .TrainsBetweenStations {
   & {
-    // height: 4000px;
     background-color: var(--c);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .upperPart {
@@ -187,7 +189,7 @@
 #media {
   @media (max-width: 767px) {
     overflow-x: scroll;
-    
+
     &::-webkit-scrollbar {
       height: 5px;
     }
@@ -241,10 +243,9 @@
 
 .mainPart .trainsCardsContainer {
   border: none;
-  min-height: 292px;
-
 }
 
 .TrainsBetweenStations .footer {
-  margin-top: 100px;
+  margin-top: auto;
+  padding-top: 100px;
 }

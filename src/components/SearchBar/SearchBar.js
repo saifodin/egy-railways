@@ -10,13 +10,20 @@ const SearchBar = props => {
   // <SearchBar extraStyle="flat" searchOn="trains"/>
   // <SearchBar extraStyle="flat" searchOn="station"/>
 
+  let fromInputLS = window.localStorage.getItem('fromInput')
+  let toInputLS = window.localStorage.getItem('toInput')
+  let dateInputIndexLS = Number(window.localStorage.getItem('selectedDateIndex'))
+
+  if (dateInputIndexLS === null) {
+    dateInputIndexLS = 0
+  }
 
   const [fromStationValue, setFromStationValue] = useState(null);
   const [toStationValue, setToStationValue] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(0); //// 0 === today
+  const [selectedDate, setSelectedDate] = useState(dateInputIndexLS); //// 0 === today
+
 
   //#region - generate options in datalist
-
   let optionsFrom = []
   let optionsTo = []
   let governorates = Object.keys(stationsAndGov)
@@ -36,50 +43,18 @@ const SearchBar = props => {
       }
     }
   }
-
   //#endregion
 
   //#region - when Submit form
   const history = useHistory();
   const onSubmitHandler = (e) => {
+    if (fromStationValue) window.localStorage.setItem('fromInput', fromStationValue);
+    if (toStationValue) window.localStorage.setItem('toInput', toStationValue);
+    window.localStorage.setItem('selectedDateIndex', selectedDate);
     e.preventDefault();
-    if (props.searchOn === "stations") {
-      history.push(`/trains-between-stations?from=${fromStationValue}&to=${toStationValue}&date=${createDateFormat(selectedDate).dateFormateDigit}`);
-    }
+    if (props.searchOn === "stations") history.push(`/trains-between-stations?from=${fromInputLS}&to=${toInputLS}&date=${createDateFormat(selectedDate).dateFormateDigit}`);
   }
   //#endregion
-
-  //#region - generate date today, tomorrow,...
-  // const createDateFormat = index => {
-  //   // 0 => today
-  //   // 1 => tomorrow
-  //   // 2 => afterTomorrow
-
-  //   const day = new Date();
-
-  //   day.setDate(day.getDate() + index)
-
-  //   const dateFormateDigit = day.toLocaleDateString('en-GB')
-  //   //// 26/06/2021
-  //   const monthName = day.toLocaleString('en-US', { month: 'short' })
-  //   //// Jun
-  //   const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
-  //   //// Sat
-  //   const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
-  //   //// 26
-  //   const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
-  //   //// 26 Jun Sat
-
-
-  //   return {
-  //     dateFormat,
-  //     weekDayName,
-  //     monthName,
-  //     dayDigit,
-  //     dateFormateDigit
-  //   };
-  // };
-  //#endregion 
 
   //#region - add extra styles based on props
   let extraStyle = "";
@@ -95,6 +70,38 @@ const SearchBar = props => {
   }
   //#endregion
 
+  //#region - generate radio dates to put it in <from searchOn="stations"/>
+  let numOfDays = 3;
+  let radios = []
+  for (let i = 0; i < numOfDays; i++) {
+    if (selectedDate === i) {
+      radios.push(
+        <div key={i}>
+          <input type="radio" id={`${i}-option`} name="selector" defaultChecked />
+          <label htmlFor={`${i}-option`}>
+            <div className={css.nextDate} onClick={_ => setSelectedDate(i)}>
+              <p>{`${createDateFormat(i).dayDigit} ${createDateFormat(i).monthName}`}</p>
+              <p>{createDateFormat(i).weekDayName}</p>
+            </div>
+          </label>
+        </div>
+      )
+    } else {
+      radios.push(
+        <div key={i}>
+          <input type="radio" id={`${i}-option`} name="selector" />
+          <label htmlFor={`${i}-option`}>
+            <div className={css.nextDate} onClick={_ => setSelectedDate(i)}>
+              <p>{`${createDateFormat(i).dayDigit} ${createDateFormat(i).monthName}`}</p>
+              <p>{createDateFormat(i).weekDayName}</p>
+            </div>
+          </label>
+        </div>
+      )
+    }
+  }
+  //#endregion
+
   //#region - generate <form/> depends on props.searchOn
   let form = "";
   if (props.searchOn === "stations") {
@@ -102,7 +109,7 @@ const SearchBar = props => {
       <form onSubmit={onSubmitHandler}>
         <div className={css.inputContainer}>
           <i className={`far fa-circle`}></i>
-          <input type="text" list="fromStation" placeholder="From: City, Station" onChange={e => setFromStationValue(e.target.value)} />
+          <input type="text" list="fromStation" placeholder="From: City, Station" onChange={e => setFromStationValue(e.target.value)} defaultValue={fromInputLS} />
           <datalist id="fromStation" className={css.datalist}>
             {optionsFrom}
           </datalist>
@@ -110,7 +117,7 @@ const SearchBar = props => {
 
         <div className={css.inputContainer}>
           <i className="fas fa-map-marker-alt"></i>
-          <input className="input-field" list="toStation" type="text" placeholder="To: City, Station" onChange={e => setToStationValue(e.target.value)} />
+          <input className="input-field" list="toStation" type="text" placeholder="To: City, Station" onChange={e => setToStationValue(e.target.value)} defaultValue={toInputLS} />
           <datalist id="toStation" className={css.datalist}>
             {optionsTo}
           </datalist>
@@ -122,37 +129,7 @@ const SearchBar = props => {
         </div>
 
         <div className={css.nextDatesContainer}>
-
-          <div>
-            <input type="radio" id="f-option" name="selector" defaultChecked />
-            <label for="f-option">
-              <div className={css.nextDate} onClick={_ => setSelectedDate(0)}>
-                <p>{`${createDateFormat(0).dayDigit} ${createDateFormat(0).monthName}`}</p>
-                <p>{createDateFormat(0).weekDayName}</p>
-              </div>
-            </label>
-          </div>
-
-          <div>
-            <input type="radio" id="s-option" name="selector" />
-            <label for="s-option">
-              <div className={css.nextDate} onClick={_ => setSelectedDate(1)}>
-                <p>{`${createDateFormat(1).dayDigit} ${createDateFormat(1).monthName}`}</p>
-                <p>{createDateFormat(1).weekDayName}</p>
-              </div>
-            </label>
-          </div>
-
-          <div>
-            <input type="radio" id="t-option" name="selector" />
-            <label for="t-option">
-              <div className={css.nextDate} onClick={_ => setSelectedDate(2)}>
-                <p>{`${createDateFormat(2).dayDigit} ${createDateFormat(2).monthName}`}</p>
-                <p>{createDateFormat(2).weekDayName}</p>
-              </div>
-            </label>
-          </div>
-
+          {radios}
         </div>
 
         <button className={css.searchButton}>Search</button>
@@ -197,6 +174,8 @@ const SearchBar = props => {
     )
   }
   //#endregion
+
+
 
   return (
     <div className={css.SearchBarContainer}>

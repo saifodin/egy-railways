@@ -11,11 +11,13 @@ import Train from './pages/Train/Train';
 import LiveTrain from './pages/LiveTrain/LiveTrain'
 import LiveStation from './pages/LiveStation/LiveStation'
 import Statistics from './pages/Statistics/Statistics'
+import ScrollToTop from './shared/ScrollToTop'
 
 function App() {
   return (
     <Router>
       <div>
+        <ScrollToTop />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/trains-between-stations" component={TrainsBetweenStations} />

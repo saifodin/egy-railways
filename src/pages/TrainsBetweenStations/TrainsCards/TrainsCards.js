@@ -1,5 +1,6 @@
 import React from 'react';
 import TrainCard from '../../../components/TrainCard/TrainCard';
+import NoTrainsFound from '../../../assets/imgs/otherSvg/NoTrainsFound.svg'
 import css from './TrainsCards.module.scss'
 import { subTwoTimes, ToMinOnly, time24To12, digitDateToNice, calFaresPrices, time24ToMin } from '../../../shared/utility'
 
@@ -12,15 +13,17 @@ const TrainsCards = (props) => {
   const toUrl = props.toUrl
   const dateUrl = props.dateUrl
 
+
+
+  console.log("ourTrains", ourTrains);
+
+  //#region - add extra items to ourTrains object
   let FastestId, CheapestId//, TopRatedId
   let FastestMin, minPrice //, hightestRate;
   let departTime, arrivalTime
   let indexFrom, indexTo
   let cheapestPrice
 
-  console.log("ourTrains", ourTrains);
-
-  //# add extra items to ourTrains objects
   for (const val of ourTrains) {
     for (const i in val.value.stopStation) {
       if (val.value.stopStation[i].name === fromUrl) {
@@ -65,10 +68,11 @@ const TrainsCards = (props) => {
     //   TopRatedId = val.value.number
     // }
   }
+  //#endregion
 
   console.log("ourTrains after extra", ourTrains);
 
-  //#region - sorted by filers
+  //#region - add filers logic
 
   //* Sorted By
   if (props.filterSorted === "DEPARTURE_TIME") {
@@ -117,7 +121,7 @@ const TrainsCards = (props) => {
   let ourTrainDep = []
   const filterDep = (min1, min2, min3, min4) => {
     for (const val of ourTrains) {
-      if (!min3) {
+      if (min3 === undefined) {
         if (val.value.departTimeMin >= min1 && val.value.departTimeMin < min2) {
           ourTrainDep.push(val)
         }
@@ -168,16 +172,13 @@ const TrainsCards = (props) => {
       if (((val.value.departTimeMin >= (23 * 60) && val.value.departTimeMin < (24 * 60)) || (val.value.departTimeMin >= 0 && val.value.departTimeMin < (5 * 60))) || (val.value.departTimeMin >= (11 * 60) && val.value.departTimeMin < (17 * 60)))
         ourTrainDep.push(val)
     }
-  } 
-  
+  }
+
   else ourTrainDep = [...ourTrains]
   ourTrains = [...ourTrainDep]
-
-
-
-
   //#endregion
 
+  console.log("ourTrains after filters", ourTrains);
 
 
 
@@ -208,6 +209,15 @@ const TrainsCards = (props) => {
               />
             )
           })
+        }
+        {ourTrains.length === 0 &&
+          <div className={css.noTrainFound}>
+            <img src={NoTrainsFound} alt="no train found"></img>
+            <div className={css.description}>
+              <h1>No trains found</h1>
+              <p>There are no more results left, you can reset filters or change this route</p>
+            </div>
+          </div>
         }
       </ul>
     </div>

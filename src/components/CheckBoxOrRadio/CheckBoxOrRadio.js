@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import css from './CheckBoxOrRadio.module.scss'
 
 
@@ -35,7 +35,7 @@ const CheckBoxOrRadio = (props) => {
         {/*input => disable none */}
         <input type={typeName} id={word} name={radioName} />
         {/*label => the word */}
-        <label onClick={_ => props.clickOnWhichLi(word)} className={isCheckbox} for={word}>{word}</label>
+        <label onClick={_ => props.clickOnWhichLi(word)} className={isCheckbox} htmlFor={word}>{word}</label>
         {/*div => the circle or rectangle  */}
         <div className={isCheckbox}></div>
       </li>
@@ -57,7 +57,7 @@ const CheckBoxOrRadio = (props) => {
         {/*
         <li>
           <input type={typeName} id={word} name={radioName} />
-          <label className={isCheckbox} for={word}>{word}</label>
+          <label className={isCheckbox} htmlFor={word}>{word}</label>
           <div className={css.isCheckbox}></div>
         </li> 
       */}

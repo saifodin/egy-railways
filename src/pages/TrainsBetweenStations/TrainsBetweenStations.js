@@ -16,7 +16,7 @@ const TrainsBetweenStations = _ => {
   console.log("TrainsBetweenStations.js")
 
 
-
+  
   //#region - get from, to, date, trainsDb values
   let params = new URLSearchParams(window.location.search);
   const fromUrl = params.get('from')
@@ -116,7 +116,7 @@ const TrainsBetweenStations = _ => {
         <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
         <div className={css.SearchBarContainer}>
-          <SearchBar extraStyle="flat" searchOn="stations" />
+          <SearchBar extraStyle="flat" searchOn="stations" inputFrom={fromUrl} inputTo={toUrl} inputDate={dateUrl}/>
         </div>
         <div className={css.line}></div>
       </div>
@@ -134,17 +134,17 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="radio" id="departure" name="sortedBy" value="departure" defaultChecked />
-                  <label onClick={_ => setFilterSorted("DEPARTURE_TIME")} for="departure">departure time</label>
+                  <label onClick={_ => setFilterSorted("DEPARTURE_TIME")} htmlFor="departure">departure time</label>
                 </div>
 
                 <div>
                   <input type="radio" id="duration" name="sortedBy" value="duration" />
-                  <label onClick={_ => setFilterSorted("DURATION")} for="duration">duration</label>
+                  <label onClick={_ => setFilterSorted("DURATION")} htmlFor="duration">duration</label>
                 </div>
 
                 <div>
                   <input type="radio" id="arrival" name="sortedBy" value="arrival" />
-                  <label onClick={_ => setFilterSorted("ARRIVAL_TIME")} for="arrival">arrival time</label>
+                  <label onClick={_ => setFilterSorted("ARRIVAL_TIME")} htmlFor="arrival">arrival time</label>
                 </div>
 
               </div>
@@ -172,7 +172,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="morning" name="morning" />
-                  <label for="morning" onClick={_ => setMorning(prev => !prev)}>
+                  <label htmlFor="morning" onClick={_ => setMorning(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="morning" src={pngMorning} />
                       <p>05 AM - 11 AM</p>
@@ -182,7 +182,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="afternoon" name="afternoon" />
-                  <label for="afternoon" onClick={_ => setAfternoon(prev => !prev)}>
+                  <label htmlFor="afternoon" onClick={_ => setAfternoon(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="afternoon" src={pngAfternoon} />
                       <p>11 AM - 05 PM</p>
@@ -192,7 +192,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="evening" name="evening" />
-                  <label for="evening" onClick={_ => setEvening(prev => !prev)}>
+                  <label htmlFor="evening" onClick={_ => setEvening(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="evening" src={pngEvening} />
                       <p>05 PM - 11 PM</p>
@@ -202,7 +202,7 @@ const TrainsBetweenStations = _ => {
 
                 <div>
                   <input type="checkbox" id="night" name="night" />
-                  <label for="night" onClick={_ => setNight(prev => !prev)}>
+                  <label htmlFor="night" onClick={_ => setNight(prev => !prev)}>
                     <div className={css.innerSection}>
                       <img alt="night" src={pngNight} />
                       <p>11 PM - 05 AM</p>

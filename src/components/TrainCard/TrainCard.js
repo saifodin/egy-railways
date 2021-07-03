@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { useHistory } from "react-router-dom"
 import DayBox from '../DayBox/DayBox'
 import css from './TrainCard.module.scss'
 
@@ -25,6 +26,13 @@ const TrainCard = props => {
     isFastest={TopRatedId === val.value.number ? true : false}
   />
   */
+
+  //#region - when click on trainDetails
+  const history = useHistory();
+  const trainDetailsButton = _ => {
+    history.push(`/train?name=${props.name}`);
+  }
+  //#endregion
 
   //#region add extra styles when Avail Closed
   const [isAvailOpen, setIsAvailOpen] = useState(false);
@@ -125,20 +133,20 @@ const TrainCard = props => {
                   {props.p1A &&
                     <div div >
                       <input onClick={_ => changeFare("1A")} type="radio" id={`train-${props.name}-1A`} name={`train-${props.name}-class`} defaultChecked />
-                      <label for={`train-${props.name}-1A`}>1A</label>
+                      <label htmlFor={`train-${props.name}-1A`}>1A</label>
                     </div>
                   }
                   {props.p2A &&
                     <div>
                       <input onClick={_ => changeFare("2A")} type="radio" id={`train-${props.name}-2A`} name={`train-${props.name}-class`} defaultChecked />
-                      <label for={`train-${props.name}-2A`}>2A</label>
+                      <label htmlFor={`train-${props.name}-2A`}>2A</label>
                     </div>
                   }
 
                   {props.p3A &&
                     <div>
                       <input onClick={_ => changeFare("3A")} type="radio" id={`train-${props.name}-3A`} name={`train-${props.name}-class`} defaultChecked />
-                      <label for={`train-${props.name}-3A`}>3A</label>
+                      <label htmlFor={`train-${props.name}-3A`}>3A</label>
                     </div>
                   }
 
@@ -159,7 +167,6 @@ const TrainCard = props => {
             </div>
 
           </div>
-
           <div className={css.trainAvail}>
             <div className={css.daysBoxes}>
               <DayBox date="3 May, Mon" availability="available" />
@@ -167,7 +174,7 @@ const TrainCard = props => {
               <DayBox date="9 May, Sun" availability="available" />
               <DayBox date="12 May, Wed" availability="not exist" />
             </div>
-            <button>Train Details</button>
+            <button onClick={trainDetailsButton}>Train Details</button>
             <div className={css.closeButton} onClick={_ => setIsAvailOpen(false)}>
               <i className="fas fa-times"></i>
             </div>

@@ -9,28 +9,50 @@ const TrainCard = props => {
 
   /*
     <TrainCard
-    key={val.id}
-    id={val.id}
-    name={val.value.number}
-    departTime={val.value.departTime}
-    arrivalTime={val.value.arrivalTime}
-    dateUrl={digitDateToNice(dateUrl)}
-    journeyTime={val.value.journeyTime}
-    numberOfStops={val.value.numberOfStops}
-    p1A={val.value.fareClassess["1A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p1A : null}
-    p2A={val.value.fareClassess["2A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p2A : null}
-    p3A={val.value.fareClassess["3A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p3A : null}
-    weekDayRuns={val.value.weekDayRuns}
-    isTopRated={FastestId === val.value.number ? true : false}
-    isCheapest={CheapestId === val.value.number ? true : false}
-    isFastest={TopRatedId === val.value.number ? true : false}
-  />
+      key={val.id}
+      id={val.id}
+      name={val.value.number}
+      departTime={val.value.departTime}
+      arrivalTime={val.value.arrivalTime}
+      dateUrl={digitDateToNice(dateUrl)}
+      journeyTime={val.value.journeyTime}
+      numberOfStops={val.value.numberOfStops}
+      p1A={val.value.fareClassess["1A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p1A : null}
+      p2A={val.value.fareClassess["2A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p2A : null}
+      p3A={val.value.fareClassess["3A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p3A : null}
+      weekDayRuns={val.value.weekDayRuns}
+      isTopRated={FastestId === val.value.number ? true : false}
+      isCheapest={CheapestId === val.value.number ? true : false}
+      isFastest={TopRatedId === val.value.number ? true : false}
+    />
+
+    <TrainCard
+      forTrainPage
+      name={ourTrain.value.number}
+      trainStart={ourTrain.value.stopStation[0].name}
+      trainEnd={ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name}
+      journeyTime={subTwoTimes(ourTrain.value.stopStation[0].departTime, ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
+      startTime={time24To12(ourTrain.value.stopStation[0].departTime)}
+      endTime={time24To12(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
+      numberOfStations={ourTrain.value.stopStation.length - 2}
+      weekDayRuns={ourTrain.value.weekDayRuns}
+      rate="3.6"
+      Fare1A={ourTrain.value.fareClassess['1A'] ? true : false}
+      Fare2A={ourTrain.value.fareClassess['2A'] ? true : false}
+      Fare3A={ourTrain.value.fareClassess['3A'] ? true : false}
+    />
   */
 
   //#region - when click on trainDetails
   const history = useHistory();
   const trainDetailsButton = _ => {
     history.push(`/train?name=${props.name}`);
+  }
+  //#endregion
+
+  //#region - when click on go to live Train
+  const goToLiveTrain = _ => {
+    history.push(`/live-train?name=${props.name}`);
   }
   //#endregion
 
@@ -192,24 +214,32 @@ const TrainCard = props => {
 
           <div className={css.trainCardTop}>
             <div className={css.rating}>
-              <p>3.6</p>
+              <p>{props.rate}</p>
             </div>
-            <span className={css.trainNo}>02461</span>
+            <span className={css.trainNo}>{props.name}</span>
             <div className={css.weekDays}>
               <ul className="reset">
-                <li className={css.noRun}>S</li>
-                <li>S</li>
-                <li className={css.noRun}>M</li>
-                <li>T</li>
-                <li className={css.noRun}>W</li>
-                <li className={css.noRun}>T</li>
-                <li>F</li>
+                {props.weekDayRuns.sat ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.sun ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.mon ? <li>M</li> : <li className={css.noRun}>M</li>}
+                {props.weekDayRuns.tue ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.wed ? <li>W</li> : <li className={css.noRun}>W</li>}
+                {props.weekDayRuns.thu ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.fri ? <li>F</li> : <li className={css.noRun}>F</li>}
               </ul>
             </div>
             <div className={css.classes}>
-              <span>1A</span>
-              <span>2A</span>
-              <span>3A</span>
+              {props.Fare1A ? <span>1A</span> : null}
+              {props.Fare2A ? <span>2A</span> : null}
+              {props.Fare3A ? <span>3A</span> : null}
+            </div>
+            <div className={css.toLiveTrainContainer}>
+              <span onClick={goToLiveTrain}> go to live train <span className={css.anchor}></span></span>
+              <div className={css.flash}>
+                <div>
+                  <span></span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -217,22 +247,83 @@ const TrainCard = props => {
 
             <div className={css.timeInfo}>
               <div className={css.departureTimeInfo}>
-                <span>10:27<span>PM</span></span>
-                <span>Cairo</span>
+                <span>{props.startTime.slice(0, props.startTime.length - 3)}<span>{props.startTime.slice(-2)}</span></span>
+                <span>{props.trainStart}</span>
               </div>
 
               <div className={css.durationAndStops}>
-                <span className={css.duration}>2h13m</span>
+                <span className={css.duration}>{props.journeyTime}</span>
                 <div className={css.line}>
                   <span></span>
                   <span></span>
                 </div>
-                <span className={css.stops}>6 Stations Between</span>
+                <span className={css.stops}>{props.numberOfStations} Stations Between</span>
               </div>
 
               <div className={css.arrivalTimeInfo}>
-                <span>01:40<span>PM</span></span>
-                <span>Alexandria</span>
+                <span>{props.endTime.slice(0, props.endTime.length - 3)}<span>{props.endTime.slice(-2)}</span></span>
+                <span>{props.trainEnd}</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    )
+  }
+
+  else if (props.liveTrainPage) {
+    trainCard = (null)
+  }
+  else if (props.liveTrainPage) {
+    trainCard = (
+      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage} ${css.liveTrainPage}`}>
+        <div className={css.trainData}>
+
+          <div className={css.trainCardTop}>
+            <div className={css.rating}>
+              <p>{props.rate}</p>
+            </div>
+            <span className={css.trainNo}>{props.name}</span>
+            <div className={css.weekDays}>
+              <ul className="reset">
+                {props.weekDayRuns.sat ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.sun ? <li>S</li> : <li className={css.noRun}>S</li>}
+                {props.weekDayRuns.mon ? <li>M</li> : <li className={css.noRun}>M</li>}
+                {props.weekDayRuns.tue ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.wed ? <li>W</li> : <li className={css.noRun}>W</li>}
+                {props.weekDayRuns.thu ? <li>T</li> : <li className={css.noRun}>T</li>}
+                {props.weekDayRuns.fri ? <li>F</li> : <li className={css.noRun}>F</li>}
+              </ul>
+            </div>
+            <div className={css.classes}>
+              {props.Fare1A ? <span>1A</span> : null}
+              {props.Fare2A ? <span>2A</span> : null}
+              {props.Fare3A ? <span>3A</span> : null}
+            </div>
+          </div>
+
+          <div className={css.trainCardMiddle}>
+
+            <div className={css.timeInfo}>
+              <div className={css.departureTimeInfo}>
+                <span>{props.startTime.slice(0, props.startTime.length - 3)}<span>{props.startTime.slice(-2)}</span></span>
+                <span>{props.trainStart}</span>
+              </div>
+
+              <div className={css.durationAndStops}>
+                <span className={css.duration}>{props.journeyTime}</span>
+                <div className={css.line}>
+                  <span></span>
+                  <span></span>
+                </div>
+                <span className={css.stops}>{props.numberOfStations} Stations Between</span>
+              </div>
+
+              <div className={css.arrivalTimeInfo}>
+                <span>{props.endTime.slice(0, props.endTime.length - 3)}<span>{props.endTime.slice(-2)}</span></span>
+                <span>{props.trainEnd}</span>
               </div>
 
             </div>

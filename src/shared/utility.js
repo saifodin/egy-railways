@@ -466,3 +466,38 @@ export const calFaresPrices = (station, anotherStation, numOfStops) => {
     p3A: (distance * 3) - (numOfStops * 1)
   }
 }
+
+export const KnowGov = (station) => {
+
+  const stationsAndGov = [
+    { "name": "Alexandria", "isCapital": true, "gov": "Alexandria" },
+    { "name": "Sidi Gaber", "isCapital": false, "gov": "Alexandria" },
+    { "name": "Kafr Aldawaar", "isCapital": false, "gov": "Beheira" },
+    { "name": "Abu Homs", "isCapital": false, "gov": "Beheira" },
+    { "name": "Damanhur", "isCapital": true, "gov": "Beheira" },
+    { "name": "Etay Elbarrowd", "isCapital": false, "gov": "Beheira" },
+    { "name": "Eltawfiqiuh", "isCapital": false, "gov": "Beheira" },
+
+    { "name": "Kafr Elzyat", "isCapital": false, "gov": "Gharbiya" },
+    { "name": "Tanta", "isCapital": true, "gov": "Gharbiya" },
+
+    { "name": "Barkih alsabe", "isCapital": false, "gov": "Menoufia" },
+    { "name": "Quesna", "isCapital": false, "gov": "Menoufia" },
+
+    { "name": "Banha", "isCapital": true, "gov": "Qalyubia" },
+    { "name": "Tookh", "isCapital": false, "gov": "Qalyubia" },
+    { "name": "Qaha", "isCapital": false, "gov": "Qalyubia" },
+    { "name": "Qalyoub", "isCapital": false, "gov": "Qalyubia" },
+    { "name": "Shubra", "isCapital": false, "gov": "Qalyubia" },
+
+    { "name": "Cairo", "isCapital": true, "gov": "Cairo" }
+  ]
+  for (const val of stationsAndGov) {
+    if (station === val.name) {
+      return {
+        gov: val.gov,
+        isCapital: val.isCapital
+      }
+    }
+  }
+}

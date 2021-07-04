@@ -1,13 +1,164 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from './Train.module.scss'
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import TrainCard from '../../components/TrainCard/TrainCard';
 import DayBox from '../../components/DayBox/DayBox';
 import Footer from '../../components/Footer/Footer'
-// import TrainCard from '../TrainsBetweenStations/TrainsCards/TrainCard/TrainCard'
+import { subTwoTimes, time24To12, calFaresPrices, KnowGov } from '../../shared/utility'
 
 const Train = () => {
+
+
+
+
+
+  //#region - get train obj
+  let params = new URLSearchParams(window.location.search);
+  const trainName = params.get('name')
+  const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
+  let ourTrain = null;
+  for (const val of trainsDb) {
+    if (val.value.number === trainName) {
+      ourTrain = val
+    }
+  }
+  //#endregion
+
+  console.log(ourTrain)
+
+  //#region - handle Availability search
+
+  const [from, setFrom] = useState(ourTrain.value.stopStation[0].name)
+  const [to, setTo] = useState(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name)
+  const [fareClass, setFareClass] = useState('1A')
+
+  // console.log(from)
+  // console.log(to)
+
+  //* know all Stations
+  let fromIndex = null
+  let allStations = []
+  for (let i = 0; i < ourTrain.value.stopStation.length; i++) {
+    allStations.push(ourTrain.value.stopStation[i].name)
+  }
+
+  const numberOfStops = allStations.indexOf(to) - allStations.indexOf(from) - 1
+
+
+  //*generate optionsFrom
+  let optionsFrom = []
+  for (let i = 0; i < ourTrain.value.stopStation.length - 1; i++) {
+    optionsFrom.push(
+      <option key={i} value={`${ourTrain.value.stopStation[i].name}`}>{ourTrain.value.stopStation[i].name}</option>
+    )
+  }
+
+  //* generate optionsTo
+  let optionsTo = []
+  if (ourTrain.value.stopStation) {
+    if (from === ourTrain.value.stopStation[0].name) {
+      for (let i = 1; i < ourTrain.value.stopStation.length; i++) {
+        if (to === ourTrain.value.stopStation[i].name) {
+          optionsTo.push(
+            <option key={i} value={`${ourTrain.value.stopStation[i].name}`} selected>{ourTrain.value.stopStation[i].name}</option>
+          )
+        } else {
+          optionsTo.push(
+            <option key={i} value={`${ourTrain.value.stopStation[i].name}`}>{ourTrain.value.stopStation[i].name}</option>
+          )
+        }
+      }
+    }
+    else {
+      fromIndex = allStations.indexOf(from)
+      for (let i = 1; i < ourTrain.value.stopStation.length; i++) {
+        if (fromIndex >= i) {
+          optionsTo.push(
+            <option key={i} value={`${ourTrain.value.stopStation[i].name}`} disabled>{ourTrain.value.stopStation[i].name}</option>
+          )
+        }
+        else {
+          optionsTo.push(
+            <option key={i} value={`${ourTrain.value.stopStation[i].name}`} >{ourTrain.value.stopStation[i].name}</option>
+          )
+        }
+      }
+    }
+  }
+
+
+  //* generate fareAndPrice
+  let fareAndPrice = []
+  if (ourTrain.value.fareClassess) {
+    if (ourTrain.value.fareClassess['1A'])
+      fareAndPrice.push(
+        <div key={"1A"}>
+          <input type="radio" id="oneTrain-1A" name="oneTrain-class" defaultChecked />
+          <label htmlFor="oneTrain-1A" onClick={_ => setFareClass('1A')}>1A<span>{calFaresPrices(from, to, numberOfStops).p1A}</span></label>
+          <div className={css.border}></div>
+        </div>
+      )
+    if (ourTrain.value.fareClassess['2A'])
+      fareAndPrice.push(
+        <div key={"2A"}>
+          <input type="radio" id="oneTrain-2A" name="oneTrain-class" defaultChecked />
+          <label htmlFor="oneTrain-2A" onClick={_ => setFareClass('2A')}>2A<span>{calFaresPrices(from, to, numberOfStops).p2A}</span></label>
+          <div className={css.border}></div>
+        </div>
+      )
+    if (ourTrain.value.fareClassess['3A'])
+      fareAndPrice.push(
+        <div key={"3A"}>
+          <input type="radio" id="oneTrain-3A" name="oneTrain-class" defaultChecked />
+          <label htmlFor="oneTrain-3A" onClick={_ => setFareClass('3A')}>3A<span>{calFaresPrices(from, to, numberOfStops).p3A}</span></label>
+          <div className={css.border}></div>
+        </div>
+      )
+  }
+  //#endregion
+
+  //#region - handle Schedule
+  let tbody = []
+  if (ourTrain.value.stopStation) {
+    tbody.push(
+      <tr key={0}>
+        <td>{ourTrain.value.stopStation[0].name}</td>
+        <td>starts</td>
+        <td>{ourTrain.value.stopStation[0].arrivalTime.slice(0, 5)}</td>
+        <td>10 min</td>
+        <td>1</td>
+        <td>{KnowGov(ourTrain.value.stopStation[0].name).isCapital ? <i className="fas fa-flag"></i> : <i className={css.noFlag}></i>} {KnowGov(ourTrain.value.stopStation[0].name).gov}</td>
+      </tr>
+    )
+    for (let i = 1; i < ourTrain.value.stopStation.length - 1; i++) {
+      tbody.push(
+        <tr key={i}>
+          <td>{ourTrain.value.stopStation[i].name}</td>
+          <td>{ourTrain.value.stopStation[i].arrivalTime.slice(0, 5)}</td>
+          <td>{ourTrain.value.stopStation[i].departTime.slice(0, 5)}</td>
+          <td>{ourTrain.value.stopStation[i].stopTime} min</td>
+          <td>1</td>
+          <td>{KnowGov(ourTrain.value.stopStation[i].name).isCapital ? <i className="fas fa-flag"></i> : <i className={css.noFlag}></i>} {KnowGov(ourTrain.value.stopStation[i].name).gov}</td>
+        </tr>
+      )
+    }
+    tbody.push(
+      <tr key={ourTrain.value.stopStation.length - 1}>
+        <td>{ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name}</td>
+        <td>{ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime.slice(0, 5)}</td>
+        <td>ends</td>
+        <td>10 min</td>
+        <td>1</td>
+        <td>{KnowGov(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name).isCapital ? <i className="fas fa-flag"></i> : <i className={css.noFlag}></i>} {KnowGov(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name).gov}</td>
+      </tr>
+    )
+  }
+  //#endregion
+
+
+
+
   return (
     <div className={css.train}>
 
@@ -15,17 +166,37 @@ const Train = () => {
         <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
         <div className={css.SearchBarContainer}>
-          <SearchBar extraStyle="flat" searchOn="trains" />
+          <SearchBar
+            extraStyle="flat"
+            searchOn="trains"
+            trainName={ourTrain.value.number}
+            trainStart={ourTrain.value.stopStation[0].name}
+            trainEnd={ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name}
+          />
         </div>
         <div className={css.line}></div>
       </div>
 
       <div className={`${css.trainCard} container`}>
-        <TrainCard forTrainPage />
+        <TrainCard
+          forTrainPage
+          name={ourTrain.value.number}
+          trainStart={ourTrain.value.stopStation[0].name}
+          trainEnd={ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name}
+          journeyTime={subTwoTimes(ourTrain.value.stopStation[0].departTime, ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
+          startTime={time24To12(ourTrain.value.stopStation[0].departTime)}
+          endTime={time24To12(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
+          numberOfStations={ourTrain.value.stopStation.length - 2}
+          weekDayRuns={ourTrain.value.weekDayRuns}
+          rate="3.7"
+          Fare1A={ourTrain.value.fareClassess['1A'] ? true : false}
+          Fare2A={ourTrain.value.fareClassess['2A'] ? true : false}
+          Fare3A={ourTrain.value.fareClassess['3A'] ? true : false}
+        />
       </div>
 
       <div className={`${css.fareAndSeatContainer} container`}>
-        <h2>Fare and Seat Availability of 02461</h2>
+        <h2>Fare and Seat Availability of {ourTrain.value.number}</h2>
         <div className={css.fareAndSeat}>
           <div className={css.inputs}>
             <div className={css.fromToSearch}>
@@ -33,13 +204,8 @@ const Train = () => {
               <form>
                 <div>
                   <i className={`far fa-circle`}></i>
-                  <select name="from" id="from">
-                    <option value="Cairo">Cairo</option>
-                    <option value="Shubra">Shubra</option>
-                    <option value="Tanta">Tanta</option>
-                    <option value="Etay Elbarrowd">Etay Elbarrowd</option>
-                    <option value="Sidi Gaber">Sidi Gaber</option>
-                    <option value="Alexandria">Alexandria</option>
+                  <select name="from" id="from" value={from} onChange={e => setFrom(e.target.value)} onClick={_ => setTo(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name)}>
+                    {optionsFrom}
                   </select>
                   <i className="fas fa-chevron-down"></i>
                 </div>
@@ -48,13 +214,8 @@ const Train = () => {
 
                 <div>
                   <i className="fas fa-map-marker-alt"></i>
-                  <select name="to" id="to">
-                    <option value="Cairo">Cairo</option>
-                    <option value="Shubra">Shubra</option>
-                    <option value="Tanta">Tanta</option>
-                    <option value="Etay Elbarrowd">Etay Elbarrowd</option>
-                    <option value="Sidi Gaber">Sidi Gaber</option>
-                    <option value="Alexandria" selected>Alexandria</option>
+                  <select name="to" id="to" value={to} onChange={e => setTo(e.target.value)}>
+                    {optionsTo}
                   </select>
                   <i className="fas fa-chevron-down"></i>
                 </div>
@@ -62,23 +223,7 @@ const Train = () => {
 
             </div>
             <div className={css.fareAndPrice}>
-              <div>
-                <input type="radio" id="oneTrain-1A" name="oneTrain-class" defaultChecked />
-                <label htmlFor="oneTrain-1A">1A<span>20</span></label>
-                <div className={css.border}></div>
-              </div>
-
-              <div>
-                <input type="radio" id="oneTrain-2A" name="oneTrain-class" />
-                <label htmlFor="oneTrain-2A">2A<span>60</span></label>
-                <div className={css.border}></div>
-              </div>
-
-              <div>
-                <input type="radio" id="oneTrain-3A" name="oneTrain-class" />
-                <label htmlFor="oneTrain-3A">3A<span>120</span></label>
-                <div className={css.border}></div>
-              </div>
+              {fareAndPrice}
             </div>
           </div>
           <div className={css.results}>
@@ -101,7 +246,7 @@ const Train = () => {
 
       <div className={`${css.scheduleContainer} container`}>
         <div className={css.schedule}>
-          <h2>02461 Schedule</h2>
+          <h2>{ourTrain.value.number} Schedule</h2>
           <div className={css.tableContainer}>
             <table>
               <thead>
@@ -115,7 +260,8 @@ const Train = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {tbody}
+                {/* <tr>
                   <td>Cairo</td>
                   <td>starts</td>
                   <td>00:05</td>
@@ -211,6 +357,7 @@ const Train = () => {
                   <td>1</td>
                   <td>Alexandria</td>
                 </tr>
+                */}
               </tbody>
             </table>
           </div>
@@ -219,7 +366,7 @@ const Train = () => {
 
       <div className={`${css.reviewContainer} container`}>
         <div className={css.review}>
-          <h2>Rating and Reviews of 02461</h2>
+          <h2>Rating and Reviews of {ourTrain.value.number}</h2>
           <div className={css.mainReview}>
             <div className={css.totalRate}>3.6</div>
             <div className={css.numberOfReviews}>15 Reviews</div>
@@ -262,7 +409,7 @@ const Train = () => {
       <div className={css.footerContainer}>
         <Footer />
       </div>
-  
+
     </div>
   );
 }

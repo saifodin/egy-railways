@@ -176,7 +176,7 @@ const LiveTrain = () => {
         </div>
     
         <div className="side">
-          <TrainCard forTrainPage liveTrainPage />
+          <TrainCard liveTrainPage />
           <span> all train information <span className="anchor"></span></span>
           <div className="trainStatus">
             <div className="title">

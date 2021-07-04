@@ -22,6 +22,8 @@ const SearchBar = props => {
   const [toStationValue, setToStationValue] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dateInputIndexLS); //// 0 === today
 
+  const [trainName, setTrainName] = useState(props.trainName);
+
 
   //#region - generate options in datalist
   let optionsFrom = []
@@ -45,14 +47,19 @@ const SearchBar = props => {
   }
   //#endregion
 
-  //#region - when Submit form
+  //#region - when Submit <form/>
   const history = useHistory();
-  const onSubmitHandler = (e) => {
+  const onSubmitHandlerStations = (e) => {
     if (fromStationValue) window.localStorage.setItem('fromInput', fromStationValue);
     if (toStationValue) window.localStorage.setItem('toInput', toStationValue);
     window.localStorage.setItem('selectedDateIndex', selectedDate);
     e.preventDefault();
-    if (props.searchOn === "stations") history.push(`/trains-between-stations?from=${fromInputLS}&to=${toInputLS}&date=${createDateFormat(selectedDate).dateFormateDigit}`);
+    history.push(`/trains-between-stations?from=${fromInputLS}&to=${toInputLS}&date=${createDateFormat(selectedDate).dateFormateDigit}`);
+  }
+
+  const onSubmitHandlerTrains = (e) => {
+    e.preventDefault();
+    history.push(`/train?name=${trainName}`);
   }
   //#endregion
 
@@ -106,7 +113,7 @@ const SearchBar = props => {
   let form = "";
   if (props.searchOn === "stations") {
     form = (
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandlerStations}>
         <div className={css.inputContainer}>
           <i className={`far fa-circle`}></i>
           <input type="text" list="fromStation" placeholder="From: City, Station" onChange={e => setFromStationValue(e.target.value)} defaultValue={fromInputLS} />
@@ -139,20 +146,20 @@ const SearchBar = props => {
   }
   else if (props.searchOn === "trains") {
     form = (
-      <form>
+      <form onSubmit={onSubmitHandlerTrains}>
         <div className={css.inputContainer}>
           <i className="fas fa-subway"></i>
-          <input type="text" placeholder="Train Number" defaultValue="02461" />
+          <input type="text" placeholder="Train Number" defaultValue={trainName} onChange={e => setTrainName(e.target.value)} />
         </div>
 
         <div className={css.inputContainer}>
           <i className={`far fa-circle`}></i>
-          <input type="text" placeholder="From: City, Station" value="Start From: Cairo" disabled />
+          <input type="text" defaultValue={`Start From: ${props.trainStart}`} disabled />
         </div>
 
         <div className={css.inputContainer}>
           <i className="fas fa-map-marker-alt"></i>
-          <input className="input-field" type="text" placeholder="To: City, Station" value="End In: Alexandria" disabled />
+          <input className="input-field" type="text" defaultValue={`End In: ${props.trainEnd}`} disabled />
         </div>
 
         <button className={css.searchButton}>Search Train</button>

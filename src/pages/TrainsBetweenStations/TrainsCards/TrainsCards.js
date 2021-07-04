@@ -15,7 +15,7 @@ const TrainsCards = (props) => {
 
 
 
-  console.log("ourTrains", ourTrains);
+  // console.log("ourTrains", ourTrains);
 
   //#region - add extra items to ourTrains object
   let FastestId, CheapestId//, TopRatedId
@@ -70,7 +70,7 @@ const TrainsCards = (props) => {
   }
   //#endregion
 
-  console.log("ourTrains after extra", ourTrains);
+  // console.log("ourTrains after extra", ourTrains);
 
   //#region - add filers logic
 
@@ -178,7 +178,7 @@ const TrainsCards = (props) => {
   ourTrains = [...ourTrainDep]
   //#endregion
 
-  console.log("ourTrains after filters", ourTrains);
+  // console.log("ourTrains after filters", ourTrains);
 
 
 

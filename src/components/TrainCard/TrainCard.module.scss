@@ -154,7 +154,7 @@
 
 .trainData .trainCardMiddle .fareClasses .classes {
   display: flex;
-  min-width: 112px;
+  min-width: 112kpx;
   > div {
     input {
       display: none;
@@ -502,24 +502,89 @@
       }
       .classes {
         margin-left: 50px;
-        margin-bottom: 3px;
         > span {
-          cursor: auto;
-          border: 1px solid var(--d);
           color: var(--d);
-          border-right: none;
-          text-align: center;
           padding: 2px;
-          position: relative;
-          font-size: 11px;
-          &:first-of-type {
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
+          &::after {
+            content: ",";
           }
           &:last-of-type {
-            border-right: 1px solid var(--d);
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
+            &::after {
+              content: "";
+            }
+          }
+        }
+      }
+      .toLiveTrainContainer {
+        position: relative;
+        margin-left: auto;
+        margin-right: 20px;
+
+        padding: 0px;
+        color: var(--f);
+        font-weight: 400;
+        font-size: 14px;
+        cursor: pointer;
+
+        .anchor {
+          display: inline-block;
+          height: 5px;
+          width: 5px;
+          border: solid var(--f);
+          border-width: 2px 2px 0 0;
+          content: "";
+          transform: rotate(45deg);
+          margin-left: auto;
+        }
+
+        .flash {
+          position: absolute;
+          left: 92px;
+          top: -18px;
+          border: 0;
+          background: none;
+          padding: 6px;
+          height: 40px;
+          width: 40px;
+          div {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-right: 0;
+            background: #4edc24;
+            border-radius: 50%;
+            margin-left: 4px;
+            z-index: 999;
+          }
+          span {
+            content: "";
+            position: absolute;
+            border-radius: 100%;
+            transform-origin: 50% 50%;
+            left: -1px;
+            top: 0px;
+            background: #4edc24;
+            opacity: 0;
+
+            width: 30px;
+            height: 30px;
+
+            animation: flash 1s ease-out infinite;
+            animation-delay: 0.2s;
+          }
+        }
+
+        @keyframes flash {
+          from {
+            transform: scale(0);
+            opacity: 1;
+          }
+
+          to {
+            /* width: 20px;
+            height: 20px; */
+            transform: scale(1);
+            opacity: 0;
           }
         }
       }
@@ -583,7 +648,7 @@
   .trainData {
     .trainCardTop {
       .classes {
-        display: none;
+        // display: none;
       }
     }
   }

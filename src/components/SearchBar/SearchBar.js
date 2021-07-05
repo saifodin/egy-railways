@@ -59,7 +59,9 @@ const SearchBar = props => {
 
   const onSubmitHandlerTrains = (e) => {
     e.preventDefault();
-    history.push(`/train?name=${trainName}`);
+    props.inLiveTrainPage ? history.push(`/live-train?name=${trainName}`) : history.push(`/train?name=${trainName}`)
+
+
   }
   //#endregion
 
@@ -167,6 +169,7 @@ const SearchBar = props => {
       </form>
     )
   }
+
   else if (props.searchOn === "LiveStation") {
     form = (
       <form>

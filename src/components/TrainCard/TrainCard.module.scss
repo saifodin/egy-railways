@@ -519,7 +519,6 @@
         position: relative;
         margin-left: auto;
         margin-right: 20px;
-
         padding: 0px;
         color: var(--f);
         font-weight: 400;
@@ -565,10 +564,8 @@
             top: 0px;
             background: #4edc24;
             opacity: 0;
-
             width: 30px;
             height: 30px;
-
             animation: flash 1s ease-out infinite;
             animation-delay: 0.2s;
           }
@@ -581,8 +578,6 @@
           }
 
           to {
-            /* width: 20px;
-            height: 20px; */
             transform: scale(1);
             opacity: 0;
           }
@@ -645,11 +640,4 @@
   margin-top: 0px;
   width: 100%;
   border: none;
-  .trainData {
-    .trainCardTop {
-      .classes {
-        // display: none;
-      }
-    }
-  }
 }

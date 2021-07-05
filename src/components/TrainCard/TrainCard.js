@@ -207,7 +207,7 @@ const TrainCard = props => {
   }
 
   //* when trainCard called by train page, or called by liveTrain page
-  else if (props.forTrainPage) {
+  else if (props.forTrainPage || props.liveTrainPage) {
     trainCard = (
       <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage} ${css.liveTrainPage}`}>
         <div className={css.trainData}>
@@ -233,75 +233,16 @@ const TrainCard = props => {
               {props.Fare2A ? <span>2A</span> : null}
               {props.Fare3A ? <span>3A</span> : null}
             </div>
-            <div className={css.toLiveTrainContainer}>
-              <span onClick={goToLiveTrain}> go to live train <span className={css.anchor}></span></span>
-              <div className={css.flash}>
-                <div>
-                  <span></span>
+            { props.forTrainPage &&
+              <div className={css.toLiveTrainContainer}>
+                <span onClick={goToLiveTrain}> go to live train <span className={css.anchor}></span></span>
+                <div className={css.flash}>
+                  <div>
+                    <span></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className={css.trainCardMiddle}>
-
-            <div className={css.timeInfo}>
-              <div className={css.departureTimeInfo}>
-                <span>{props.startTime.slice(0, props.startTime.length - 3)}<span>{props.startTime.slice(-2)}</span></span>
-                <span>{props.trainStart}</span>
-              </div>
-
-              <div className={css.durationAndStops}>
-                <span className={css.duration}>{props.journeyTime}</span>
-                <div className={css.line}>
-                  <span></span>
-                  <span></span>
-                </div>
-                <span className={css.stops}>{props.numberOfStations} Stations Between</span>
-              </div>
-
-              <div className={css.arrivalTimeInfo}>
-                <span>{props.endTime.slice(0, props.endTime.length - 3)}<span>{props.endTime.slice(-2)}</span></span>
-                <span>{props.trainEnd}</span>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    )
-  }
-
-  else if (props.liveTrainPage) {
-    trainCard = (null)
-  }
-  else if (props.liveTrainPage) {
-    trainCard = (
-      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage} ${css.liveTrainPage}`}>
-        <div className={css.trainData}>
-
-          <div className={css.trainCardTop}>
-            <div className={css.rating}>
-              <p>{props.rate}</p>
-            </div>
-            <span className={css.trainNo}>{props.name}</span>
-            <div className={css.weekDays}>
-              <ul className="reset">
-                {props.weekDayRuns.sat ? <li>S</li> : <li className={css.noRun}>S</li>}
-                {props.weekDayRuns.sun ? <li>S</li> : <li className={css.noRun}>S</li>}
-                {props.weekDayRuns.mon ? <li>M</li> : <li className={css.noRun}>M</li>}
-                {props.weekDayRuns.tue ? <li>T</li> : <li className={css.noRun}>T</li>}
-                {props.weekDayRuns.wed ? <li>W</li> : <li className={css.noRun}>W</li>}
-                {props.weekDayRuns.thu ? <li>T</li> : <li className={css.noRun}>T</li>}
-                {props.weekDayRuns.fri ? <li>F</li> : <li className={css.noRun}>F</li>}
-              </ul>
-            </div>
-            <div className={css.classes}>
-              {props.Fare1A ? <span>1A</span> : null}
-              {props.Fare2A ? <span>2A</span> : null}
-              {props.Fare3A ? <span>3A</span> : null}
-            </div>
+            }
           </div>
 
           <div className={css.trainCardMiddle}>

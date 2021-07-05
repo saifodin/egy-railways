@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom"
 import './LiveTrain.scss';
 import Navbar from '../../components/Navbar/Navbar'
 import TrainCard from '../../components/TrainCard/TrainCard'
@@ -8,7 +9,6 @@ import Footer from '../../components/Footer/Footer'
 import {
   timeNow,
   NameNextDayWork,
-  trainData,
   weekDayToday,
   time24To12,
   subTwoTimes,
@@ -21,16 +21,29 @@ import {
 
 const LiveTrain = () => {
 
+  //#region - get train obj
+  let params = new URLSearchParams(window.location.search);
+  const trainName = params.get('name')
+  const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
+  let trainData = null;
+  for (const val of trainsDb) {
+    if (val.value.number === trainName) {
+      trainData = val.value
+    }
+  }
+  //#endregion
+
+  console.log(trainData)
 
   //#region - generate content in trainStatus
   let content;
   let secondDiv;
 
   //* today is a workDay
-  if (trainData.weekdaysRuns[weekDayToday]) {
+  if (trainData.weekDayRuns[weekDayToday]) {
 
     // Not Started Yet
-    if (isPastDate(trainData.routeStations[0].departs)) {
+    if (isPastDate(trainData.stopStation[0].departTime)) {
       content = (
         <div className="content">
           <div>
@@ -38,7 +51,7 @@ const LiveTrain = () => {
             <div className="textContent">
               <div>Train Status</div>
               <div className="red">Not Started Yet</div>
-              <div>will start after <span>{subTwoTimes(timeNow, trainData.routeStations[0].departs)}</span></div>
+              <div>will start after <span>{subTwoTimes(timeNow, trainData.stopStation[0].departTime)}</span></div>
             </div>
           </div>
         </div>
@@ -46,28 +59,28 @@ const LiveTrain = () => {
     }
 
     // Running Now
-    else if (isTimeBetweenOrEqual(trainData.routeStations[0].departs, trainData.routeStations[trainData.routeStations.length - 1].arrives)) {
+    else if (isTimeBetweenOrEqual(trainData.stopStation[0].departTime, trainData.stopStation[trainData.stopStation.length - 1].arrivalTime)) {
       //// if location in station
-      if (isWaiting().result || timeNow === isWaiting().departs) {
+      if (isWaiting(trainData.stopStation).result || timeNow === isWaiting(trainData.stopStation).departs) {
         secondDiv = (
           <div>
             <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
-              <div className="orange">Waiting in <span className="underline">{isWaiting().station}</span> Station</div>
-              <div>The train departs after <span>{subTwoTimes(timeNow, isWaiting().departs).slice(-3)}</span></div>
+              <div className="orange">Waiting in <span className="underline">{isWaiting(trainData.stopStation).station}</span> Station</div>
+              <div>The train departs after <span>{subTwoTimes(timeNow, isWaiting(trainData.stopStation).departs).slice(-3)}</span></div>
             </div>
           </div>
         )
       }
       //// if location in last station
-      else if (timeNow === trainData.routeStations[trainData.routeStations.length - 1].departs) {
+      else if (timeNow === trainData.stopStation[trainData.stopStation.length - 1].departTime) {
         secondDiv = (
           <div>
             <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
-              <div className="orange">Stop in <span className="underline">{isWaiting().station}</span> Station</div>
+              <div className="orange">Stop in <span className="underline">{isWaiting(trainData.stopStation).station}</span> Station</div>
               <div>The train finish its journey</div>
             </div>
           </div>
@@ -80,8 +93,8 @@ const LiveTrain = () => {
             <div className="icon"><i className="fas fa-map-marked-alt fa-2x fa-fw"></i></div>
             <div className="textContent">
               <div>Train location</div>
-              <div className="orange">Going To <span className="underline">{isBetweenStations().nextStation}</span> Station</div>
-              <div>The train arrives in <span>{subTwoTimes(timeNow, isBetweenStations().arrives)}</span></div>
+              <div className="orange">Going To <span className="underline">{isBetweenStations(trainData.stopStation).nextStation}</span> Station</div>
+              <div>The train arrives in <span>{subTwoTimes(timeNow, isBetweenStations(trainData.stopStation).arrives)}</span></div>
             </div>
           </div>
         )
@@ -94,7 +107,7 @@ const LiveTrain = () => {
             <div className="textContent">
               <div>Train Status</div>
               <div>Running Now</div>
-              <div>has started since <span className="red">{subTwoTimes(trainData.routeStations[0].departs, timeNow)}</span></div>
+              <div>has started since <span className="red">{subTwoTimes(trainData.stopStation[0].departTime, timeNow)}</span></div>
             </div>
           </div>
           {secondDiv}
@@ -111,7 +124,7 @@ const LiveTrain = () => {
             <div className="textContent">
               <div>Train Status</div>
               <div className="red">Finish Its Journey</div>
-              <div>has finish since <span>{subTwoTimes(trainData.routeStations[trainData.routeStations.length - 1].arrives, timeNow)}</span></div>
+              <div>has finish since <span>{subTwoTimes(trainData.stopStation[trainData.stopStation.length - 1].arrivalTime, timeNow)}</span></div>
             </div>
           </div>
         </div>
@@ -130,7 +143,7 @@ const LiveTrain = () => {
           <div className="textContent">
             <div>Train Status</div>
             <div className="red">Not working Today</div>
-            <div>first day of work is <span>{NameNextDayWork()}</span></div>
+            <div>first day of work is <span>{NameNextDayWork(trainData.weekDayRuns)}</span></div>
           </div>
         </div>
       </div>
@@ -138,6 +151,18 @@ const LiveTrain = () => {
   }
   //#endregion
 
+  //#region - when click on Refresh button
+  const refreshButtonClick = _ => {
+    // history.push(`/live-train?name=${trainData.number}`)
+    window.location.reload();
+  }
+  //#endregion
+  //#region - when click on allTrainInformation button
+  const history = useHistory();
+  const trainInfoButtonClick = _ => {
+    history.push(`/train?name=${trainData.number}`)
+  }
+  //#endregion
 
   return (
     <div className="liveTrain">
@@ -146,13 +171,20 @@ const LiveTrain = () => {
         <Navbar extraStyle="whiteBackground" />
         <div className="line"></div>
         <div className="SearchBarContainer">
-          <SearchBar extraStyle="flat" searchOn="trains" />
+          <SearchBar
+            extraStyle="flat"
+            searchOn="trains"
+            inLiveTrainPage
+            trainName={trainData.number}
+            trainStart={trainData.stopStation[0].name}
+            trainEnd={trainData.stopStation[trainData.stopStation.length - 1].name}
+          />
         </div>
         <div className="line"></div>
       </div>
 
       <div className="mainPart container">
-    
+
         <div className="runningStatus">
 
           <h2>{trainData.number} Running Status</h2>
@@ -160,13 +192,13 @@ const LiveTrain = () => {
           <div className="mainContent">
 
             <div className="segmentsContainer">
-              <Segments />
+              <Segments trainData={trainData} />
             </div>
 
             <div className="refreshAndTime">
               <div className="refreshButton">
                 <i className="fas fa-redo"></i>
-                <div>Refresh</div>
+                <div onClick={refreshButtonClick}>Refresh</div>
               </div>
               <div className="lastUpdate">last update at {time24To12(timeNow)}</div>
             </div>
@@ -174,10 +206,25 @@ const LiveTrain = () => {
           </div>
 
         </div>
-    
+
         <div className="side">
-          <TrainCard liveTrainPage />
-          <span> all train information <span className="anchor"></span></span>
+          {/* <TrainCard liveTrainPage /> */}
+          <TrainCard
+            liveTrainPage
+            name={trainData.number}
+            trainStart={trainData.stopStation[0].name}
+            trainEnd={trainData.stopStation[trainData.stopStation.length - 1].name}
+            journeyTime={subTwoTimes(trainData.stopStation[0].departTime, trainData.stopStation[trainData.stopStation.length - 1].arrivalTime)}
+            startTime={time24To12(trainData.stopStation[0].departTime)}
+            endTime={time24To12(trainData.stopStation[trainData.stopStation.length - 1].arrivalTime)}
+            numberOfStations={trainData.stopStation.length - 2}
+            weekDayRuns={trainData.weekDayRuns}
+            rate="3.7"
+            Fare1A={trainData.fareClassess['1A'] ? true : false}
+            Fare2A={trainData.fareClassess['2A'] ? true : false}
+            Fare3A={trainData.fareClassess['3A'] ? true : false}
+          />
+          <span onClick={trainInfoButtonClick}> all train information <span className="anchor"></span></span>
           <div className="trainStatus">
             <div className="title">
               <h2>Train Status<span className="flash"><span><span></span></span></span></h2>
@@ -185,7 +232,7 @@ const LiveTrain = () => {
             {content}
           </div >
         </div >
-    
+
       </div >
 
       <div className="footerContainer">

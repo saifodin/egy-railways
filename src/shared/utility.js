@@ -1,51 +1,3 @@
-export const trainData = {
-  number: "921",
-  noOfStations: 4,
-  fareClasses: [
-    "1A",
-    "2A",
-    "3A"
-  ],
-  weekdaysRuns: {
-    sat: true,
-    sun: false,
-    mon: false,
-    tue: false,
-    wed: false,
-    thu: false,
-    fri: false
-  },
-  routeStations: [
-    {
-      name: "Cairo",
-      orderInRoute: 1,
-      arrives: "18:00:00",
-      departs: "18:10:00",
-      stopTime: 10
-    },
-    {
-      name: "Tanta",
-      orderInRoute: 2,
-      arrives: "19:07:00",
-      departs: "19:10:00",
-      stopTime: 3
-    },
-    {
-      name: "Sidi Gaber",
-      orderInRoute: 3,
-      arrives: "20:28:00",
-      departs: "20:30:00",
-      stopTime: 2
-    },
-    {
-      name: "Alexandria",
-      orderInRoute: 4,
-      arrives: "20:35:00",
-      departs: "20:40:00",
-      stopTime: 5
-    }
-  ]
-}
 
 export const stationsAndGov = {
   "Alexandria": [
@@ -109,7 +61,7 @@ export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 // timeNow = "08:20:00" // 902 Barkih alsabe -> Quesna
 // timeNow = "08:30:00" // 902 Quesna -> Banha
 
-timeNow = "17:28:00" // 118 outNorth firstWay, 922 waiting in tanta, weekDayToday = "thu" 
+// timeNow = "17:28:00" // 118 outNorth firstWay, 922 waiting in tanta, weekDayToday = "thu" 
 
 //* secondWay
 // timeNow = "06:48:00" // 903 in Banha -> Quesna
@@ -138,11 +90,13 @@ timeNow = "17:28:00" // 118 outNorth firstWay, 922 waiting in tanta, weekDayToda
 // timeNow = "20:42:00" // not moving
 //#endregion
 
+timeNow = "16:56:00"
+
 export let weekDayToday = new Date().toLocaleString('en-US', { weekday: "short" }).toLowerCase();
 //// "sun"
-weekDayToday = "thu"
+// weekDayToday = "thu"
 
-export const NameNextDayWork = _ => {
+export const NameNextDayWork = weekdayRuns => {
 
   const KeysWeekdays = ["sat", "sun", "mon", "tue", "wed", "thu", "fri"]
   const longWeekdays = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -162,7 +116,7 @@ export const NameNextDayWork = _ => {
       i = 0;
     }
     // if trainData.weekdaysRuns[sun] === true, break, return
-    if (trainData.weekdaysRuns[KeysWeekdays[i]]) {
+    if (weekdayRuns[KeysWeekdays[i]]) {
       return longWeekdays[i]
     }
   }
@@ -318,14 +272,13 @@ export const isTimeBetweenOrEqual = (startTime, endTime) => {
   }
 }
 
-export const isWaiting = () => {
-  for (let key = 0; key < trainData.routeStations.length; key++) {
-    if (isTimeBetweenOrEqual(trainData.routeStations[key].arrives, trainData.routeStations[key].departs)) {
+export const isWaiting = (stopStation) => {
+  for (let key = 0; key < stopStation.length; key++) {
+    if (isTimeBetweenOrEqual(stopStation[key].arrivalTime, stopStation[key].departTime)) {
       return {
         result: true,
-        station: trainData.routeStations[key].name,
-        departs: trainData.routeStations[key].departs,
-        // arrives: trainData.routeStations[key].arrives
+        station: stopStation[key].name,
+        departs: stopStation[key].departTime,
       }
     }
   }
@@ -334,13 +287,13 @@ export const isWaiting = () => {
   }
 }
 
-export const isBetweenStations = () => {
-  for (let key = 0; key < trainData.routeStations.length - 1; key++) {
-    if (isTimeBetweenOrEqual(trainData.routeStations[key].departs, trainData.routeStations[key + 1].arrives)) {
+export const isBetweenStations = (stopStation) => {
+  for (let key = 0; key < stopStation.length - 1; key++) {
+    if (isTimeBetweenOrEqual(stopStation[key].departTime, stopStation[key + 1].arrivalTime)) {
       return {
         result: true,
-        nextStation: trainData.routeStations[key + 1].name,
-        arrives: trainData.routeStations[key + 1].arrives
+        nextStation: stopStation[key + 1].name,
+        arrives: stopStation[key + 1].arrivalTime
       }
     }
   }

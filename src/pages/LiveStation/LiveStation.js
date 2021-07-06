@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './LiveStation.scss';
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'

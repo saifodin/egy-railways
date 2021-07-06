@@ -1,30 +1,25 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import css from './Footer.module.scss'
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <Fragment>
-      <div className={css.FooterBackground}>
-        <div className='container'>
-          <div className={css.Footer}>
-            <div className={css.Logo}>
-              <div className={`${css.logoContainer}`}>
-                <p className={css.firstLine}><span className={css.coloredPart}>EGY</span>Railways</p>
-                {/* <p className={css.secondLine} >Lifeline of the Nation</p> */}
-              </div>
+    <div className={css.FooterBackground}>
+      <div className='container'>
+        <div className={css.Footer}>
+          <div className={css.Logo}>
+            <div className={`${css.logoContainer}`}>
+              <p className={css.firstLine}><span className={css.coloredPart}>EGY</span>Railways</p>
+              {/* <p className={css.secondLine} >Lifeline of the Nation</p> */}
             </div>
-            <div className={css.CopyWrightContainer}>
-              <p>Copyright &copy; {year} EGYRailways</p>
-            </div>
+          </div>
+          <div className={css.CopyWrightContainer}>
+            <p>Copyright &copy; {year} EGYRailways</p>
           </div>
         </div>
       </div>
-      <div className={css.authPopup}>
-      </div>
-    </Fragment>
-
+    </div>
   );
 }
 

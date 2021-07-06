@@ -22,7 +22,7 @@ const Home = props => {
 
 
       {myService === 1 &&
-        <SearchBar searchOn="stations"/>
+        <SearchBar searchOn="stations" />
       }
       {(myService === 2 || myService === 3) &&
         <SearchBar searchOn="trains" inHomePage />

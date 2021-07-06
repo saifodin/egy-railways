@@ -230,13 +230,12 @@
   text-decoration: none;
   transition: background-color 0.2s linear 0s;
   color: rgb(255, 255, 255);
-  background-color: rgb(250, 107, 107);
+  background-color: var(--d);
   height: 48px;
   font-size: 16px;
   margin-left: auto;
   margin-right: 50px;
   outline: none;
-  font-family: "GT Walsheim Pro";
   &:hover {
     background-color: var(--l);
   }
@@ -340,7 +339,7 @@
 
 // ***** another styles for searchOn="trains" inHomePage *****
 .SearchBar.trains.trainHomePage {
-  .inputContainer{
+  .inputContainer {
     min-width: 60%;
   }
 }

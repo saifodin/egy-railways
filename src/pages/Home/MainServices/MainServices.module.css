@@ -131,7 +131,8 @@
   }
 
   .MainServices .servicesBoxes::-webkit-scrollbar {
-    /* display: none; */
+    /* for remove warning*/
+    border-radius: auto;
   }
 
   .MainServices .servicesBoxes::-webkit-scrollbar {

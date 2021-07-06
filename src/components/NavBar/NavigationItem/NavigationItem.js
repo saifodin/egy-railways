@@ -5,19 +5,11 @@ import css from './NavigationItem.module.css'
 
 const NavigationItem = (props) => {
 
-  //#region comments how add extra styles based on current location
-  //// import { useLocation } from "react-router-dom";
-  // const location = useLocation();
-  // let extraCss = "";
-  // if (location.pathname === '/trains-between-stations') {
-  //   extraCss = css.trainsBetweenStations;
-  // }
-  //#endregion
 
   //#region add extra styles based on props
   let extraCss = "";
   if (props.extraStyle === 'whiteBackground') {
-    extraCss = css.trainsBetweenStations;
+    extraCss = css.whiteBackground;
   }
   //#endregion
 

@@ -1,0 +1,13 @@
+.authItem {
+  margin: 0px 20px;
+  cursor: pointer;
+}
+
+.authItem i {
+  color: white;
+  font-size: 22px;
+}
+
+.authItem i.whiteBackground {
+  color: var(--a);
+}

@@ -4,9 +4,9 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Home from './pages/Home/Home';
-import SignIn from './pages/SignIn/SignIn.js';
+// import SignIn from './pages/SignIn/SignIn.js';
+// import CreateAccount from './pages/CreateAccount/CreateAccount.js';
 import TrainsBetweenStations from './pages/TrainsBetweenStations/TrainsBetweenStations';
-import CreateAccount from './pages/CreateAccount/CreateAccount.js';
 import Train from './pages/Train/Train';
 import LiveTrain from './pages/LiveTrain/LiveTrain'
 import LiveStation from './pages/LiveStation/LiveStation'
@@ -25,8 +25,8 @@ function App() {
           <Route path="/live-train" component={LiveTrain} />
           <Route path="/live-station" component={LiveStation} />
           <Route path="/statistics" component={Statistics} />
-          <Route path="/SignIn" component={SignIn} />
-          <Route path="/CreateAccount" component={CreateAccount} />
+          {/* <Route path="/SignIn" component={SignIn} /> */}
+          {/* <Route path="/CreateAccount" component={CreateAccount} /> */}
           <Redirect to="/" />
         </Switch>
       </div>

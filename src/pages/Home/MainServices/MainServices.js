@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from './MainServices.module.css'
 import SvgLiveStation from '../../../assets/imgs/trains/SvgLiveStation'
 import SvgLiveTrain from '../../../assets/imgs/trains/SvgLiveTrain'
 import SvgLiveStatus from '../../../assets/imgs/trains/SvgLiveStatus'
 import SvgSearchRoutes from '../../../assets/imgs/trains/SvgSearchRoutes'
 
-const MainServices = () => {
+const MainServices = props => {
+
+  const myService = props.myService
+  console.log(myService)
+
   return (
     <div className={css.MainServices}>
 
       <div className={`${css.servicesBoxes} container `}>
 
-        <div className={css.serviceBox}>
+        <div className={`${css.serviceBox} ${myService === 1 ? css.serviceBoxSelected : null}`} onClick={_ => props.setMyService(1)}>
           <div className={css.imgBox}>
             <SvgSearchRoutes />
           </div>
@@ -21,7 +25,7 @@ const MainServices = () => {
           </div>
         </div>
 
-        <div className={css.serviceBox}>
+        <div className={`${css.serviceBox} ${myService === 2 ? css.serviceBoxSelected : null}`} onClick={_ => props.setMyService(2)}>
           <div className={css.imgBox}>
             <SvgLiveStatus />
           </div>
@@ -31,7 +35,7 @@ const MainServices = () => {
           </div>
         </div>
 
-        <div className={css.serviceBox}>
+        <div className={`${css.serviceBox} ${myService === 3 ? css.serviceBoxSelected : null}`} onClick={_ => props.setMyService(3)}>
           <div className={css.imgBox}>
             <SvgLiveTrain />
             <div className={css.flash}>
@@ -46,7 +50,7 @@ const MainServices = () => {
           </div>
         </div>
 
-        <div className={css.serviceBox}>
+        <div className={`${css.serviceBox} ${myService === 4 ? css.serviceBoxSelected : null}`} onClick={_ => props.setMyService(4)}>
           <div className={css.imgBox}>
             <SvgLiveStation />
             <div className={css.flash}>

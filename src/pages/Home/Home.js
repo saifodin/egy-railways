@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MainServices from './MainServices/MainServices'
@@ -9,30 +9,42 @@ import Footer from '../../components/Footer/Footer'
 import css from './Home.module.css'
 
 
-const Home = props => (
-  <div className={css.Home}>
-
-    <header className={`${css.Header}`}>
-      <Navbar />
-      <h1 className={`${css.title} container`}>Train Ticket Booking and Tracking</h1>
-    </header>
-
-    <SearchBar searchOn="stations"/>
+const Home = props => {
+  const [myService, setMyService] = useState(1)
 
 
-    <MainServices />
+  return (
+    <div className={css.Home}>
+      <header className={`${css.Header}`}>
+        <Navbar />
+        <h1 className={`${css.title} container`}>Train Ticket Booking and Tracking</h1>
+      </header>
 
-    <div className={css.toShowScroll}></div>
 
-    <TopTrainRoutes />
+      {myService === 1 &&
+        <SearchBar searchOn="stations"/>
+      }
+      {(myService === 2 || myService === 3) &&
+        <SearchBar searchOn="trains" inHomePage />
+      }
+      {myService === 4 &&
+        <SearchBar searchOn="LiveStation" />
+      }
 
-    <DownloadApp />
 
-    <AskedQuestions/>
+      <MainServices myService={myService} setMyService={setMyService} />
 
-    <Footer />
+      <div className={css.toShowScroll}></div>
 
-  </div>
-);
+      <TopTrainRoutes />
 
+      <DownloadApp />
+
+      <AskedQuestions />
+
+      <Footer />
+
+    </div>
+  );
+}
 export default Home;

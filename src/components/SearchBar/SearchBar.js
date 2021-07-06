@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import css from './SearchBar.module.scss'
 import StationIcon from '../../assets/imgs/iconsSvg/StationIcon.svg';
-import { stationsAndGov, createDateFormat } from '../../shared/utility'
+import { stationsAndGov, createDateFormat, refreshPage } from '../../shared/utility'
 import { useHistory } from "react-router-dom"
 
 
@@ -13,37 +13,52 @@ const SearchBar = props => {
   let fromInputLS = window.localStorage.getItem('fromInput')
   let toInputLS = window.localStorage.getItem('toInput')
   let dateInputIndexLS = Number(window.localStorage.getItem('selectedDateIndex'))
+  let stationNameLS = window.localStorage.getItem('station')
 
   if (dateInputIndexLS === null) {
     dateInputIndexLS = 0
   }
 
-  const [fromStationValue, setFromStationValue] = useState(null);
-  const [toStationValue, setToStationValue] = useState(null);
+  const [fromStationValue, setFromStationValue] = useState(fromInputLS);
+  const [toStationValue, setToStationValue] = useState(toInputLS);
   const [selectedDate, setSelectedDate] = useState(dateInputIndexLS); //// 0 === today
 
   const [trainName, setTrainName] = useState(props.trainName);
+
+  const [stationName, setStationName] = useState(stationNameLS)
 
 
   //#region - generate options in datalist
   let optionsFrom = []
   let optionsTo = []
+  let allStation = []
+  let allTrainsNames = []
   let governorates = Object.keys(stationsAndGov)
   for (const x in governorates) {
     for (const y in Object.keys(stationsAndGov[governorates[x]])) {
       //// gov = governorates[x]
       //// station = stationsAndGov[governorates[x]][y].name
+      allStation.push(
+        <option key={`${x}${y}`} value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
+      )
       if (stationsAndGov[governorates[x]][y].name !== toStationValue) {
         optionsFrom.push(
-          <option key={`${x}${y}`} placeholder="sdf" value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
+          <option key={`${x}${y}`} value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
         )
       }
       if (stationsAndGov[governorates[x]][y].name !== fromStationValue) {
         optionsTo.push(
-          <option key={`${x}${y}`} placeholder="sdf" value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
+          <option key={`${x}${y}`} value={stationsAndGov[governorates[x]][y].name}>{governorates[x]}</option>
         )
       }
     }
+  }
+
+  const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
+  for (const val of trainsDb) {
+    allTrainsNames.push(
+      <option option key={val.value.number} value={val.value.number} > {val.value.number}</option>
+    )
   }
   //#endregion
 
@@ -60,19 +75,30 @@ const SearchBar = props => {
   const onSubmitHandlerTrains = (e) => {
     e.preventDefault();
     props.inLiveTrainPage ? history.push(`/live-train?name=${trainName}`) : history.push(`/train?name=${trainName}`)
+    refreshPage()
+  }
 
-
+  const onSubmitHandlerLiveStation = (e) => {
+    e.preventDefault();
+    window.localStorage.setItem('station', stationName);
+    history.push(`/live-station?station=${stationName}`)
+    refreshPage()
   }
   //#endregion
 
   //#region - add extra styles based on props
   let extraStyle = "";
   let searchOn = "";
+  let whichTrainPage = "";
   if (props.extraStyle === 'flat') {
     extraStyle = css.flat;
   }
   if (props.searchOn === 'trains') {
     searchOn = css.trains;
+    if (props.inHomePage) {
+      whichTrainPage = css.trainHomePage
+    }
+
   }
   if (props.searchOn === 'LiveStation') {
     searchOn = css.liveStation;
@@ -151,34 +177,43 @@ const SearchBar = props => {
       <form onSubmit={onSubmitHandlerTrains}>
         <div className={css.inputContainer}>
           <i className="fas fa-subway"></i>
-          <input type="text" placeholder="Train Number" defaultValue={trainName} onChange={e => setTrainName(e.target.value)} />
+          <input type="text" list="allTrainsNames" placeholder="Train Number" defaultValue={trainName} onChange={e => setTrainName(e.target.value)} />
+          <datalist id="allTrainsNames" className={css.datalist}>
+            {allTrainsNames}
+          </datalist>
         </div>
 
-        <div className={css.inputContainer}>
-          <i className={`far fa-circle`}></i>
-          <input type="text" defaultValue={`Start From: ${props.trainStart}`} disabled />
-        </div>
+        {!props.inHomePage &&
+          <Fragment>
+            <div className={css.inputContainer}>
+              <i className={`far fa-circle`}></i>
+              <input type="text" defaultValue={`Start From: ${props.trainStart}`} disabled />
+            </div>
 
-        <div className={css.inputContainer}>
-          <i className="fas fa-map-marker-alt"></i>
-          <input className="input-field" type="text" defaultValue={`End In: ${props.trainEnd}`} disabled />
-        </div>
+            <div className={css.inputContainer}>
+              <i className="fas fa-map-marker-alt"></i>
+              <input className="input-field" type="text" defaultValue={`End In: ${props.trainEnd}`} disabled />
+            </div>
+          </Fragment>
+        }
 
         <button className={css.searchButton}>Search Train</button>
 
       </form>
     )
   }
-
   else if (props.searchOn === "LiveStation") {
     form = (
-      <form>
+      <form onSubmit={onSubmitHandlerLiveStation}>
         <div className={css.inputContainer}>
           <img src={StationIcon} alt="Station Icon" />
-          <input type="text" placeholder="Station Name" defaultValue="Tanta - Elgarbia" />
+          <input type="text" list="allStations" placeholder="Station Name" defaultValue={stationName} onChange={e => setStationName(e.target.value)} />
+          <datalist id="allStations" className={css.datalist}>
+            {allStation}
+          </datalist>
         </div>
 
-        <button className={css.searchButton}>Search Train</button>
+        <button className={css.searchButton}>Search Station</button>
 
       </form>
     )
@@ -189,7 +224,7 @@ const SearchBar = props => {
 
   return (
     <div className={css.SearchBarContainer}>
-      <div className={`container ${css.SearchBar} ${extraStyle} ${searchOn}`}>
+      <div className={`container ${css.SearchBar} ${extraStyle} ${searchOn} ${whichTrainPage}`}>
         {form}
       </div>
     </div>

@@ -338,6 +338,13 @@
   }
 }
 
+// ***** another styles for searchOn="trains" inHomePage *****
+.SearchBar.trains.trainHomePage {
+  .inputContainer{
+    min-width: 60%;
+  }
+}
+
 // ***** another styles for searchOn="liveStation" *****
 .SearchBar.liveStation {
   form {

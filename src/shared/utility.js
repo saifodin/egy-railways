@@ -90,7 +90,7 @@ export let timeNow = new Date().toLocaleString('en-GB').slice(-8);
 // timeNow = "20:42:00" // not moving
 //#endregion
 
-timeNow = "16:56:00"
+// timeNow = "16:56:00"
 
 export let weekDayToday = new Date().toLocaleString('en-US', { weekday: "short" }).toLowerCase();
 //// "sun"
@@ -453,4 +453,8 @@ export const KnowGov = (station) => {
       }
     }
   }
+}
+
+export const refreshPage = _ => {
+  window.location.reload();
 }

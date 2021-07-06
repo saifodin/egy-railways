@@ -153,7 +153,7 @@ const TrainCard = props => {
                 <div className={css.classes}>
 
                   {props.p1A &&
-                    <div div >
+                    <div>
                       <input onClick={_ => changeFare("1A")} type="radio" id={`train-${props.name}-1A`} name={`train-${props.name}-class`} defaultChecked />
                       <label htmlFor={`train-${props.name}-1A`}>1A</label>
                     </div>

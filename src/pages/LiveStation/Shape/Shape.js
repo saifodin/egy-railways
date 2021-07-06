@@ -11,7 +11,7 @@ import {
   weekDayToday,
 } from '../../../shared/utility'
 
-const Shape = () => {
+const Shape = props => {
 
 
 
@@ -114,12 +114,7 @@ const Shape = () => {
     return result
   }
 
-
-
-
-  console.log("Shape.js")
-
-  const selectedStation = "Tanta";
+  const selectedStation = props.stationName;
 
   const [trainsArray, setTrainsArray] = useState([])
 

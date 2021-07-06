@@ -16,12 +16,13 @@ import {
   isTimeBetweenOrEqual,
   isWaiting,
   isBetweenStations,
+  refreshPage
 
 } from '../../shared/utility'
 
 const LiveTrain = () => {
 
-  //#region - get train obj
+  //#region - get train name then get all obj
   let params = new URLSearchParams(window.location.search);
   const trainName = params.get('name')
   const trainsDb = JSON.parse(window.localStorage.getItem('trainsDb'))
@@ -151,12 +152,6 @@ const LiveTrain = () => {
   }
   //#endregion
 
-  //#region - when click on Refresh button
-  const refreshButtonClick = _ => {
-    // history.push(`/live-train?name=${trainData.number}`)
-    window.location.reload();
-  }
-  //#endregion
   //#region - when click on allTrainInformation button
   const history = useHistory();
   const trainInfoButtonClick = _ => {
@@ -198,7 +193,7 @@ const LiveTrain = () => {
             <div className="refreshAndTime">
               <div className="refreshButton">
                 <i className="fas fa-redo"></i>
-                <div onClick={refreshButtonClick}>Refresh</div>
+                <div onClick={refreshPage}>Refresh</div>
               </div>
               <div className="lastUpdate">last update at {time24To12(timeNow)}</div>
             </div>

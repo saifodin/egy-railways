@@ -1,4 +1,3 @@
-
 .authPopupContent {
   position: fixed;
   inset: 0px;
@@ -41,6 +40,14 @@
   caret-color: #a1a9c3;
   color: #132968;
   transition: border 0.15s;
+  &.inputError {
+    background-color: rgb(255, 242, 241);
+    border: 1px solid rgb(223, 27, 10);
+    &:hover,
+    &:focus {
+      border: 1px solid rgb(223, 27, 10);
+    }
+  }
   // padding-left: 35px;
   &:hover,
   &:focus {
@@ -103,9 +110,6 @@
   width: 100%;
   height: 100%;
   display: flex;
-  .contentPart {
-    width: 50%;
-  }
   .imgPart {
     width: 50%;
     height: 100%;
@@ -148,6 +152,7 @@
     }
   }
   .contentPart {
+    width: 50%;
     padding: 24px;
     h4 {
       color: var(--a);
@@ -309,6 +314,26 @@
       span {
         color: var(--d);
         cursor: pointer;
+      }
+    }
+  }
+}
+
+.authPopupContent,
+#media {
+  @media (max-width: 767px) {
+    width: 270px;
+  }
+  .signUp,
+  .signIn {
+    .contentPart {
+      @media (max-width: 767px) {
+        width: 100%;
+      }
+    }
+    .imgPart {
+      @media (max-width: 767px) {
+        display: none;
       }
     }
   }

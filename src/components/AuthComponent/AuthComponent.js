@@ -3,11 +3,15 @@ import coverWalking from '../../assets/imgs/omioCovers/cover-walking.svg'
 import google from '../../assets/imgs/otherSvg/google.svg'
 import './AuthComponent.scss'
 import { emailValidator } from '../../shared/utility'
+import firebase from '../../firebase/firebase'
 
 const AuthComponent = props => {
 
   const [isSignIn, setIsSignIn] = useState(true)
 
+
+  const [signUpErrorMess, setSignUpErrorMess] = useState(null)
+  const [signInErrorMess, setSignInErrorMess] = useState(null)
 
   //#region validation inputs, then add message error
   const validationErrorBlank = <p className="validationError">This field can't be blank</p>
@@ -65,8 +69,17 @@ const AuthComponent = props => {
 
   const submitSignIn = _ => {
     // if all inputs is not null && no errors, why? (before focus on any inputs no errors yet, so we must check if inputs is null or not)
-    if (signInEmail && signInPass && !signInEmailError && !signInPassError) {
-      //* push to server
+    if (signInEmail && signInPass && emailValidator(signInEmail) && signInPass.length >= 8) {
+      firebase.auth().signInWithEmailAndPassword(signInEmail, signInPass)
+        .then(_ => {
+          props.setOpenAuth(false)
+        })
+        .catch((error) => {
+          // var errorCode = error.code;
+          // console.log(error.message);
+          // console.log(error.code);
+          setSignInErrorMess(error.code)
+        });
     } else {
       setIsSignInEmailAccess(true)
       setIsSignInPassAccess(true)
@@ -74,8 +87,19 @@ const AuthComponent = props => {
   }
 
   const submitSignUp = _ => {
-    if (signUpFname && signUpLname && signUpEmail && signUpPass && !signInEmailError && !signInPassError) {
-      //* push to server
+    if (signUpFname && signUpLname && emailValidator(signUpEmail) && signUpPass.length >= 8) {
+      firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPass)
+        .then(userCredential => {
+          let user = userCredential.user;
+          user.updateProfile({
+            displayName: `${signUpFname.toLowerCase()} ${signUpLname.toLowerCase()}`
+          })
+          props.setOpenAuth(false);
+          // props.setOpenUserList(false);
+        })
+        .catch(error => {
+          setSignUpErrorMess(error.code)
+        });
     } else {
       setSignUpFnameAccess(true)
       setSignUpLnameAccess(true)
@@ -84,6 +108,18 @@ const AuthComponent = props => {
     }
   }
 
+  const authUsingGoogle = _ => {
+    console.log("in authUsingGoogle")
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(result => {
+      // /** @type {firebase.auth.OAuthCredential} */
+      const user = result.user;
+      console.log(user)
+      props.setOpenAuth(false)
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 
   return (
     <Fragment>
@@ -103,7 +139,14 @@ const AuthComponent = props => {
             </div>
             <div className="contentPart">
               <h4>Login in</h4>
-              <div className="withGoogle">
+              {signInErrorMess &&
+                <div className="errorBox">
+                  <div className="errorIcon"><i className="fas fa-exclamation-circle"></i></div>
+                  {signInErrorMess === "auth/network-request-failed" && <div className="errorContent">Something went wrong. Please try again.</div>}
+                  {signInErrorMess !== "auth/network-request-failed" && <div className="errorContent">Sorry, we don't recognize that email or password. Please try again.</div>}
+                </div>
+              }
+              <div className="withGoogle" onClick={authUsingGoogle}>
                 <img alt="google" src={google} />
                 <p>Sign in with Google</p>
               </div>
@@ -134,7 +177,9 @@ const AuthComponent = props => {
           <div className="signUp">
             <div className="contentPart">
               <h4>Create Account</h4>
-              <div className="withGoogle">
+              {signUpErrorMess === "auth/email-already-in-use" && <p className="signUpErrorPar">The email address is already in use by another account.</p>}
+              {signUpErrorMess !== null && signUpErrorMess !== "auth/email-already-in-use" && <p className="signUpErrorPar">Something went wrong. Please try again.</p>}
+              <div className="withGoogle" onClick={authUsingGoogle}>
                 <img alt="google" src={google} />
                 <p>Sign up with Google</p>
               </div>

@@ -8,7 +8,6 @@ import SvgSearchRoutes from '../../../assets/imgs/trains/SvgSearchRoutes'
 const MainServices = props => {
 
   const myService = props.myService
-  console.log(myService)
 
   return (
     <div className={css.MainServices}>

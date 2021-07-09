@@ -1,0 +1,109 @@
+.Navbar {
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: auto;
+  &.whiteBackground {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  ul {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+}
+//********
+// color: var(--a);
+
+.userInfoContainer {
+  color: var(--b);
+  position: relative;
+}
+
+.userInfoContainer .nameAndImg {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  .name {
+    margin-right: 10px;
+  }
+  .charCircle {
+    width: 22px;
+    height: 22px;
+    color: #3d5c94;
+    background-color: white;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  > img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+}
+
+.userInfoContainer .dropDownContainer {
+  .close {
+    position: fixed;
+    inset: 0px;
+    z-index: 100;
+  }
+  .list {
+    z-index: 999;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: #13296833 0px 8px 16px 0px;
+    margin: 5px 0px 0px;
+    min-width: 285px;
+    white-space: nowrap;
+    display: block;
+    right: 0px;
+    transition: all 0.2s cubic-bezier(0.6, 0, 0.7, 1) 0s;
+    opacity: 1;
+    transform: translateY(0px);
+    > div {
+      padding-left: 15px;
+      padding-right: 15px;
+      color: var(--f);
+      border-bottom: 1px solid rgb(241, 242, 246);
+      height: 55px;
+      line-height: 55px;
+      font-size: 16px;
+      transition: background 0.2s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        background: #f6f7f9;
+      }
+      &:first-of-type {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      &:last-of-type {
+        border-bottom: none;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+      i {
+        width: 30px;
+        // margin-right: 10px;
+      }
+    }
+  }
+}
+
+.userInfoContainer.whiteBackground {
+  color: var(--a);
+  .nameAndImg {
+    > div:last-of-type {
+    }
+  }
+}

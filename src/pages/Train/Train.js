@@ -31,7 +31,7 @@ const Train = () => {
 
   const [from, setFrom] = useState(ourTrain.value.stopStation[0].name)
   const [to, setTo] = useState(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name)
-  const [fareClass, setFareClass] = useState('1A')
+  const [, setFareClass] = useState('1A')
 
   // console.log(from)
   // console.log(to)

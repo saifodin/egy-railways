@@ -6,6 +6,7 @@
   text-decoration: none;
   color: var(--b);
   font-size: 14px;
+  margin-right: 10px;
 }
 
 @media (max-width: 576px) {

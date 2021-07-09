@@ -8,7 +8,7 @@ const OneTrainRoute = (props) => {
         <span>{props.from}</span>
         <span>&nbsp;-&nbsp; </span>
         <span>{props.to}</span>
-        <a href={_ => { }} className={css.searchBtn}>Search Train</a>
+        <span className={css.searchBtn}>Search Train</span>
       </p>
     </div>
   );

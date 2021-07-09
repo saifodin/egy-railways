@@ -13,12 +13,12 @@ const Panel = (props) => {
   return (
     <div className={css.panel}>
 
-      <a href={_ => { }} onClick={panelToggleHandler}>
+      <div onClick={panelToggleHandler}>
         <div className={css.panelHeading}>
           <h4 className={css.panelTitle}>{props.title}</h4>
           <span className={`${css.anchor} ${anchorOpen}`}></span>
         </div>
-      </a>
+      </div>
 
       <div className={`${panelBodyClass} ${css.panelClose}`} id="collapse4">
         <div className={css.panelBody}>

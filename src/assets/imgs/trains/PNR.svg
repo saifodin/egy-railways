@@ -6,7 +6,7 @@
     <path id="Path_132" data-name="Path 132" d="M34.575,71.146H143.983a9.038,9.038,0,0,0,9.075-9.075c0-5.042-4.033-8.571-9.075-8.571H34.575A9.038,9.038,0,0,0,25.5,62.575C25.5,67.617,29.533,71.146,34.575,71.146Z" transform="translate(3475.791 -135.711)" fill="#006bb1"/>
     <path id="Path_133" data-name="Path 133" d="M253.39,64.6H34.575a9.075,9.075,0,0,0,0,18.151H253.39a9.075,9.075,0,1,0,0-18.151Z" transform="translate(3475.79 -90.847)" fill="#006bb1"/>
     <path id="Path_135" data-name="Path 135" d="M253.39,86.8H34.575a9.075,9.075,0,0,0,0,18.151H253.39a9.075,9.075,0,1,0,0-18.151Z" transform="translate(3475.79 -1.119)" fill="#006bb1"/>
-    <text id="PNR" transform="translate(3521 71)" fill="#006bb1" font-size="97" font-family="SegoeUI-Bold, Segoe UI" font-weight="700" letter-spacing="-0.02em"><tspan x="0" y="0">PNR</tspan></text>
+    <text id="PNR" transform="translate(3521 71)" fill="#006bb1" fontSize="97" fontFamily="SegoeUI-Bold, Segoe UI" fontWeight="700" letter-spacing="-0.02em"><tspan x="0" y="0">PNR</tspan></text>
     <circle id="Ellipse_13" data-name="Ellipse 13" cx="71.5" cy="71.5" r="71.5" transform="translate(3887 -260)" fill="#feda87"/>
   </g>
 </svg>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MainServices from './MainServices/MainServices'
 import TopTrainRoutes from './TopTrainRoutes/TopTrainRoutes'

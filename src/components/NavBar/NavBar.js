@@ -11,14 +11,6 @@ import { refreshPage } from '../../shared/utility'
 
 const Navbar = props => {
 
-  const [userInfo, setUserInfo] = useState(null)
-  // const [userName, setUserName] = useState(null)
-
-
-
-
-
-
   //#region go to Home page when click on logo
   const history = useHistory();
   const GoToHomePage = _ => {
@@ -38,23 +30,15 @@ const Navbar = props => {
   const [openUserList, setOpenUserList] = useState(false);
   //#endregion
 
-  const auth = firebase.auth()
-  useEffect(_ => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // console.log("myUser:", user.displayName)
-        setUserInfo(user)
-      } else {
-        // User is signed out
-        setUserInfo(null)
-      }
-    });
-  }, [auth]);
+  //#region - get the current user, fix string error, singOut function
+  
+  const [userInfo, setUserInfo] = useState(null)
 
-  const signOut = _ => {
-    firebase.auth().signOut()
-    setOpenUserList(false)
-  }
+  useEffect(_ => {
+    firebase.auth().onAuthStateChanged(user => {
+      user ? setUserInfo(user) : setUserInfo(null)
+    });
+  }, []);
 
   //* because after signUp first render userInfo is obj, but userInfo.displayName in null
   //* then second render userInfo is obj, and userInfo.displayName in string
@@ -63,10 +47,14 @@ const Navbar = props => {
     refreshPage()
   }
 
-  //* in first render => useIfo is obj and displayName inside it is string, but when print userInfo.displayName is null !!!
+  //* in first render => useIfo is obj and displayName inside it is string, but when print userInfo.displayName alone is null !!!
   // console.log("userInfo", userInfo, userInfo.displayName)
 
-  // console.log(firebase.auth().currentUser)
+  const signOut = _ => {
+    firebase.auth().signOut()
+    setOpenUserList(false)
+  }
+  //#endregion
 
   return (
     <nav className={`container ${css.Navbar} ${extraCss}`}>
@@ -81,9 +69,8 @@ const Navbar = props => {
         <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem> */}
+        <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem>
         <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>
-        {/* <NavigationItem to="/SignIn" extraStyle={props.extraStyle}>Sign in</NavigationItem> */}
-        {/* <NavigationItem to="/CreateAccount" extraStyle={props.extraStyle}>Create an account</NavigationItem> */}
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />
         }
@@ -92,7 +79,7 @@ const Navbar = props => {
             <div className={css.nameAndImg} onClick={_ => setOpenUserList(true)}>
               <div className={css.name}>{userInfo.displayName.split(" ")[0]}</div>
               {!userInfo.photoURL && <div className={css.charCircle}>{userInfo.displayName[0]}</div>}
-              {userInfo.photoURL && <img alt="user profile" src={userInfo.photoURL}/>}
+              {userInfo.photoURL && <img alt="user profile" src={userInfo.photoURL} />}
             </div>
             {openUserList &&
               <div className={css.dropDownContainer}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom"
 import './LiveTrain.scss';
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import TrainCard from '../../components/TrainCard/TrainCard'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Segments from './Segments/Segments'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import css from './Train.module.scss'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import TrainCard from '../../components/TrainCard/TrainCard';
 import DayBox from '../../components/DayBox/DayBox';

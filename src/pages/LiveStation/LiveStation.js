@@ -1,6 +1,6 @@
 import React from 'react';
 import './LiveStation.scss';
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Footer from '../../components/Footer/Footer'
 import Shape from './Shape/Shape'

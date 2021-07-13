@@ -39,7 +39,7 @@
     background-color: white;
     text-align: center;
     border-radius: 50%;
-    line-height: 20px;
+    line-height: 21px;
     font-size: 20px;
     font-weight: bold;
   }
@@ -103,7 +103,9 @@
 .userInfoContainer.whiteBackground {
   color: var(--a);
   .nameAndImg {
-    > div:last-of-type {
+    .charCircle {
+      color: white;
+      background-color: var(--a);
     }
   }
 }

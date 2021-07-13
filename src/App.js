@@ -11,6 +11,7 @@ import Train from './pages/Train/Train';
 import LiveTrain from './pages/LiveTrain/LiveTrain'
 import LiveStation from './pages/LiveStation/LiveStation'
 import Statistics from './pages/Statistics/Statistics'
+import Booking from './pages/Booking/Booking'
 import ScrollToTop from './shared/ScrollToTop'
 
 function App() {
@@ -25,8 +26,7 @@ function App() {
           <Route path="/live-train" component={LiveTrain} />
           <Route path="/live-station" component={LiveStation} />
           <Route path="/statistics" component={Statistics} />
-          {/* <Route path="/SignIn" component={SignIn} /> */}
-          {/* <Route path="/CreateAccount" component={CreateAccount} /> */}
+          <Route path="/booking" component={Booking} />
           <Redirect to="/" />
         </Switch>
       </div>

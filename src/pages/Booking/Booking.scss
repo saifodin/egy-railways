@@ -1,0 +1,502 @@
+.booking {
+  background-color: var(--c);
+}
+
+.booking .upperPart {
+  background-color: var(--b);
+  .blueBar {
+    background-color: var(--a);
+    .blueBarContent {
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: flex-start;
+      height: 72px;
+      line-height: 1;
+      color: white;
+      font-size: 16px;
+      i {
+        margin: 0 20px;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.booking .mainPart {
+  display: flex;
+  justify-content: space-between;
+  .side {
+    width: 36%;
+    flex-grow: 0;
+  }
+  .section {
+    width: 58%;
+    flex-grow: 0;
+    height: 6000px;
+  }
+}
+
+.booking .mainPart .side .sideContent {
+  position: sticky;
+  top: 0px;
+  margin-top: -70px;
+  top: 24px;
+
+  .dayContainer,
+  .classAndPrice {
+    margin-top: 20px;
+    padding: 24px;
+    background-color: var(--b);
+    border-radius: 8px;
+    box-shadow: #13296833 0px 2px 5px 0px;
+  }
+  .dayContainer {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    color: var(--f);
+    img {
+      margin-right: 15px;
+    }
+    .day {
+      color: var(--d);
+    }
+  }
+  .classAndPrice {
+    // height: 90px;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    > div {
+      color: var(--f);
+      margin: 2px 0px;
+      .egp {
+        font-size: 12px;
+      }
+      &:first-of-type {
+        span:last-of-type {
+          color: var(--d);
+        }
+      }
+      &:last-of-type {
+        color: var(--a);
+        font-weight: bold;
+        font-size: 20px;
+        margin-top: 5px;
+        .egp {
+          font-size: 16px;
+        }
+      }
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+.booking .mainPart .section {
+  > section {
+    border-radius: 8px;
+    box-shadow: #13296833 0px 2px 5px 0px;
+    background-color: var(--b);
+    margin-top: 20px;
+    > header {
+      border-bottom: 1px solid #dcdfe9;
+      padding: 16px 24px;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: var(--a);
+    }
+    section {
+      padding: 24px;
+    }
+  }
+
+  > section.ticketType section {
+    display: flex;
+    > div {
+      border: 1px solid #dcdfe9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background-color: var(--b);
+      height: 100%;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      img {
+        height: 80px;
+        // width: 80px;
+      }
+      > div {
+        width: 65%;
+        > header {
+          color: #717fa4;
+          font-size: 16px;
+          font-weight: bold;
+        }
+        > p {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 20px;
+          color: var(--f);
+          font-weight: 500;
+          margin-top: 5px;
+        }
+      }
+      &:first-of-type {
+        margin-right: 4px;
+      }
+      &.selected {
+        border: 1px solid #5e90cc;
+        background-color: #deebf9;
+      }
+    }
+  }
+
+  > section.passengerDetails section {
+    font-weight: 500;
+    P {
+      color: var(--f);
+      line-height: 20px;
+    }
+    div {
+      display: flex;
+      align-items: center;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 8px;
+      background: #f5f9fd;
+      border-color: #5e90cc;
+      color: var(--f);
+      padding: 12px 16px 14px;
+      margin-top: 8px;
+      font-size: 16px;
+      i {
+        color: #5e90cc;
+        margin-right: 15px;
+        font-size: 20px;
+      }
+    }
+  }
+
+  [class^="whenTicket"] {
+    padding: 12px 16px 14px;
+    border: 1px solid;
+    border-radius: 8px;
+    background: #f5f9fd;
+    margin-top: 20px;
+    display: flex;
+    P {
+      line-height: 20px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+  }
+
+  .whenTicketStation {
+    border-color: #5e90cc;
+    color: #3366a2;
+    i {
+      color: #5e90cc;
+    }
+  }
+
+  .whenTicketMobile {
+    border-color: #24c89a;
+    color: #1c9d79;
+    i {
+      color: #24c89a;
+    }
+  }
+
+  > section.paymentMethod section {
+    padding: 0px 24px;
+    padding-bottom: 24px;
+
+    [class^="select"] {
+      display: flex;
+      align-items: center;
+      height: 65px;
+      cursor: pointer;
+      &.selected {
+        .radioButton {
+          // width = width:20 + border:0 + shadow:2+2= 24
+          // + margin-left: 2px
+          // + margin-top: 1px;
+          // + margin-right: 2px;
+          width: 20px;
+          height: 20px;
+          background-color: #5e90cc; // like inside circle
+          box-shadow: 0px 0px 0px 2px #9ebce0; //like border
+          border: 4px solid white; //like gap between inside circle and border
+          margin-left: 2px;
+          margin-right: 2px;
+          margin-top: 1px;
+        }
+      }
+      &:hover {
+        background-color: #f6f7f9;
+      }
+      .radioButton {
+        flex-grow: 0;
+        flex-shrink: 0;
+        // width = width:24 + border:0 = 24
+        width: 24px;
+        height: 24px;
+        border: 2px solid #9ebce0;
+        border-radius: 50%;
+        box-sizing: border-box;
+        &.selected {
+          // width = width:20 + border:0 + shadow:2+2= 24
+          // + margin-left: 2px
+          // + margin-top: 1px;
+          // + margin-right: 2px;
+          width: 20px;
+          height: 20px;
+          background-color: #5e90cc; // like inside circle
+          box-shadow: 0px 0px 0px 2px #9ebce0; //like border
+          border: 4px solid white; //like gap between inside circle and border
+          margin-left: 2px;
+          margin-right: 2px;
+          margin-top: 1px;
+        }
+      }
+      .paymentImgs {
+        display: flex;
+        margin-left: 10px;
+        align-items: center;
+
+        img {
+          height: 20px;
+          &:not(:last-of-type) {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .selectVisa {
+      // border-bottom: 1px solid #f1f2f6;
+      &.selected {
+        // border-bottom: none;
+      }
+      .paymentImgs img {
+        &:nth-of-type(1) {
+          width: 46.33px;
+          height: 15px;
+
+          // width: 61.78px;
+          // height: 20px;
+        }
+        &:nth-of-type(2) {
+          width: 33.36px;
+          height: 20px;
+
+          // width: 41.69px;
+          // height: 25px;
+
+          // width: 50px;
+          // height: 30px;
+        }
+        &:nth-of-type(3) {
+          height: 30px;
+        }
+      }
+    }
+    .selectVodafone {
+      margin-top: 30px;
+      border-top: 1px solid #f1f2f6;
+      &.selected {
+        margin-top: 0px;
+      }
+      .paymentImgs img {
+        height: 80px;
+        width: 140px;
+        margin-left: -33px;
+      }
+    }
+    .contentDisabled {
+      display: none;
+    }
+  }
+
+  .payButton {
+    margin-top: 50px;
+    text-align: center;
+    line-height: 20px;
+    padding: 0px 16px;
+    border: 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    appearance: none;
+    box-shadow: none;
+    text-decoration: none;
+    transition: background-color 0.2s linear 0s;
+    color: var(--b);
+    background-color: var(--d);
+    height: 56px;
+    font-size: 18px;
+    outline: none;
+    width: 38%;
+    &:hover {
+      background-color: var(--l);
+    }
+  }
+}
+
+//************* name on Card input
+
+.booking .visaName input {
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  box-sizing: border-box;
+  height: 48px;
+  width: 100%;
+  padding: 0 12px;
+  border: 1px solid #f1f2f6;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: left;
+  letter-spacing: 0.3px;
+  appearance: none;
+  background-color: #f1f2f6;
+  box-shadow: none;
+  caret-color: #a1a9c3;
+  color: #132968;
+  transition: border 0.15s;
+  &.inputError {
+    background-color: rgb(255, 242, 241);
+    border: 1px solid rgb(223, 27, 10);
+    &:hover,
+    &:focus {
+      border: 1px solid rgb(223, 27, 10);
+    }
+  }
+  // padding-left: 35px;
+  &:hover,
+  &:focus {
+    border: 1px solid #a1a9c3;
+    outline: 0;
+  }
+  &::placeholder {
+    color: #a1a9c3;
+    opacity: 1;
+  }
+}
+
+.booking .visaName label {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+  line-height: 24px;
+  color: rgb(66, 84, 134);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: default;
+  margin-top: 10px;
+}
+
+.booking .visaName .validationError {
+  line-height: 20px;
+  margin: 0px;
+  margin-bottom: -5px;
+  font-size: 14px;
+  color: rgb(223, 27, 10);
+  font-weight: 500;
+  // margin-bottom: 5px;
+}
+
+//****** react-payment-inputs *****
+
+.booking .paymentContainer {
+  // margin-top: 30px;
+  .likeLabel {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+    line-height: 24px;
+    color: rgb(66, 84, 134);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: default;
+    margin-top: 10px;
+  }
+  > div {
+    width: 100%;
+    > div:first-of-type {
+      background-color: #f1f2f6;
+      border-radius: 8px;
+      height: 50px;
+      box-sizing: border-box;
+      border: none;
+      box-shadow: none;
+      transition: all 0.15s;
+      padding: 0px;
+      &.SNVCN,
+      &:hover {
+        // focus and hover
+        border: 1px solid #a1a9c3;
+      }
+      &.PyiZR,
+      &.gFDbrB {
+        // error not focus
+        // error when focus
+        background-color: rgb(255, 242, 241);
+        border: 1px solid rgb(223, 27, 10);
+        input {
+          background-color: rgb(255, 242, 241);
+        }
+      }
+      svg {
+        margin-left: 10px;
+      }
+      input {
+        height: 100%;
+        border-right: 1px solid #e5e6e6;
+        font-size: 16px;
+        letter-spacing: 2px;
+        word-spacing: 4px;
+        background-color: #f1f2f6;
+        box-shadow: none;
+        caret-color: #a1a9c3;
+        color: #132968;
+        transition: all 0.15s;
+        &::placeholder {
+          color: #a1a9c3;
+          word-spacing: normal;
+          letter-spacing: 0.3px;
+        }
+        &:nth-of-type(1) {
+          width: 50% !important;
+        }
+        &:nth-of-type(2) {
+          width: 25% !important;
+          margin-left: 5px;
+        }
+        &:nth-of-type(3) {
+          width: 10% !important;
+          margin-left: 5px;
+          border-right: none;
+        }
+      }
+    }
+    > div:nth-of-type(2) {
+      line-height: 20px;
+      margin: 0px;
+      margin-bottom: -5px;
+      font-size: 14px;
+      color: rgb(223, 27, 10);
+      font-weight: 500;
+    }
+  }
+}

@@ -209,7 +209,7 @@ const TrainCard = props => {
   //* when trainCard called by train page, or called by liveTrain page
   else if (props.forTrainPage || props.liveTrainPage) {
     trainCard = (
-      <div className={`${css.trainCard} ${isAvailOpenClass} ${css.forTrainPage} ${css.liveTrainPage}`}>
+      <div className={`${css.trainCard} ${css.forTrainPage} ${css.liveTrainPage}`}>
         <div className={css.trainData}>
 
           <div className={css.trainCardTop}>
@@ -233,7 +233,7 @@ const TrainCard = props => {
               {props.Fare2A ? <span>2A</span> : null}
               {props.Fare3A ? <span>3A</span> : null}
             </div>
-            { props.forTrainPage &&
+            {props.forTrainPage &&
               <div className={css.toLiveTrainContainer}>
                 <span onClick={goToLiveTrain}> go to live train <span className={css.anchor}></span></span>
                 <div className={css.flash}>
@@ -270,6 +270,52 @@ const TrainCard = props => {
             </div>
           </div>
 
+        </div>
+      </div>
+    )
+  }
+  //   <TrainCard
+  //   forBooking
+  //   name={ourTrain.name}
+  //   start={ourTrain.start}
+  //   end={ourTrain.end}
+  //   journeyTime={ourTrain.journeyTime}
+  //   numberOfStops={ourTrain.numberOfStops}
+  //   day={ourTrain.day}
+  //   class={ourTrain.class}
+  //   price={ourTrain.price}
+  // />
+  else if (props.forBooking) {
+    trainCard = (
+      <div className={`${css.trainCard} ${css.forBooking}`}>
+        <div className={css.trainData}>
+          <div className={css.trainCardTop}>
+            <span className={css.trainNo}>{props.name}</span>
+          </div>
+
+          <div className={css.trainCardMiddle}>
+            <div className={css.timeInfo}>
+              <div className={css.departureTimeInfo}>
+                <span>{props.start.slice(0, props.start.length - 3)}<span>{props.end.slice(-2)}</span></span>
+                <span>{props.startFrom}</span>
+              </div>
+              <div className={css.durationAndStops}>
+                <span className={css.duration}>{props.journeyTime}</span>
+                <div className={css.line}>
+                  <span></span>
+                  <span></span>
+                </div>
+                <span className={css.stops}>
+                  {props.numberOfStops}
+                  {props.numberOfStops > 1 ? " stops" : " stop"}
+                </span>
+              </div>
+              <div className={css.arrivalTimeInfo}>
+                <span>{props.end.slice(0, props.end.length - 3)}<span>{props.end.slice(-2)}</span></span>
+                <span>{props.endIn}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

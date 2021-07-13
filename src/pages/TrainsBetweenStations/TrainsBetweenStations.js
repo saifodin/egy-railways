@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import css from './TrainsBetweenStations.module.scss'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/NavBar'
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Footer from '../../components/Footer/Footer'
 import CheckBoxOrRadio from '../../components/CheckBoxOrRadio/CheckBoxOrRadio'

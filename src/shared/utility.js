@@ -321,14 +321,16 @@ export const createDateFormat = index => {
   //// 26
   const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
   //// 26 Jun Sat
-
+  const firebaseFormat = `${weekDayName}, ${Number(dayDigit)} ${monthName}`;
+  //// Sat, 9 Jun 
 
   return {
     dateFormat,
     weekDayName,
     monthName,
     dayDigit,
-    dateFormateDigit
+    dateFormateDigit,
+    firebaseFormat
   };
 };
 //* "01/07/2021" => "01 Jul, Thu"
@@ -355,6 +357,30 @@ export const digitDateToNice = dateFormateDigit => {
   return `${dayDigit} ${monthName}, ${weekDayName}`;
   //// 01 Jul, Thu
 };
+//* "01/07/2021" => "01 Jul, Thu"
+export const digitDateToFire = dateFormateDigit => {
+  //// "01/07/2021"
+
+  const dayNum = Number(dateFormateDigit.slice(0, 2))
+  //// 1
+  const monthIndex = Number(dateFormateDigit.slice(3, 5) - 1)
+  //// 6
+  const year = Number(dateFormateDigit.slice(6))
+  //// 2021
+
+  const day = new Date(year, monthIndex, dayNum);
+  //// object => Thu Jul 01 2021 00:00:00 GMT+0200 (Eastern European Standard Time)
+
+  const monthName = day.toLocaleString('en-US', { month: 'short' })
+  //// Jul
+  const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
+  //// Thu
+  const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
+  //// 01
+
+  return `${weekDayName}, ${Number(dayDigit)} ${monthName}`;;
+  //// 01 Jul, Thu
+}
 //* "01/07/2021" => "thu"
 export const knowWeekday = dateFormateDigit => {
   //// "01/07/2021"
@@ -458,7 +484,6 @@ export const KnowGov = (station) => {
 export const refreshPage = _ => {
   window.location.reload();
 }
-
 
 export const emailValidator = email => {
   if (!email) return false

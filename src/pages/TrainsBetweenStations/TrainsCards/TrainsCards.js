@@ -206,6 +206,9 @@ const TrainsCards = (props) => {
                 // isTopRated={TopRatedId === val.value.number ? true : false}
                 isCheapest={CheapestId === val.value.number ? true : false}
                 isFastest={FastestId === val.value.number ? true : false}
+                fromUrl={fromUrl}
+                toUrl={toUrl}
+                digitDate={dateUrl}
               />
             )
           })

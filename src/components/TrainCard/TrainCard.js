@@ -1,47 +1,17 @@
 import React, { useState, Fragment } from 'react';
 import { useHistory } from "react-router-dom"
-import DayBox from '../DayBox/DayBox'
+import DayBoxes from '../DayBoxes/DayBoxes';
 import css from './TrainCard.module.scss'
 
 const TrainCard = props => {
-  // <TrainCard id name departTime arrivalTime dateUrl journeyTime numberOfStops p1A p2A p3A weekDayRuns isTopRated isCheapest isFastest /> // in TrainsCards.js
-  // <TrainCard forTrainPage /> // in train.js
 
-  /*
-    <TrainCard
-      key={val.id}
-      id={val.id}
-      name={val.value.number}
-      departTime={val.value.departTime}
-      arrivalTime={val.value.arrivalTime}
-      dateUrl={digitDateToNice(dateUrl)}
-      journeyTime={val.value.journeyTime}
-      numberOfStops={val.value.numberOfStops}
-      p1A={val.value.fareClassess["1A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p1A : null}
-      p2A={val.value.fareClassess["2A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p2A : null}
-      p3A={val.value.fareClassess["3A"] ? calFaresPrices(fromUrl, toUrl, val.value.numberOfStops).p3A : null}
-      weekDayRuns={val.value.weekDayRuns}
-      isTopRated={FastestId === val.value.number ? true : false}
-      isCheapest={CheapestId === val.value.number ? true : false}
-      isFastest={TopRatedId === val.value.number ? true : false}
-    />
 
-    <TrainCard
-      forTrainPage
-      name={ourTrain.value.number}
-      trainStart={ourTrain.value.stopStation[0].name}
-      trainEnd={ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].name}
-      journeyTime={subTwoTimes(ourTrain.value.stopStation[0].departTime, ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
-      startTime={time24To12(ourTrain.value.stopStation[0].departTime)}
-      endTime={time24To12(ourTrain.value.stopStation[ourTrain.value.stopStation.length - 1].arrivalTime)}
-      numberOfStations={ourTrain.value.stopStation.length - 2}
-      weekDayRuns={ourTrain.value.weekDayRuns}
-      rate="3.6"
-      Fare1A={ourTrain.value.fareClassess['1A'] ? true : false}
-      Fare2A={ourTrain.value.fareClassess['2A'] ? true : false}
-      Fare3A={ourTrain.value.fareClassess['3A'] ? true : false}
-    />
-  */
+  //#region - change <DayBoxes/> when change class
+  let initialClassSelect = "1A"
+  if (props.p2A) initialClassSelect = "2A"
+  if (props.p3A) initialClassSelect = "3A"
+  const [classSelect, setClassSelect] = useState(initialClassSelect)
+  //#endregion
 
   //#region - when click on trainDetails
   const history = useHistory();
@@ -64,6 +34,7 @@ const TrainCard = props => {
   //#region get price when click on Name of fare class 
   const [fare, setFare] = useState(null)
   const changeFare = trainClassName => {
+    setClassSelect(trainClassName)
     switch (trainClassName) {
       case "1A":
         setFare(props.p1A)
@@ -189,18 +160,25 @@ const TrainCard = props => {
             </div>
 
           </div>
-          <div className={css.trainAvail}>
-            <div className={css.daysBoxes}>
-              <DayBox date="3 May, Mon" availability="available" />
-              <DayBox date="6 May, Thu" availability="not available" />
-              <DayBox date="9 May, Sun" availability="available" />
-              <DayBox date="12 May, Wed" availability="not exist" />
+
+          { isAvailOpen &&
+            <div className={css.trainAvail}>
+              <div className={css.daysBoxes}>
+                <DayBoxes
+                  fromStation={props.fromUrl}
+                  toStation={props.toUrl}
+                  trainNumber={props.name}
+                  classSelect={classSelect}
+                  weekDayRuns={props.weekDayRuns}
+                  digitDate={props.digitDate}
+                />
+              </div>
+              <button onClick={trainDetailsButton}>Train Details</button>
+              <div className={css.closeButton} onClick={_ => setIsAvailOpen(false)}>
+                <i className="fas fa-times"></i>
+              </div>
             </div>
-            <button onClick={trainDetailsButton}>Train Details</button>
-            <div className={css.closeButton} onClick={_ => setIsAvailOpen(false)}>
-              <i className="fas fa-times"></i>
-            </div>
-          </div>
+          }
         </div>
       </li >
     )
@@ -274,17 +252,7 @@ const TrainCard = props => {
       </div>
     )
   }
-  //   <TrainCard
-  //   forBooking
-  //   name={ourTrain.name}
-  //   start={ourTrain.start}
-  //   end={ourTrain.end}
-  //   journeyTime={ourTrain.journeyTime}
-  //   numberOfStops={ourTrain.numberOfStops}
-  //   day={ourTrain.day}
-  //   class={ourTrain.class}
-  //   price={ourTrain.price}
-  // />
+
   else if (props.forBooking) {
     trainCard = (
       <div className={`${css.trainCard} ${css.forBooking}`}>

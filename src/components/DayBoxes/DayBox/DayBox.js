@@ -19,8 +19,9 @@ const DayBox = props => {
       break;
   }
 
+
   return (
-    <div className={css.dayBox}>
+    <div className={`${css.dayBox} ${props.theDayIWant ? css.theDayIWant : null}`}>
       <p>{props.date}</p>
       <p className={style} >{props.availability === "not exist" ? "" : props.availability}</p>
       <button>Book Now</button>

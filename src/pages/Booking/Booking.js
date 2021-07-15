@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Booking.scss'
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
+import Footer from '../../components/Footer/Footer'
 import images from 'react-payment-inputs/images';
 import Navbar from '../../components/Navbar/NavBar'
 import TrainCard from '../../components/TrainCard/TrainCard'
@@ -54,23 +55,54 @@ const Booking = () => {
   const [vodNumberAccess, setVodNumberAccess] = useState(false)
   let vodNumberError = null
   if (vodNumberAccess) {
-    vodNumberError = !vodNumber ? <p className="validationError">Required</p> : (vodNumber.length !== 11 ? <p className="validationError">Invalid</p> : null)
+    vodNumberError = !vodNumber ? <p className="validationError">Required</p> : (vodNumber.slice(0, 2) !== "01" ? <p className="validationError">Invalid</p> : (vodNumber.length !== 11 ? <p className="validationError">Invalid</p> : null))
+    // (vodNumber.length !== 11 ? <p className="validationError">Invalid</p> : null)
   }
 
   //* cardNumber
   const { wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
   // when this undefined then the card is full and valid
   // console.log("wrapperProps.error", wrapperProps.error)
+  const [isAllInputsTouched, setIsAllInputsTouched] = useState(false)
   const [cardNumber, setCardNumber] = useState(null)
   const [expiry, setExpiry] = useState(null)
   const [cvc, setCvc] = useState(null)
-  console.log(cardNumber)
 
+  const ToYourBookingPage = _ => {
 
+  }
 
+  const submitPayButton = _ => {
+    //* pay by card
+    if (isSelectCard) {
+      if (!wrapperProps.error && visaName) {
+        // ... push to server
+        console.log("by card => push")
+      }
+      else {
+        wrapperProps.isTouched = true
+      }
+
+    }
+    //* pay by vodafone
+    else {
+      if (vodNumber && vodNumber.slice(0, 2) === "01" && vodNumber.length === 11) {
+        // ... push to server
+        console.log("by vodafone => push")
+
+        ToYourBookingPage()
+      }
+      else {
+        setVodNumberAccess(true)
+      }
+    }
+  }
+
+  console.log(wrapperProps)
 
   return (
     <div className="booking">
+
       <div className="upperPart">
         <Navbar extraStyle="whiteBackground" />
         <div className="blueBar">
@@ -85,9 +117,9 @@ const Booking = () => {
           </div>
         </div>
       </div>
+
       <div className="mainPart container">
         <div className="section">
-
           <section className="ticketType">
             <header>Choose a ticket type</header>
             <section>
@@ -145,11 +177,11 @@ const Booking = () => {
                   <input className={visaNameError ? "inputError" : null} onBlur={_ => setVisaNameAccess(true)} onChange={e => setVisaName(e.target.value.trim())} defaultValue={currentUser.name} type="text" id="visaName" name="visaName" />
                   {visaNameError}
                 </div>
-                <div className="paymentContainer">
+                <p className="likeLabel">Card number</p>
+                <div className="paymentContainer" onClick={_ => setIsAllInputsTouched(true)}>
                   {/* //// visa => 4539298728713761 */}
                   {/* //// MasterCard => 5131378213242564 */}
                   {/* //// American Express => 342304893033616 */}
-                  <p className="likeLabel">Card number</p>
                   <PaymentInputsWrapper {...wrapperProps}>
                     <svg {...getCardImageProps({ images })} />
                     <input {...getCardNumberProps({ onChange: e => setCardNumber(e.target.value) })} />
@@ -175,7 +207,7 @@ const Booking = () => {
             </section>
           </section>
 
-          <button className="payButton">Pay</button>
+          <button className="payButton" onClick={submitPayButton}>Pay</button>
 
         </div>
         <div className="side">
@@ -217,6 +249,11 @@ const Booking = () => {
           </div>
         </div>
       </div>
+
+      <div className="footerContainer">
+        <Footer />
+      </div>
+
     </div >
   );
 }

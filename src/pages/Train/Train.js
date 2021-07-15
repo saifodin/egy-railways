@@ -3,7 +3,7 @@ import css from './Train.module.scss'
 import Navbar from '../../components/Navbar/NavBar'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import TrainCard from '../../components/TrainCard/TrainCard';
-import DayBox from '../../components/DayBox/DayBox';
+import DayBox from '../../components/DayBoxes/DayBox/DayBox';
 import Footer from '../../components/Footer/Footer'
 import { subTwoTimes, time24To12, calFaresPrices, KnowGov } from '../../shared/utility'
 
@@ -24,8 +24,6 @@ const Train = () => {
     }
   }
   //#endregion
-
-  console.log(ourTrain)
 
   //#region - handle Availability search
 

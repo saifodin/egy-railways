@@ -246,6 +246,29 @@
 
 .trainAvail .daysBoxes {
   display: flex;
+  overflow-x: scroll;
+  max-width: 620px;
+  :last-child {
+    margin-right: 20px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 1px 0px 0px 0px white;
+    background-color: var(--c);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--c);
+    border-radius: 50px;
+    box-shadow: inset 2px 2px 3px 0px #b4b3b5;
+  }
+  > div {
+    margin-bottom: 10px;
+  }
 }
 
 .trainAvail .closeButton {
@@ -410,26 +433,15 @@
   }
   .trainAvail {
     .daysBoxes {
+      @media (max-width: 991px) {
+        overflow-x: scroll;
+        max-width: 510px;
+      }
       @media (max-width: 767px) {
         overflow-x: scroll;
         max-width: 350px;
         :last-child {
           margin-right: 20px;
-        }
-
-        &::-webkit-scrollbar {
-          height: 5px;
-        }
-
-        &::-webkit-scrollbar-track {
-          box-shadow: inset 1px 0px 0px 0px white;
-          background-color: var(--c);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: var(--c);
-          border-radius: 50px;
-          box-shadow: inset 2px 2px 3px 0px #b4b3b5;
         }
       }
 
@@ -439,16 +451,16 @@
       }
     }
     .daysBoxes > div {
+      // min-width: 130px;
+      // min-height: 98px;
       @media (max-width: 991px) {
-        min-width: auto;
+        min-width: 124px;
         min-height: 98px;
       }
       @media (max-width: 767px) {
         min-width: 130px;
         min-height: 98px;
-        margin-bottom: 10px;
       }
-
       p:last-of-type {
         @media (max-width: 991px) {
           font-size: 12px;

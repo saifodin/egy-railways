@@ -5,11 +5,14 @@
   padding: 10px 0;
   padding-bottom: 0;
   background-color: #fff;
-  min-width: 140px;
+  min-width: 150px;
   height: 118px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin: 0px 3px;
+  &.theDayIWant {
+    background-color: #fa6b6b24;
+  }
   p:first-of-type {
     font-size: 13px;
     color: var(--f);

@@ -34,7 +34,6 @@
   .section {
     width: 58%;
     flex-grow: 0;
-    height: 6000px;
   }
 }
 
@@ -282,10 +281,6 @@
     }
 
     .selectVisa {
-      // border-bottom: 1px solid #f1f2f6;
-      &.selected {
-        // border-bottom: none;
-      }
       .paymentImgs img {
         &:nth-of-type(1) {
           width: 46.33px;
@@ -345,6 +340,7 @@
     font-size: 18px;
     outline: none;
     width: 38%;
+    margin-bottom: 60px;
     &:hover {
       background-color: var(--l);
     }
@@ -417,20 +413,21 @@
 
 //****** react-payment-inputs *****
 
+.likeLabel {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+  line-height: 24px;
+  color: rgb(66, 84, 134);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: default;
+  margin-top: 10px;
+}
+
 .booking .paymentContainer {
   // margin-top: 30px;
-  .likeLabel {
-    display: block;
-    margin: 0px;
-    padding: 0px;
-    text-align: left;
-    line-height: 24px;
-    color: rgb(66, 84, 134);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: default;
-    margin-top: 10px;
-  }
   > div {
     width: 100%;
     > div:first-of-type {

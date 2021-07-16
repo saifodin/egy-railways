@@ -209,6 +209,7 @@ const TrainsCards = (props) => {
                 fromUrl={fromUrl}
                 toUrl={toUrl}
                 digitDate={dateUrl}
+                departTimeDigit={departTime} //fro DayBoxes
               />
             )
           })

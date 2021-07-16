@@ -15,8 +15,11 @@ import { stationsName, knowWeekday } from '../../shared/utility'
 const TrainsBetweenStations = _ => {
   console.log("TrainsBetweenStations.js")
 
-
+  //#region - when click on book button open Auth page
   
+
+  ////#endregion
+
   //#region - get from, to, date, trainsDb values
   let params = new URLSearchParams(window.location.search);
   const fromUrl = params.get('from')
@@ -116,7 +119,7 @@ const TrainsBetweenStations = _ => {
         <Navbar extraStyle="whiteBackground" />
         <div className={css.line}></div>
         <div className={css.SearchBarContainer}>
-          <SearchBar extraStyle="flat" searchOn="stations" inputFrom={fromUrl} inputTo={toUrl} inputDate={dateUrl}/>
+          <SearchBar extraStyle="flat" searchOn="stations" inputFrom={fromUrl} inputTo={toUrl} inputDate={dateUrl} />
         </div>
         <div className={css.line}></div>
       </div>

@@ -320,7 +320,7 @@ export const createDateFormat = index => {
   const dayDigit = day.toLocaleString('en-US', { day: '2-digit' })
   //// 26
   const dateFormat = `${dayDigit} ${monthName}, ${weekDayName}`;
-  //// 26 Jun Sat
+  //// 26 Jun, Sat
   const firebaseFormat = `${weekDayName}, ${Number(dayDigit)} ${monthName}`;
   //// Sat, 9 Jun 
 

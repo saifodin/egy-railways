@@ -161,7 +161,7 @@ const TrainCard = props => {
 
           </div>
 
-          { isAvailOpen &&
+          {isAvailOpen &&
             <div className={css.trainAvail}>
               <div className={css.daysBoxes}>
                 <DayBoxes
@@ -171,6 +171,14 @@ const TrainCard = props => {
                   classSelect={classSelect}
                   weekDayRuns={props.weekDayRuns}
                   digitDate={props.digitDate}
+                  departTimeDigit={props.departTimeDigit}
+                  forBookingInfo={{
+                    start: props.departTime,
+                    end: props.arrivalTime,
+                    journeyTime: props.journeyTime,
+                    numberOfStops: props.numberOfStops,
+                    price: fare ? fare : props.p3A ? props.p3A : props.p2A ? props.p2A : props.p1A ? props.p1A : null
+                  }}
                 />
               </div>
               <button onClick={trainDetailsButton}>Train Details</button>

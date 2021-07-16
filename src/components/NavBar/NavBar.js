@@ -28,10 +28,15 @@ const Navbar = props => {
   //#region - open and close AuthComponent and userList
   const [openAuth, setOpenAuth] = useState(false);
   const [openUserList, setOpenUserList] = useState(false);
+
+  if (window.localStorage.getItem('openAuth') === "true") {
+    window.localStorage.setItem('openAuth', "false");
+    setOpenAuth(true)
+  }
   //#endregion
 
   //#region - get the current user, fix string error, singOut function
-  
+
   const [userInfo, setUserInfo] = useState(null)
 
   useEffect(_ => {

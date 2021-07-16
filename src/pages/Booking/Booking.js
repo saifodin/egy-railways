@@ -12,20 +12,26 @@ import visa from '../../assets/imgs/otherImgs/visa.png'
 import MasterCard from '../../assets/imgs/otherImgs/MasterCard.png'
 import vodafoneCash from '../../assets/imgs/otherImgs/vodafoneCash.gif'
 import americanExpress from '../../assets/imgs/otherSvg/americanExpress.svg'
+import { digitDateToNice } from '../../shared/utility'
 
 const Booking = () => {
+  
+  let params = new URLSearchParams(window.location.search);
+  const dayDigit = params.get('day')
+
   const ourTrain = {
-    name: "02461",
-    start: "08:27 PM",
-    end: "10:40 PM",
-    startFrom: "Cairo",
-    endIn: "Tanta",
-    journeyTime: "0h13m",
-    numberOfStops: 2,
-    day: "02 May, Sun",
-    class: "2A",
-    price: "50"
+    name: params.get('name'),
+    startFrom: params.get('fromStation'),
+    endIn: params.get('toStation'),
+    day: digitDateToNice(dayDigit),
+    start: params.get('startAt'),
+    end: params.get('endAt'),
+    journeyTime: params.get('journeyTime'),
+    numberOfStops: params.get('stops'),
+    class: params.get('class'),
+    price: params.get('price'),
   }
+
   const currentUser = {
     name: "Saifodin Ibrahim",
     email: "saifodin@gmail.com",

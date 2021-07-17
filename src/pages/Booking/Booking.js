@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Booking.scss'
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import Footer from '../../components/Footer/Footer'
@@ -12,12 +12,17 @@ import visa from '../../assets/imgs/otherImgs/visa.png'
 import MasterCard from '../../assets/imgs/otherImgs/MasterCard.png'
 import vodafoneCash from '../../assets/imgs/otherImgs/vodafoneCash.gif'
 import americanExpress from '../../assets/imgs/otherSvg/americanExpress.svg'
-import { digitDateToNice } from '../../shared/utility'
+import { digitDateToNice, digitDateToFire } from '../../shared/utility'
+import firebase from '../../firebase/firebase'
 
 const Booking = () => {
-  
+
   let params = new URLSearchParams(window.location.search);
+  // const stationsBooking = window.localStorage.getItem("stationsBooking");
+  // console.log(stationsBooking)
+
   const dayDigit = params.get('day')
+  const dayFirFormate = digitDateToFire(dayDigit)
 
   const ourTrain = {
     name: params.get('name'),
@@ -48,6 +53,8 @@ const Booking = () => {
   const [isSelectCard, setIsSelectCard] = useState(true)
 
 
+  //#region - inputs validation and values
+
   //* visaName
   const [visaName, setVisaName] = useState(null)
   const [visaNameAccess, setVisaNameAccess] = useState(false)
@@ -62,31 +69,135 @@ const Booking = () => {
   let vodNumberError = null
   if (vodNumberAccess) {
     vodNumberError = !vodNumber ? <p className="validationError">Required</p> : (vodNumber.slice(0, 2) !== "01" ? <p className="validationError">Invalid</p> : (vodNumber.length !== 11 ? <p className="validationError">Invalid</p> : null))
-    // (vodNumber.length !== 11 ? <p className="validationError">Invalid</p> : null)
   }
 
   //* cardNumber
+  // these two useState, because PaymentInputsWrapper haven't error message when click pay Button without focus in card inputs
+  const [cardErrorAfterSubmitButton, setCardErrorAfterSubmitButton] = useState(null)
+  const [cardErrorOne, setCardErrorOne] = useState(false)
+
   const { wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
   // when this undefined then the card is full and valid
-  // console.log("wrapperProps.error", wrapperProps.error)
+  console.log("wrapperProps.error", wrapperProps)
   const [isAllInputsTouched, setIsAllInputsTouched] = useState(false)
   const [cardNumber, setCardNumber] = useState(null)
   const [expiry, setExpiry] = useState(null)
   const [cvc, setCvc] = useState(null)
+  //#endregion
 
-  const ToYourBookingPage = _ => {
+  //#region - get myStations that will be increment, fareClassess, isTrainDocUE Contain MyDate or not
 
+  const [trainDocUE, setTrainDocUE] = useState(null)
+
+  useEffect(() => {
+    firebase.firestore().collection("journeys").doc(ourTrain.name).get().then(doc => {
+      setTrainDocUE(doc.data())
+    })
+  }, [ourTrain.name])
+
+  let myStations = [];
+  if (trainDocUE) {
+    let foundFirstStation = false
+    for (const i in trainDocUE.scheduels) {
+      let station = Object.keys(trainDocUE.scheduels[i])[0];
+      if (!foundFirstStation) {
+        if (station === ourTrain.startFrom) {
+          foundFirstStation = true
+        }
+      }
+      if (foundFirstStation) {
+        if (station === ourTrain.endIn) {
+          break;
+        }
+        // console.log({ index: i, station: station })
+        myStations.push({ index: i, station: station })
+      }
+    }
   }
+
+  let fareClassess = null;
+  if (trainDocUE) {
+    fareClassess = trainDocUE.fareClassess
+    // console.log("fareClassess", fareClassess)
+  }
+
+  let isTrainDocUEContainMyDate
+  if (trainDocUE) {
+    // console.log("fistObjInTrainDocUE", Object.keys(trainDocUE.scheduels[0])[0])
+    // if (trainDocUE.scheduels[0][Object.keys(trainDocUE.scheduels[0])[0]]["Tue, 20 Jul"]) {
+    if (trainDocUE.scheduels[0][Object.keys(trainDocUE.scheduels[0])[0]][dayFirFormate]) {
+      isTrainDocUEContainMyDate = true
+    }
+    else {
+      isTrainDocUEContainMyDate = false
+    }
+    // console.log(isTrainDocUEContainMyDate)
+  }
+
+  //#endregion
+
+  //#region - updateJourneysDoc() called by submitPayButton() - get trainDoc from journeys, update, push to journeys again 
+
+  const [trainDocOld, setTrainDocOld] = useState(null)
+
+  const updateJourneysDoc = _ => {
+    console.log("updateJourneysDoc")
+
+    firebase.firestore().collection("journeys").doc(ourTrain.name).get().then(doc => {
+      setTrainDocOld(doc.data())
+    })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      })
+  }
+
+  if (trainDocOld) {
+    // console.log(trainDocOld);
+
+    trainDocOld.passengers += 1;
+    trainDocOld.profit += Number(ourTrain.price);
+
+    if (!isTrainDocUEContainMyDate) {
+      for (const i in trainDocOld.scheduels) {
+        trainDocOld.scheduels[i][Object.keys(trainDocUE.scheduels[i])[0]][dayFirFormate] = { ...fareClassess }
+      }
+    }
+
+    // console.log(myStations)
+
+    for (const i in myStations) {
+      let indexIWant = myStations[i].index;
+      let stationIWant = myStations[i].station;
+      trainDocOld.scheduels[indexIWant][stationIWant][dayFirFormate][ourTrain.class] -= 1
+    }
+
+    // console.log(trainDocOld);
+
+    firebase.firestore().collection("journeys").doc(ourTrain.name).set(trainDocOld)
+      .then(_ => {
+        console.log("Document successfully written!");
+        setTrainDocOld(null)
+      })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  }
+  //#endregion
+
 
   const submitPayButton = _ => {
     //* pay by card
     if (isSelectCard) {
       if (!wrapperProps.error && visaName) {
         // ... push to server
+        updateJourneysDoc()
         console.log("by card => push")
       }
       else {
-        wrapperProps.isTouched = true
+        if (!cardErrorOne) {
+          setCardErrorAfterSubmitButton(wrapperProps.error)
+          setCardErrorOne(true)
+        }
       }
 
     }
@@ -95,16 +206,13 @@ const Booking = () => {
       if (vodNumber && vodNumber.slice(0, 2) === "01" && vodNumber.length === 11) {
         // ... push to server
         console.log("by vodafone => push")
-
-        ToYourBookingPage()
+        updateJourneysDoc()
       }
       else {
         setVodNumberAccess(true)
       }
     }
   }
-
-  console.log(wrapperProps)
 
   return (
     <div className="booking">
@@ -115,9 +223,9 @@ const Booking = () => {
           <div className="container">
             <div className="blueBarContent">
               <p>Passenger Details</p>
-              <i class="fas fa-chevron-right"></i>
+              <i className="fas fa-chevron-right"></i>
               <p>Payment Method</p>
-              <i class="fas fa-chevron-right"></i>
+              <i className="fas fa-chevron-right"></i>
               <p>Review and Pay</p>
             </div>
           </div>
@@ -156,14 +264,14 @@ const Booking = () => {
 
           {isTicketTypeMobile &&
             <div className="whenTicketMobile">
-              <i class="fas fa-check-circle"></i>
+              <i className="fas fa-check-circle"></i>
               <p>This ticket can be shown on your smartphone or tablet with no printing required.</p>
             </div>
           }
 
           {!isTicketTypeMobile &&
             <div className="whenTicketStation">
-              <i class="fas fa-exclamation-circle"></i>
+              <i className="fas fa-exclamation-circle"></i>
               <p>The ticket must be collected from a machine at the station. You will need to insert any bank card and enter your booking number into the machine in order to collect your ticket.</p>
             </div>
           }
@@ -184,16 +292,18 @@ const Booking = () => {
                   {visaNameError}
                 </div>
                 <p className="likeLabel">Card number</p>
-                <div className="paymentContainer" onClick={_ => setIsAllInputsTouched(true)}>
+                <div className={`paymentContainer ${cardErrorAfterSubmitButton ? "errorFistTime": null}`} onClick={_ => setIsAllInputsTouched(true)}>
                   {/* //// visa => 4539298728713761 */}
                   {/* //// MasterCard => 5131378213242564 */}
                   {/* //// American Express => 342304893033616 */}
-                  <PaymentInputsWrapper {...wrapperProps}>
+                  <PaymentInputsWrapper {...wrapperProps} onClick={_ => { setCardErrorAfterSubmitButton(null); setCardErrorOne(true) }}>
                     <svg {...getCardImageProps({ images })} />
                     <input {...getCardNumberProps({ onChange: e => setCardNumber(e.target.value) })} />
                     <input {...getExpiryDateProps({ onChange: e => setExpiry(e.target.value) })} />
                     <input {...getCVCProps({ onChange: e => setCvc(e.target.value) })} />
                   </PaymentInputsWrapper>
+                  {<p className="validationError">{cardErrorAfterSubmitButton}</p>}
+
                 </div>
               </div>
 
@@ -205,7 +315,7 @@ const Booking = () => {
               <div className={`vodafoneContent ${!isSelectCard ? null : "contentDisabled"}`}>
                 <div className="visaName">
                   <label htmlFor="vodNumber">Vodafone number</label>
-                  <input className={vodNumberError ? "inputError" : null} value={vodNumber} onBlur={_ => setVodNumberAccess(true)} onChange={e => setVodNumber(e.target.value.replace(/\D/, '').trim())} type="tel" id="vodNumber" name="vodNumber" />
+                  <input className={vodNumberError ? "inputError" : null} value={vodNumber || ''} onBlur={_ => setVodNumberAccess(true)} onChange={e => setVodNumber(e.target.value.replace(/\D/, '').trim())} type="tel" id="vodNumber" name="vodNumber" />
                   {vodNumberError}
                 </div>
               </div>
@@ -213,6 +323,7 @@ const Booking = () => {
             </section>
           </section>
 
+          <p>01333333333</p>
           <button className="payButton" onClick={submitPayButton}>Pay</button>
 
         </div>

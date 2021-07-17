@@ -357,7 +357,7 @@ export const digitDateToNice = dateFormateDigit => {
   return `${dayDigit} ${monthName}, ${weekDayName}`;
   //// 01 Jul, Thu
 };
-//* "01/07/2021" => "01 Jul, Thu"
+//* "01/07/2021" => Thu, 01 Jul
 export const digitDateToFire = dateFormateDigit => {
   //// "01/07/2021"
 
@@ -379,7 +379,7 @@ export const digitDateToFire = dateFormateDigit => {
   //// 01
 
   return `${weekDayName}, ${Number(dayDigit)} ${monthName}`;;
-  //// 01 Jul, Thu
+  //// Thu, 01 Jul
 }
 //* "01/07/2021" => "thu"
 export const knowWeekday = dateFormateDigit => {

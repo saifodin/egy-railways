@@ -496,4 +496,26 @@
       font-weight: 500;
     }
   }
+  .validationError {
+    line-height: 20px;
+    margin: 0px;
+    margin-bottom: -5px;
+    font-size: 14px;
+    color: rgb(223, 27, 10);
+    font-weight: 500;
+  }
+}
+
+.booking .paymentContainer.errorFistTime {
+  // margin-top: 30px;
+  > div {
+    width: 100%;
+    > div:first-of-type {
+      background-color: rgb(255, 242, 241);
+      border: 1px solid rgb(223, 27, 10);
+      input {
+        background-color: rgb(255, 242, 241);
+      }
+    }
+  }
 }

@@ -6,7 +6,7 @@ import css from './Navbar.module.scss'
 import AuthItem from './AuthItem/AuthItem'
 import AuthComponent from '../AuthComponent/AuthComponent'
 import firebase from '../../firebase/firebase'
-import { refreshPage } from '../../shared/utility'
+// import { refreshPage } from '../../shared/utility'
 
 
 const Navbar = props => {
@@ -35,7 +35,7 @@ const Navbar = props => {
   }
   //#endregion
 
-  //#region - get the current user, fix string error, singOut function
+  //#region - get the current user, singOut function
 
   const [userInfo, setUserInfo] = useState(null)
 
@@ -48,9 +48,17 @@ const Navbar = props => {
   //* because after signUp first render userInfo is obj, but userInfo.displayName in null
   //* then second render userInfo is obj, and userInfo.displayName in string
   //* i don't know why, probably there are problem in set the username to firebase
-  if (userInfo && !userInfo.displayName) {
-    refreshPage()
-  }
+  //**
+  //* these leads to infinity refreshPage when singUp
+  //* i put refreshPage() when sinUp complete in auth page instead here
+  // if (userInfo && !userInfo.displayName) {
+  //   refreshPage()
+  // }
+  // if (userInfo) {
+  //   console.log("userInfo", userInfo)
+  //   console.log("userInfo.displayName", userInfo.displayName)
+  //   console.log("firebase.auth().currentUser.displayName", firebase.auth().currentUser.displayName)
+  // }
 
   //* in first render => useIfo is obj and displayName inside it is string, but when print userInfo.displayName alone is null !!!
   // console.log("userInfo", userInfo, userInfo.displayName)
@@ -61,6 +69,30 @@ const Navbar = props => {
   }
   //#endregion
 
+  //#region - push the user details to profiles in firestore when userInfo changes and not exist in profiles collection
+  useEffect(_ => {
+    if (userInfo) {
+      firebase.firestore().collection("profiles").doc(userInfo.uid).get().then(doc => {
+        if (!doc.exists) {
+          firebase.firestore().collection("profiles").doc(userInfo.uid).set({
+            name: userInfo.displayName,
+            email: userInfo.email,
+            imgURL: userInfo.photoURL
+          })
+            .then(_ => {
+              console.log("Document successfully written userId Doc in profiles !");
+            })
+            .catch(error => {
+              console.error("Error writing userId Doc in profiles ", error);
+            });
+        }
+      }).catch((error) => {
+        console.log("Error getting document user id to check if is exist or not:", error);
+      });
+    }
+  }, [userInfo]);
+
+  //#endregion
   return (
     <nav className={`container ${css.Navbar} ${extraCss}`}>
 
@@ -74,7 +106,7 @@ const Navbar = props => {
         <NavigationItem to="/train" extraStyle={props.extraStyle} >Train</NavigationItem>
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem> */}
-        <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem>
+        {/* <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem> */}
         <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />
@@ -92,7 +124,6 @@ const Navbar = props => {
                 <div className={css.list}>
                   <div><i className="fas fa-user-alt"></i>Passenger details</div>
                   <div><i className="fas fa-bookmark"></i>Your bookings</div>
-                  <div><i className="fas fa-credit-card"></i>Payment methods</div>
                   <div onClick={signOut}><i className="fas fa-sign-out-alt"></i>Sign Out</div>
                 </div>
               </div>

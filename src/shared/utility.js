@@ -313,6 +313,8 @@ export const createDateFormat = index => {
 
   const dateFormateDigit = day.toLocaleDateString('en-GB')
   //// 26/06/2021
+  const dateDigitDash = dateFormateDigit.split("/").join("-")
+  //// 26-06-2021
   const monthName = day.toLocaleString('en-US', { month: 'short' })
   //// Jun
   const weekDayName = day.toLocaleString('en-US', { weekday: 'short' })
@@ -330,7 +332,8 @@ export const createDateFormat = index => {
     monthName,
     dayDigit,
     dateFormateDigit,
-    firebaseFormat
+    firebaseFormat,
+    dateDigitDash,
   };
 };
 //* "01/07/2021" => "01 Jul, Thu"
@@ -380,6 +383,12 @@ export const digitDateToFire = dateFormateDigit => {
 
   return `${weekDayName}, ${Number(dayDigit)} ${monthName}`;;
   //// Thu, 01 Jul
+}
+//* "01/07/2021" => "01-07-2021"
+export const digitDateDash = dateFormateDigit => {
+  //// "01/07/2021"
+  return dateFormateDigit.split("/").join("-");
+  //// "01-07-2021"
 }
 //* "01/07/2021" => "thu"
 export const knowWeekday = dateFormateDigit => {

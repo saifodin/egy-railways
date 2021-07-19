@@ -115,12 +115,13 @@
 
   > section.ticketType section {
     display: flex;
+    height: 100%;
     > div {
       border: 1px solid #dcdfe9;
       border-radius: 8px;
       padding: 12px 16px;
       background-color: var(--b);
-      height: 100%;
+      min-height: 100%;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -321,28 +322,43 @@
     }
   }
 
-  .payButton {
+  .buttonsContainer {
+    width: 100%;
     margin-top: 50px;
-    text-align: center;
-    line-height: 20px;
-    padding: 0px 16px;
-    border: 0px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    appearance: none;
-    box-shadow: none;
-    text-decoration: none;
-    transition: background-color 0.2s linear 0s;
-    color: var(--b);
-    background-color: var(--d);
-    height: 56px;
-    font-size: 18px;
-    outline: none;
-    width: 38%;
     margin-bottom: 60px;
-    &:hover {
-      background-color: var(--l);
+    display: flex;
+    button {
+      border: none;
+      cursor: pointer;
+      color: var(--d);
+      background-color: transparent;
+    }
+    .payButton {
+      text-align: center;
+      margin-right: 40px;
+      line-height: 20px;
+      padding: 0px 16px;
+      border: 0px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      appearance: none;
+      box-shadow: none;
+      text-decoration: none;
+      transition: background-color 0.2s linear 0s;
+      color: var(--b);
+      background-color: var(--d);
+      height: 56px;
+      font-size: 18px;
+      outline: none;
+      width: 38%;
+      &:hover {
+        background-color: var(--l);
+      }
+      &[disabled] {
+        background-color: var(--l);
+        cursor: not-allowed;
+      }
     }
   }
 }
@@ -518,4 +534,8 @@
       }
     }
   }
+}
+
+.qrCodeContainer {
+  display: none;
 }

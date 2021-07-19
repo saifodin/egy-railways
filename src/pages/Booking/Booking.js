@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Booking.scss'
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
+import { useHistory } from "react-router-dom"
 import Footer from '../../components/Footer/Footer'
 import images from 'react-payment-inputs/images';
 import Navbar from '../../components/Navbar/NavBar'
@@ -12,14 +13,17 @@ import visa from '../../assets/imgs/otherImgs/visa.png'
 import MasterCard from '../../assets/imgs/otherImgs/MasterCard.png'
 import vodafoneCash from '../../assets/imgs/otherImgs/vodafoneCash.gif'
 import americanExpress from '../../assets/imgs/otherSvg/americanExpress.svg'
-import { digitDateToNice, digitDateToFire } from '../../shared/utility'
+import { digitDateToNice, digitDateToFire, digitDateDash, createDateFormat } from '../../shared/utility'
 import firebase from '../../firebase/firebase'
+import QRCode from 'qrcode.react';
+import emailjs from 'emailjs-com';
+import { init } from 'emailjs-com';
+init("user_rGtZEBpWWRNWMpdedohhD");
+
 
 const Booking = () => {
 
   let params = new URLSearchParams(window.location.search);
-  // const stationsBooking = window.localStorage.getItem("stationsBooking");
-  // console.log(stationsBooking)
 
   const dayDigit = params.get('day')
   const dayFirFormate = digitDateToFire(dayDigit)
@@ -38,19 +42,14 @@ const Booking = () => {
   }
 
   const currentUser = {
-    name: "Saifodin Ibrahim",
-    email: "saifodin@gmail.com",
-    cardInfo: {
-      cardNumber: "",
-      expirationMonth: "",
-      expirationYear: "",
-      cvv: "",
-    },
-    vodafoneNumber: ""
+    name: firebase.auth().currentUser.displayName,
+    email: firebase.auth().currentUser.email,
   }
 
   const [isTicketTypeMobile, setIsTicketTypeMobile] = useState(true)
   const [isSelectCard, setIsSelectCard] = useState(true)
+  const [ticketID, setTicketID] = useState(null)
+  const [isPayFinish, setIsPayFinish] = useState(false)
 
 
   //#region - inputs validation and values
@@ -176,22 +175,122 @@ const Booking = () => {
     firebase.firestore().collection("journeys").doc(ourTrain.name).set(trainDocOld)
       .then(_ => {
         console.log("Document successfully written!");
-        setTrainDocOld(null)
       })
       .catch(error => {
         console.error("Error writing document: ", error);
       });
+
+    setTrainDocOld(null)
+
   }
   //#endregion
 
+  //#region - updateAnalysis() called by submitPayButton() - get analysisDoc from analysis, update, push to journeys again
+
+  const [dayAnalysisDoc, setDayAnalysisDoc] = useState(null)
+  const [dayIsExist, setDayIsExist] = useState(null)
+
+  const updateAnalysis = _ => {
+    firebase.firestore().collection("analysis").doc(digitDateDash(dayDigit)).get().then(doc => {
+      if (doc.exists) {
+        setDayIsExist(true)
+        setDayAnalysisDoc(doc.data())
+        console.log("Document data:", doc.data());
+      } else {
+        setDayIsExist(false)
+        setDayAnalysisDoc({
+          passengers: 1,
+          profit: Number(ourTrain.price)
+        })
+      }
+    }).catch(error => {
+      console.log("Error getting document from analysis collection:", error);
+    });
+  }
+
+  if (dayAnalysisDoc) {
+    if (dayIsExist) {
+      dayAnalysisDoc.passengers += 1
+      dayAnalysisDoc.profit += Number(ourTrain.price)
+    }
+
+    firebase.firestore().collection("analysis").doc(digitDateDash(dayDigit)).set(dayAnalysisDoc)
+      .then(_ => {
+        console.log("Document successfully written Doc in analysis collection!");
+        setDayAnalysisDoc(null)
+      })
+      .catch(error => {
+        console.error("Error writing Doc in analysis collection: ", error);
+      });
+  }
+  //#endregion
+
+  //#region - sendToEmail() called when click on sedToEmail button - send ticket number to email
+  const sendToEmail = _ => {
+    if (ticketID) {
+      console.log("ticketID in sedToEmail fun", ticketID)
+      const templateParams = {
+        name: currentUser.name,
+        ToEmail: currentUser.email,
+        id: ticketID
+      };
+      emailjs.send('service_po6xwej', 'template_3zt0ksq', templateParams)
+        .then((result) => {
+          console.log(result.text);
+        }, (error) => {
+          console.log(error.text);
+        });
+    }
+  }
+  //#endregion
+
+  //#region - downloadQR() called when click on  downloadQRCode button - transform canvas to img then download it
+  const downloadQR = () => {
+    const canvas = document.getElementById("ticketQRCode");
+    const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    console.log("pngUrl", pngUrl)
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "ticketQRCode.png";
+    console.log("downloadLink.download", downloadLink.download)
+    document.body.appendChild(downloadLink);
+    console.log("downloadLink", downloadLink)
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+  //#endregion 
+
+  //#region - enterThisTicketToProfile() called by submitPayButton() - push ticket info to user reservations
+  const enterThisTicketToProfile = _ => {
+    firebase.firestore().collection('profiles').doc(firebase.auth().currentUser.uid).collection('reservations').add({
+      bookingDate: createDateFormat(0).dateDigitDash,
+      bookingTime: new Date().toLocaleString('en-GB').slice(-8),
+      trainNo: ourTrain.name,
+      price: Number(ourTrain.price),
+      fareClass: ourTrain.class,
+      JourneyDate: digitDateDash(dayDigit),
+      JourneyStartsAt: ourTrain.start,
+      JourneyEndsAt: ourTrain.end,
+      source: ourTrain.startFrom,
+      destination: ourTrain.endIn,
+    }).then(docRef => {
+      console.log("Document ticket written in reservations with ID: ", docRef.id);
+      setTicketID(docRef.id)
+    })
+  }
+  //#endregion
 
   const submitPayButton = _ => {
     //* pay by card
     if (isSelectCard) {
       if (!wrapperProps.error && visaName) {
         // ... push to server
-        updateJourneysDoc()
         console.log("by card => push")
+        updateJourneysDoc()
+        updateAnalysis()
+        enterThisTicketToProfile()
+        setIsPayFinish(true)
+
       }
       else {
         if (!cardErrorOne) {
@@ -207,6 +306,9 @@ const Booking = () => {
         // ... push to server
         console.log("by vodafone => push")
         updateJourneysDoc()
+        updateAnalysis()
+        enterThisTicketToProfile()
+        setIsPayFinish(true)
       }
       else {
         setVodNumberAccess(true)
@@ -214,8 +316,9 @@ const Booking = () => {
     }
   }
 
+
   return (
-    <div className="booking">
+    <div className="booking" id="capture">
 
       <div className="upperPart">
         <Navbar extraStyle="whiteBackground" />
@@ -241,7 +344,7 @@ const Booking = () => {
                 <img alt="ticket on mobile" src={ticketFromMobile} />
                 <div>
                   <header>Ticket on my phone</header>
-                  <p>Your ticket will be emailed to you straight away as a PDF and can either be printed or downloaded to your phone.</p>
+                  <p>Your ticket will be downloaded to your device straight away as a IMG and can either be printed or keep it in your phone.</p>
                 </div>
               </div>
               <div className={isTicketTypeMobile ? null : "selected"} onClick={_ => setIsTicketTypeMobile(false)}>
@@ -258,7 +361,7 @@ const Booking = () => {
             <header>Passenger Details</header>
             <section>
               <p>{currentUser.name}</p>
-              <div><i className="fas fa-ticket-alt"></i>Your ticket will be sent to: {currentUser.email}</div>
+              <div><i className="fas fa-ticket-alt"></i>Your ticket will be sent to: {currentUser.email} or downloaded to your device</div>
             </section>
           </section>
 
@@ -272,7 +375,7 @@ const Booking = () => {
           {!isTicketTypeMobile &&
             <div className="whenTicketStation">
               <i className="fas fa-exclamation-circle"></i>
-              <p>The ticket must be collected from a machine at the station. You will need to insert any bank card and enter your booking number into the machine in order to collect your ticket.</p>
+              <p>The ticket must be collected from a machine at the station. You will need to enter your booking number into the machine in order to collect your ticket.</p>
             </div>
           }
 
@@ -292,7 +395,7 @@ const Booking = () => {
                   {visaNameError}
                 </div>
                 <p className="likeLabel">Card number</p>
-                <div className={`paymentContainer ${cardErrorAfterSubmitButton ? "errorFistTime": null}`} onClick={_ => setIsAllInputsTouched(true)}>
+                <div className={`paymentContainer ${cardErrorAfterSubmitButton ? "errorFistTime" : null}`} onClick={_ => setIsAllInputsTouched(true)}>
                   {/* //// visa => 4539298728713761 */}
                   {/* //// MasterCard => 5131378213242564 */}
                   {/* //// American Express => 342304893033616 */}
@@ -323,8 +426,11 @@ const Booking = () => {
             </section>
           </section>
 
-          <p>01333333333</p>
-          <button className="payButton" onClick={submitPayButton}>Pay</button>
+          <div className="buttonsContainer">
+            <button className="payButton" onClick={submitPayButton} disabled={isPayFinish}>Pay</button>
+            {isPayFinish && isTicketTypeMobile && <button onClick={downloadQR} href={_ => { }}> Download QR code into this device </button>}
+            {isPayFinish && !isTicketTypeMobile && <button onClick={sendToEmail} href={_ => { }}> Send booking number To email </button>}
+          </div>
 
         </div>
         <div className="side">
@@ -366,6 +472,19 @@ const Booking = () => {
           </div>
         </div>
       </div>
+
+      {
+        ticketID &&
+        <div className="qrCodeContainer">
+          <QRCode
+            id="ticketQRCode"
+            value={ticketID}
+            size={290}
+            // level={"H"}
+            includeMargin={true}
+          />
+        </div>
+      }
 
       <div className="footerContainer">
         <Footer />

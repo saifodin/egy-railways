@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import coverWalking from '../../assets/imgs/omioCovers/cover-walking.svg'
 import google from '../../assets/imgs/otherSvg/google.svg'
 import './AuthComponent.scss'
-import { emailValidator } from '../../shared/utility'
+import { emailValidator, refreshPage } from '../../shared/utility'
 import firebase from '../../firebase/firebase'
 
 const AuthComponent = props => {
@@ -91,11 +91,13 @@ const AuthComponent = props => {
       firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPass)
         .then(userCredential => {
           let user = userCredential.user;
+          // console.log(user)
           user.updateProfile({
             displayName: `${signUpFname.toLowerCase()} ${signUpLname.toLowerCase()}`
           })
+          // props.setIsSingUpComplete(true)
           props.setOpenAuth(false);
-          // props.setOpenUserList(false);
+          refreshPage()
         })
         .catch(error => {
           setSignUpErrorMess(error.code)

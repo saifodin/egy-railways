@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { useHistory } from "react-router-dom"
 import DayBoxes from '../DayBoxes/DayBoxes';
 import css from './TrainCard.module.scss'
+import bookingDate from '../../assets/imgs/otherSvg/bookingDate.svg'
 
 const TrainCard = props => {
 
@@ -292,6 +293,59 @@ const TrainCard = props => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  else if (props.myAccount) {
+    trainCard = (
+      <div className={`${css.trainCard} ${css.myAccount}`}>
+        <div className={css.trainData}>
+
+          <div className={css.trainCardTop}>
+            <img src={bookingDate} alt="booking date icon" />
+            <span>booking date and time: </span>
+            <div className={css.bookingDate}>{props.bookingDate}</div>
+            <div className={css.bookingTime}>{props.bookingTime}</div>
+          </div>
+
+          <div className={css.trainCardMiddle}>
+            
+            <div className={css.trainNoAndDate}>
+              <div className={css.trainNo}>{props.name}</div>
+              <div className={css.journeyDate}>{props.journeyDate}</div>
+            </div>
+
+            <div className={css.timeInfo}>
+              <div className={css.departureTimeInfo}>
+                <span>{props.startTime.slice(0, props.startTime.length - 3)}<span>{props.startTime.slice(-2)}</span></span>
+                <span>{props.trainStart}</span>
+              </div>
+
+              <div className={css.durationAndStops}>
+                <span className={css.duration}>{props.journeyTime}</span>
+                <div className={css.line}>
+                  <span></span>
+                  <span></span>
+                </div>
+                <span className={css.stops}>{props.numberOfStations} Stations Between</span>
+              </div>
+
+              <div className={css.arrivalTimeInfo}>
+                <span>{props.endTime.slice(0, props.endTime.length - 3)}<span>{props.endTime.slice(-2)}</span></span>
+                <span>{props.trainEnd}</span>
+              </div>
+
+            </div>
+
+            <div className={css.classAndPrice}>
+              <span className={css.myClass}>{props.myClass}</span>
+              <span className={css.price}>{props.price}<span>EGP</span></span>
+            </div>
+
+          </div>
+
         </div>
       </div>
     )

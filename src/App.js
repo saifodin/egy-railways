@@ -13,6 +13,7 @@ import LiveStation from './pages/LiveStation/LiveStation'
 import Statistics from './pages/Statistics/Statistics'
 import Booking from './pages/Booking/Booking'
 import ScrollToTop from './shared/ScrollToTop'
+import MyAccount from './pages/MyAccount/MyAccount'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/live-station" component={LiveStation} />
           <Route path="/statistics" component={Statistics} />
           <Route path="/booking" component={Booking} />
+          <Route path="/my-account" component={MyAccount} />
           <Redirect to="/" />
         </Switch>
       </div>

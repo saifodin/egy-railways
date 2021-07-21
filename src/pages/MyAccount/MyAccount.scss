@@ -1,0 +1,231 @@
+.myAccount {
+  background-color: var(--c);
+  // height: 5000px;
+  display: flex;
+  flex-direction: column;
+  .header {
+    // height: 272px;
+    // height: 300px;
+    background-image: url(../../assets/imgs/omioCovers/myAccountCover.webp);
+    background-size: cover;
+    background-position: 50%;
+    width: 100%;
+    .title {
+      color: var(--b);
+      font-weight: 700;
+      font-size: 40px;
+      margin-top: 59px;
+      margin-bottom: 36px;
+      width: auto;
+    }
+  }
+}
+
+.myAccount,
+#media {
+  .header {
+    @media (max-width: 992px) {
+      height: 216px;
+    }
+    .title {
+      @media (max-width: 992px) {
+        font-size: 35px;
+        margin-top: 15px;
+      }
+      @media (max-width: 768px) {
+        font-size: 30px;
+        margin-top: 10px;
+      }
+      @media (max-width: 576px) {
+        font-size: 24px;
+        margin-top: 7px;
+      }
+    }
+  }
+}
+
+.myAccount .header .switcherContainer {
+  .switcher {
+    display: flex;
+    width: 300px;
+    .upcoming,
+    .archived {
+      color: #dcdfe9;
+      margin: 8px 0px 16px 0;
+      text-align: center;
+      cursor: pointer;
+      line-height: 24px;
+      font-size: 16px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+      flex-shrink: 0;
+      &.selected {
+        color: var(--b);
+      }
+      span:first-of-type {
+      }
+      i {
+        font-size: 5px;
+        margin: 0px 5px;
+      }
+    }
+    .tabsHighlight {
+      flex-shrink: 0;
+      width: 50%;
+      transform: translate3d(-200%, 0px, 0px);
+      height: 4px;
+      transition: transform 300ms ease-in-out;
+      align-self: flex-end;
+      background: #fa6b6b;
+      &.secondSwitch {
+        transform: translate3d(-100%, 0px, 0px);
+      }
+    }
+  }
+}
+
+.myAccount main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  aside {
+    width: 36%;
+    flex-grow: 0;
+  }
+  .yourBookings {
+    width: 58%;
+    flex-grow: 0;
+  }
+}
+
+.myAccount main .yourBookings .bookingEmpty {
+  margin-top: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: #13296833 0px 2px 5px 0px;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  div {
+    header {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--a);
+      margin-bottom: 5px;
+    }
+    p {
+      color: var(--f);
+    }
+  }
+}
+
+.myAccount main aside {
+  margin-top: -40px;
+  > section {
+    border-radius: 8px;
+    box-shadow: #13296833 0px 2px 5px 0px;
+    background-color: var(--b);
+    > header {
+      border-bottom: 1px solid #dcdfe9;
+      padding: 16px 24px;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: var(--a);
+    }
+    section {
+      padding: 24px;
+    }
+  }
+}
+
+.myAccount main aside .accountHolder .nameAndImg {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  .charCircle {
+    width: 30px;
+    height: 30px;
+    background-color: #3d5c94;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 31px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  > img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .name {
+    font-weight: 500;
+    color: var(--a);
+  }
+}
+
+.myAccount main aside .accountHolder .warningMessage {
+  padding: 10px 14px 12px;
+  border: 1px solid;
+  border-radius: 8px;
+  background: #f5f9fd;
+  margin-top: 20px;
+  border-color: #5e90cc;
+  color: #3366a2;
+  display: flex;
+  margin-bottom: 30px;
+  P {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #5e90cc;
+  }
+}
+
+.myAccount main aside .basicInfo {
+  header {
+    border-bottom: 1px solid #dcdfe9;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 58px;
+    color: var(--a);
+    margin-bottom: 20px;
+  }
+  div {
+    color: var(--f);
+    font-size: 16px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    i {
+      color: var(--m);
+      width: 10%;
+    }
+    span:first-of-type {
+      width: 35%;
+    }
+    span:last-of-type {
+      font-weight: 500;
+    }
+  }
+}
+
+.myAccount .footerContainer {
+  margin-top: auto;
+  padding-top: 100px;
+}

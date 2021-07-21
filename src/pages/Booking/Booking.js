@@ -23,6 +23,7 @@ init("user_rGtZEBpWWRNWMpdedohhD");
 
 const Booking = () => {
 
+  //#region - variables and states
   let params = new URLSearchParams(window.location.search);
 
   const dayDigit = params.get('day')
@@ -50,7 +51,7 @@ const Booking = () => {
   const [isSelectCard, setIsSelectCard] = useState(true)
   const [ticketID, setTicketID] = useState(null)
   const [isPayFinish, setIsPayFinish] = useState(false)
-
+  //#endregion
 
   //#region - inputs validation and values
 
@@ -273,6 +274,7 @@ const Booking = () => {
       JourneyEndsAt: ourTrain.end,
       source: ourTrain.startFrom,
       destination: ourTrain.endIn,
+      numberOfStops: +ourTrain.numberOfStops,
     }).then(docRef => {
       console.log("Document ticket written in reservations with ID: ", docRef.id);
       setTicketID(docRef.id)
@@ -280,6 +282,7 @@ const Booking = () => {
   }
   //#endregion
 
+  //## submitPayButton() called when click on pay Button
   const submitPayButton = _ => {
     //* pay by card
     if (isSelectCard) {
@@ -480,7 +483,6 @@ const Booking = () => {
             id="ticketQRCode"
             value={ticketID}
             size={290}
-            // level={"H"}
             includeMargin={true}
           />
         </div>

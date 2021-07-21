@@ -107,6 +107,7 @@ const Navbar = props => {
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem> */}
         {/* <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem> */}
+        <NavigationItem to="/my-account" extraStyle={props.extraStyle} >myAccount</NavigationItem>
         <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />

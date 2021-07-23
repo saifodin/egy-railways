@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import DayBoxes from '../DayBoxes/DayBoxes';
 import css from './TrainCard.module.scss'
 import bookingDate from '../../assets/imgs/otherSvg/bookingDate.svg'
+import { time12To24 } from '../../shared/utility'
 
 const TrainCard = props => {
 
@@ -172,7 +173,7 @@ const TrainCard = props => {
                   classSelect={classSelect}
                   weekDayRuns={props.weekDayRuns}
                   digitDate={props.digitDate}
-                  departTimeDigit={props.departTimeDigit}
+                  departTimeDigit={time12To24(props.departTime)}
                   forBookingInfo={{
                     start: props.departTime,
                     end: props.arrivalTime,
@@ -311,7 +312,7 @@ const TrainCard = props => {
           </div>
 
           <div className={css.trainCardMiddle}>
-            
+
             <div className={css.trainNoAndDate}>
               <div className={css.trainNo}>{props.name}</div>
               <div className={css.journeyDate}>{props.journeyDate}</div>

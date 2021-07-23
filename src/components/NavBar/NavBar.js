@@ -18,6 +18,15 @@ const Navbar = props => {
   }
   //#endregion
 
+  //#region - got to myAccount Page when click on passengerDetails or yourBookings
+  //* when hover on yourBooking hover passengerDetails also
+  const [hoverYourBookings, setHoverYourBookings] = useState(false)
+
+  const gotToAccountPage = _ => {
+    history.push("/my-account");
+  }
+  //#endregion
+
   //#region add extra styles based on props
   let extraCss = "";
   if (props.extraStyle === 'whiteBackground') {
@@ -93,6 +102,8 @@ const Navbar = props => {
   }, [userInfo]);
 
   //#endregion
+
+
   return (
     <nav className={`container ${css.Navbar} ${extraCss}`}>
 
@@ -108,7 +119,7 @@ const Navbar = props => {
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem> */}
         {/* <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem> */}
         <NavigationItem to="/my-account" extraStyle={props.extraStyle} >myAccount</NavigationItem>
-        <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>
+        {/* <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem> */}
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />
         }
@@ -123,9 +134,9 @@ const Navbar = props => {
               <div className={css.dropDownContainer}>
                 <div className={css.close} onClick={_ => setOpenUserList(false)}></div>
                 <div className={css.list}>
-                  <div><i className="fas fa-user-alt"></i>Passenger details</div>
-                  <div><i className="fas fa-bookmark"></i>Your bookings</div>
-                  <div onClick={signOut}><i className="fas fa-sign-out-alt"></i>Sign Out</div>
+                  <div onClick={gotToAccountPage} className={`${css.passengerDetails} ${hoverYourBookings ? css.likeHover : null}`}><i className="fas fa-user-alt"></i>Passenger details</div>
+                  <div onClick={gotToAccountPage} className={css.yourBookings} onMouseEnter={_ => setHoverYourBookings(true)} onMouseLeave={_ => setHoverYourBookings(false)}><i className="fas fa-bookmark"></i>Your bookings</div>
+                  <div onClick={signOut} className={css.signOut}><i className="fas fa-sign-out-alt"></i>Sign Out</div>
                 </div>
               </div>
             }

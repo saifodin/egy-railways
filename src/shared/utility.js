@@ -150,6 +150,19 @@ export const time24To12 = (time) => {
 
   return time
 }
+//* "06:00 PM" => "18:00:00"
+export const time12To24 = (time12h) => {
+  //// time12h = "06:00 PM"
+  const [time, modifier] = time12h.split(" ");
+  //// "06:00",PM
+  let [hours, minutes] = time.split(":");
+  //// "06","00"
+  if (hours === "12") hours = "00";
+
+  if (modifier === "PM") hours = parseInt(hours, 10) + 12;
+
+  return `${hours}:${minutes}:00`;
+}
 //* "18:00:00" => 1080
 export const time24ToMin = time => {
   //// time = "18:00:00"
@@ -498,4 +511,14 @@ export const emailValidator = email => {
   if (!email) return false
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email));
+}
+
+export const isPastDayAndTime = (digitDateDash, time24) => {
+
+  const today = new Date()
+  // console.log(today)
+  const day = new Date(digitDateDash.slice(-4), digitDateDash.slice(3, 5) - 1, digitDateDash.slice(0, 2), time24.slice(0, 2), time24.slice(3, 5), time24.slice(-2));
+  // console.log(day)
+
+  return day.getTime() - today.getTime() < 0
 }

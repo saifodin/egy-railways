@@ -76,7 +76,7 @@ const DayBoxes = props => {
             <DayBox
               key={i}
               date={createDateFormat(i).dateFormat}
-              availability={!isBoxCanBook(createDateFormat(i).dateFormat) ? "not available" : (isPastDate(departTimeDigit) ? "available" : "departed")}
+              availability={!isBoxCanBook(createDateFormat(i).dateFormateDigit) ? "not available" : (isPastDate(departTimeDigit) ? "available" : "departed")}
               theDayIWant={createDateFormat(i).dateFormateDigit === digitDate}
               departAfter={isPastDate(departTimeDigit) ? subTwoTimes(timeNow, departTimeDigit) : null}
               departSince={!isPastDate(departTimeDigit) ? subTwoTimes(departTimeDigit, timeNow) : null}
@@ -90,12 +90,12 @@ const DayBoxes = props => {
           )
         }
         //* when this day is not today (available or notAvailable)
-        else (
+        else {
           DayBoxes.push(
             <DayBox
               key={i}
               date={createDateFormat(i).dateFormat}
-              availability={isBoxCanBook(createDateFormat(i).dateFormat) ? "available" : "not available"}
+              availability={isBoxCanBook(createDateFormat(i).dateFormateDigit) ? "available" : "not available"}
               theDayIWant={createDateFormat(i).dateFormateDigit === digitDate}
               forBookingInfo={forBookingInfo}
               trainNumber={props.trainNumber}
@@ -105,7 +105,7 @@ const DayBoxes = props => {
               classSelect={classSelect}
             />
           )
-        )
+        }
       }
       //* when this train not running in this day, based on week Day Work (not exist)
       else {

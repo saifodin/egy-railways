@@ -97,6 +97,19 @@
         // margin-right: 10px;
       }
     }
+    .passengerDetails {
+      border-bottom: none;
+    }
+    .passengerDetails:hover ~ .yourBookings {
+      background: #f6f7f9;
+    }
+    .passengerDetails.likeHover {
+      background: #f6f7f9;
+    }
+
+    // .yourBookings:hover ~ .passengerDetails {
+    //   background: #f6f7f9;
+    // }
   }
 }
 

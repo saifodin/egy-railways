@@ -24,6 +24,8 @@ init("user_rGtZEBpWWRNWMpdedohhD");
 const Booking = () => {
 
   //#region - variables and states
+  const history = useHistory();
+
   let params = new URLSearchParams(window.location.search);
 
   const dayDigit = params.get('day')
@@ -78,11 +80,13 @@ const Booking = () => {
 
   const { wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
   // when this undefined then the card is full and valid
-  console.log("wrapperProps.error", wrapperProps)
+  // console.log("wrapperProps.error", wrapperProps)
   const [isAllInputsTouched, setIsAllInputsTouched] = useState(false)
   const [cardNumber, setCardNumber] = useState(null)
   const [expiry, setExpiry] = useState(null)
   const [cvc, setCvc] = useState(null)
+  //for remove warning these var not used
+  if (isAllInputsTouched && cardNumber && expiry && cvc) { }
   //#endregion
 
   //#region - get myStations that will be increment, fareClassess, isTrainDocUE Contain MyDate or not
@@ -238,6 +242,7 @@ const Booking = () => {
       emailjs.send('service_po6xwej', 'template_3zt0ksq', templateParams)
         .then((result) => {
           console.log(result.text);
+          history.push("/my-account");
         }, (error) => {
           console.log(error.text);
         });
@@ -258,6 +263,7 @@ const Booking = () => {
     console.log("downloadLink", downloadLink)
     downloadLink.click();
     document.body.removeChild(downloadLink);
+    history.push("/my-account");
   };
   //#endregion 
 
@@ -269,9 +275,9 @@ const Booking = () => {
       trainNo: ourTrain.name,
       price: Number(ourTrain.price),
       fareClass: ourTrain.class,
-      JourneyDate: digitDateDash(dayDigit),
-      JourneyStartsAt: ourTrain.start,
-      JourneyEndsAt: ourTrain.end,
+      journeyDate: digitDateDash(dayDigit),
+      journeyStartsAt: ourTrain.start,
+      journeyEndsAt: ourTrain.end,
       source: ourTrain.startFrom,
       destination: ourTrain.endIn,
       numberOfStops: +ourTrain.numberOfStops,
@@ -431,8 +437,8 @@ const Booking = () => {
 
           <div className="buttonsContainer">
             <button className="payButton" onClick={submitPayButton} disabled={isPayFinish}>Pay</button>
-            {isPayFinish && isTicketTypeMobile && <button onClick={downloadQR} href={_ => { }}> Download QR code into this device </button>}
-            {isPayFinish && !isTicketTypeMobile && <button onClick={sendToEmail} href={_ => { }}> Send booking number To email </button>}
+            {isPayFinish && isTicketTypeMobile && <button onClick={downloadQR}> Download QR code into this device </button>}
+            {isPayFinish && !isTicketTypeMobile && <button onClick={sendToEmail}> Send booking number To email </button>}
           </div>
 
         </div>
@@ -481,7 +487,7 @@ const Booking = () => {
         <div className="qrCodeContainer">
           <QRCode
             id="ticketQRCode"
-            value={ticketID}
+            value={`${firebase.auth().currentUser.uid},${ticketID}`}
             size={290}
             includeMargin={true}
           />

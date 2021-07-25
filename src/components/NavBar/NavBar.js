@@ -6,7 +6,6 @@ import css from './Navbar.module.scss'
 import AuthItem from './AuthItem/AuthItem'
 import AuthComponent from '../AuthComponent/AuthComponent'
 import firebase from '../../firebase/firebase'
-// import { refreshPage } from '../../shared/utility'
 
 
 const Navbar = props => {
@@ -47,6 +46,7 @@ const Navbar = props => {
   //#region - get the current user, singOut function
 
   const [userInfo, setUserInfo] = useState(null)
+  const [myDisplayName, setMyDisplayName] = useState(null)
 
   useEffect(_ => {
     firebase.auth().onAuthStateChanged(user => {
@@ -72,6 +72,17 @@ const Navbar = props => {
   //* in first render => useIfo is obj and displayName inside it is string, but when print userInfo.displayName alone is null !!!
   // console.log("userInfo", userInfo, userInfo.displayName)
 
+
+  //* solve problem userInfo found but displayName not found
+  if (userInfo && !myDisplayName && !userInfo.displayName) {
+    setMyDisplayName(localStorage.getItem('nameAfterSignUp'));
+  } else if (userInfo && userInfo.displayName) {
+    if (myDisplayName !== userInfo.displayName) {
+      setMyDisplayName(userInfo.displayName)
+    }
+  }
+
+
   const signOut = _ => {
     firebase.auth().signOut()
     setOpenUserList(false)
@@ -80,11 +91,11 @@ const Navbar = props => {
 
   //#region - push the user details to profiles in firestore when userInfo changes and not exist in profiles collection
   useEffect(_ => {
-    if (userInfo) {
+    if (userInfo && myDisplayName) {
       firebase.firestore().collection("profiles").doc(userInfo.uid).get().then(doc => {
         if (!doc.exists) {
           firebase.firestore().collection("profiles").doc(userInfo.uid).set({
-            name: userInfo.displayName,
+            name: myDisplayName,
             email: userInfo.email,
             imgURL: userInfo.photoURL
           })
@@ -99,7 +110,7 @@ const Navbar = props => {
         console.log("Error getting document user id to check if is exist or not:", error);
       });
     }
-  }, [userInfo]);
+  }, [userInfo, myDisplayName]);
 
   //#region - is an admin to show statistics or not
   const [isAdmin, setIsAdmin] = useState(false)
@@ -140,11 +151,11 @@ const Navbar = props => {
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />
         }
-        {userInfo && userInfo.displayName &&
+        {userInfo && myDisplayName &&
           <div className={`${css.userInfoContainer} ${extraCss}`}>
             <div className={css.nameAndImg} onClick={_ => setOpenUserList(true)}>
-              <div className={css.name}>{userInfo.displayName.split(" ")[0]}</div>
-              {!userInfo.photoURL && <div className={css.charCircle}>{userInfo.displayName[0]}</div>}
+              <div className={css.name}>{myDisplayName.split(" ")[0]}</div>
+              {!userInfo.photoURL && <div className={css.charCircle}>{myDisplayName[0]}</div>}
               {userInfo.photoURL && <img alt="user profile" src={userInfo.photoURL} />}
             </div>
             {openUserList &&

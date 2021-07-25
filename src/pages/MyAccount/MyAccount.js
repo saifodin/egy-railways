@@ -12,30 +12,41 @@ import { isPastDayAndTime, time12To24, digitDateToNice, time24To12, subTwoTimes 
 
 const MyAccount = () => {
 
-  const currentUser = {
-    name: firebase.auth().currentUser.displayName,
-    email: firebase.auth().currentUser.email,
-    photoURL: firebase.auth().currentUser.photoURL
+  //#region - variable and states
+  let currentUser = {
+    name: "userName",
+    email: "email@email.com",
+    photoURL: null
   }
-
-  // const currentUser = {
-  //   name: "tamer Ibrahim",
-  //   email: "saifodinii@gmail.com",
-  //   // photoURL: "https://lh3.googleusercontent.com/a/AATXAJxg_961MZYf9U2gDZjmGkbAlfBEdLEb_cTRk_9s=s96-c",
-  //   // photoURL: "https://lh3.googleusercontent.com/a/AATXAJxg_961MZYf9U2gDZjmGkbAlfBEdLEb_cTRk_9s=s96-c"
-  // }
+  const [userInfo, setUserInfo] = useState(null)
 
   const [isUpcoming, setIsUpcoming] = useState(true)
   const [myReservations, setMyReservations] = useState([])
   let upComingRes = []
   let archivedRes = []
   let resCards = []
+  //#endregion
 
-
-
-
+  //#region - because auth take a second when reload the page, i put init data until auth finish
+  
   useEffect(_ => {
-    if (firebase.auth().currentUser) {
+    firebase.auth().onAuthStateChanged(user => {
+      user ? setUserInfo(user) : setUserInfo(null)
+    });
+  }, []);
+
+  if (userInfo) {
+    currentUser = {
+      name: firebase.auth().currentUser.displayName,
+      email: firebase.auth().currentUser.email,
+      photoURL: firebase.auth().currentUser.photoURL,
+    }
+  }
+  //#endregion
+
+  //## get reservations of this user, after auth finish
+  useEffect(_ => {
+    if (userInfo) {
       firebase.firestore().collection("profiles").doc(firebase.auth().currentUser.uid).collection("reservations").get().then(querySnapshot => {
         let arr = []
         querySnapshot.docs.map((doc) =>
@@ -44,14 +55,11 @@ const MyAccount = () => {
         setMyReservations(arr)
       })
     }
-  }, [])
+  }, [userInfo])
 
-  console.log(myReservations)
-
+  //## get split myReservations to upComingRes and archivedRes
   if (myReservations.length) {
     for (const val of myReservations) {
-      // console.log(val.value.journeyDate)
-      // console.log(time12To24(val.value.journeyStartsAt))
       if (isPastDayAndTime(val.value.journeyDate, time12To24(val.value.journeyStartsAt))) {
         archivedRes.push(val)
       } else {
@@ -60,20 +68,7 @@ const MyAccount = () => {
     }
   }
 
-  /**
-   bookingDate: "21-07-2021"
-bookingTime: "21:07:30"
-destination: "Alexandria"
-fareClass: "2A"
-journeyDate: "22-07-2021"
-journeyEndsAt: "09:20 AM"
-journeyStartsAt: "06:05 AM"
-numberOfStops: 8
-price: 64
-source: "Cairo"
-trainNo: "903"
-   */
-
+  //## generate UpcomingRes
   if (isUpcoming) {
     if (upComingRes.length) {
       for (const val of upComingRes) {
@@ -110,6 +105,7 @@ trainNo: "903"
     }
   }
 
+  //## generate archivedRes
   if (!isUpcoming) {
     if (archivedRes.length) {
       for (const val of archivedRes) {
@@ -146,21 +142,7 @@ trainNo: "903"
     }
   }
 
-
-
-
-  // console.log(isPastDayAndTime("21-07-2021", "20:04:00"))
-
-  // let arr = ["12-03-2012", "09-02-2017", "06-01-2020"]
-
-
-  // arr.sort()
-  // console.log(arr)
-
-
-
-
-
+  
   return (
     <div className="myAccount">
 
@@ -188,53 +170,6 @@ trainNo: "903"
 
         <div className="yourBookings">
           {resCards}
-          {/* <TrainCard
-            myAccount
-            bookingDate="12 Jul, sun"
-            bookingTime="06:10 AM"
-            name="903"
-            trainStart="Alexandria"
-            trainEnd="Tanta"
-            journeyDate="23 Jul, fri"
-            journeyTime="2h3m"
-            startTime="08:20 AM"
-            endTime="10:30 AM"
-            numberOfStations={3}
-            myClass="2A"
-            price="34"
-          />
-          <TrainCard
-            myAccount
-            bookingDate="12 Jul, sun"
-            bookingTime="06:10 AM"
-            name="903"
-            trainStart="Alexandria"
-            trainEnd="Tanta"
-            journeyDate="23 Jul, fri"
-            journeyTime="2h3m"
-            startTime="08:20 AM"
-            endTime="10:30 AM"
-            numberOfStations={3}
-            myClass="2A"
-            price="34"
-          /> */}
-
-          {/* <div className="upcoming bookingEmpty">
-            <img src={ticketsWallet} alt="tickets Wallet icon" />
-            <div>
-              <header>You have no upcoming journeys.</header>
-              <p>You can retrieve any bookings that aren't already listed here.</p>
-            </div>
-          </div> */}
-
-          {/* <div className="Archived bookingEmpty">
-            <img src={emailTickets} alt="email tickets icon" />
-            <div>
-              <header>You have no archived bookings.</header>
-              <p>Your bookings will be archived here.</p>
-            </div>
-          </div> */}
-
         </div>
 
         <aside>

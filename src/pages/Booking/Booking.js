@@ -44,15 +44,34 @@ const Booking = () => {
     price: params.get('price'),
   }
 
-  const currentUser = {
-    name: firebase.auth().currentUser.displayName,
-    email: firebase.auth().currentUser.email,
+  const [userInfo, setUserInfo] = useState(null)
+  let currentUser = {
+    name: "user name",
+    email: "email@email.com",
+    id: null
   }
 
   const [isTicketTypeMobile, setIsTicketTypeMobile] = useState(true)
   const [isSelectCard, setIsSelectCard] = useState(true)
   const [ticketID, setTicketID] = useState(null)
   const [isPayFinish, setIsPayFinish] = useState(false)
+  //#endregion
+
+  //#region - because auth take a second when reload the page, i put init data until auth finish
+
+  useEffect(_ => {
+    firebase.auth().onAuthStateChanged(user => {
+      user ? setUserInfo(user) : setUserInfo(null)
+    });
+  }, []);
+
+  if (userInfo) {
+    currentUser = {
+      name: firebase.auth().currentUser.displayName,
+      email: firebase.auth().currentUser.email,
+      id: firebase.auth().currentUser.uid
+    }
+  }
   //#endregion
 
   //#region - inputs validation and values
@@ -269,7 +288,7 @@ const Booking = () => {
 
   //#region - enterThisTicketToProfile() called by submitPayButton() - push ticket info to user reservations
   const enterThisTicketToProfile = _ => {
-    firebase.firestore().collection('profiles').doc(firebase.auth().currentUser.uid).collection('reservations').add({
+    firebase.firestore().collection('profiles').doc(currentUser.id).collection('reservations').add({
       bookingDate: createDateFormat(0).dateDigitDash,
       bookingTime: new Date().toLocaleString('en-GB').slice(-8),
       trainNo: ourTrain.name,
@@ -487,7 +506,7 @@ const Booking = () => {
         <div className="qrCodeContainer">
           <QRCode
             id="ticketQRCode"
-            value={`${firebase.auth().currentUser.uid},${ticketID}`}
+            value={`${currentUser.id},${ticketID}`}
             size={290}
             includeMargin={true}
           />

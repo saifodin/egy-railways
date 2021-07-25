@@ -95,6 +95,7 @@ const AuthComponent = props => {
           user.updateProfile({
             displayName: `${signUpFname.toLowerCase()} ${signUpLname.toLowerCase()}`
           })
+          localStorage.setItem('nameAfterSignUp', `${signUpFname.toLowerCase()} ${signUpLname.toLowerCase()}`);
           // props.setIsSingUpComplete(true)
           props.setOpenAuth(false);
           refreshPage()

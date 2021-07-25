@@ -101,6 +101,23 @@ const Navbar = props => {
     }
   }, [userInfo]);
 
+  //#region - is an admin to show statistics or not
+  const [isAdmin, setIsAdmin] = useState(false)
+  useEffect(_ => {
+    if (userInfo) {
+      firebase.firestore().collection("profiles").doc(userInfo.uid).get().then((doc) => {
+        if (doc.exists) {
+          if (doc.data().admin) {
+            setIsAdmin(true)
+          }
+        } else {
+          console.log("No such user id doc in profiles!");
+        }
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      });
+    }
+  }, [userInfo]);
   //#endregion
 
 
@@ -118,8 +135,8 @@ const Navbar = props => {
         <NavigationItem to="/live-train" extraStyle={props.extraStyle} >Live Train</NavigationItem>
         <NavigationItem to="/live-station" extraStyle={props.extraStyle} >Live Station</NavigationItem> */}
         {/* <NavigationItem to="/booking" extraStyle={props.extraStyle} >Booking</NavigationItem> */}
-        <NavigationItem to="/my-account" extraStyle={props.extraStyle} >myAccount</NavigationItem>
-        {/* <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem> */}
+        {/* <NavigationItem to="/my-account" extraStyle={props.extraStyle} >myAccount</NavigationItem> */}
+        {isAdmin && <NavigationItem to="/statistics" extraStyle={props.extraStyle} >Statistics</NavigationItem>}
         {!userInfo &&
           <AuthItem extraStyle={props.extraStyle} setOpenAuth={setOpenAuth} />
         }

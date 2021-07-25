@@ -1,0 +1,452 @@
+
+.statistics {
+  background-color: var(--c);
+  display: flex;
+  flex-direction: column;
+  .upperPart {
+    background-image: url(../../assets/imgs/omioCovers/people_in_station.jpg);
+    background-size: cover;
+    background-position: 50%;
+    width: 100%;
+    .title {
+      color: var(--b);
+      font-weight: 700;
+      font-size: 40px;
+      margin-top: 59px;
+      margin-bottom: 36px;
+      width: auto;
+    }
+  }
+}
+
+
+.statistics main {
+  width: 100%;
+  height: 1000px;
+  .mainContent {
+    width: 100%;
+    //.firstRowOfStatics & .secondeRowOfStatics
+    > div {
+      // boxes in all Rows
+      > div {
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+        padding: 24px;
+        .header {
+          color: var(--a);
+          font-size: 20px;
+          font-weight: 500;
+          display: flex;
+          margin-bottom: 20px;
+          img {
+            width: 25px;
+            height: 25px;
+            margin-left: auto;
+          }
+        }
+        .viewMore {
+          color: #b7bac9;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          font-size: 17px;
+          margin-top: 15px;
+          i {
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.statistics main .mainContent .firstRowOfStatics {
+  width: 100%;
+  // height: 100px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  > div {
+    width: 35%;
+    .subBoxes {
+      display: flex;
+      margin-top: 30px;
+      font-weight: 500;
+      > div {
+        flex-grow: 1;
+        display: flex;
+        .icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: #f4f3fc;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          img {
+            width: 25px;
+            height: 25px;
+          }
+        }
+        .info {
+          .title {
+            color: #7e828c;
+            font-size: 14px;
+            margin-bottom: 5px;
+          }
+          .number {
+            color: #041637bd;
+            font-size: 20px;
+            span {
+              margin-left: 5px;
+              font-size: 14px;
+              color: #7e828c;
+            }
+          }
+        }
+      }
+    }
+  }
+  .outcomeInfo {
+    width: 55%;
+    .subBoxes > div .icon {
+      background-color: #fef6f6;
+      margin-right: 20px;
+    }
+  }
+}
+
+.statistics main .mainContent .secondeRowOfStatics {
+  margin-top: 30px;
+  display: flex;
+}
+
+.statistics main .mainContent .secondeRowOfStatics .stations {
+  width: 50%;
+  .header {
+    margin-bottom: 20px;
+  }
+  .stationsContent {
+    border-bottom: 1px solid #f5f5f5;
+    margin: 0;
+    padding: 11.5px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .stationName {
+      font-size: 18px;
+      font-weight: 500;
+      // color: #041637;
+      color: #041637bd;
+      width: 20%;
+    }
+    .stationAllNumber {
+      color: #7e828c;
+      font-size: 20px;
+      width: 20%;
+      span {
+        display: block;
+        font-size: 14px;
+        color: #7e828c82;
+      }
+    }
+    .stationEnterAndLeave {
+      width: 15%;
+      .stationEnter {
+        color: #8bc34a;
+        display: flex;
+        margin-bottom: 2px;
+        justify-content: space-between;
+      }
+      .stationLeave {
+        color: #ff9800;
+        justify-content: space-between;
+        display: flex;
+        margin-top: 2px;
+      }
+      img {
+        width: 15px;
+      }
+    }
+    .progressBarContainer {
+      width: 20%;
+      position: relative;
+      background-color: #d4d5de;
+      border-radius: 60px;
+      height: 3px;
+      display: flex;
+      align-items: center;
+      .progressBar {
+        position: absolute;
+        height: 5px;
+        border-radius: 60px;
+        &.red {
+          width: 100%;
+          background: rgb(244, 182, 182);
+          background: linear-gradient(90deg, rgba(244, 182, 182, 1) 25%, rgba(235, 88, 86, 1) 100%);
+        }
+        &.orange {
+          width: 90%;
+          background: rgb(253, 245, 219);
+          background: linear-gradient(90deg, rgba(253, 245, 219, 1) 25%, rgba(245, 175, 84, 1) 100%);
+        }
+        &.blue {
+          width: 60%;
+          background: rgb(215, 228, 253);
+          background: linear-gradient(90deg, rgba(215, 228, 253, 1) 25%, rgba(104, 147, 248, 1) 100%);
+        }
+        &.green {
+          width: 30%;
+          background: rgb(247, 252, 212);
+          background: linear-gradient(90deg, rgba(247, 252, 212, 1) 25%, rgba(179, 225, 75, 1) 100%);
+        }
+      }
+    }
+    .crowdIcon {
+      width: 5%;
+      img {
+        width: 30px;
+      }
+    }
+  }
+  .stationsContent:last-of-type {
+    border: none;
+  }
+}
+
+.statistics main .mainContent .secondeRowOfStatics .trains {
+  width: 40%;
+  margin-left: auto;
+  .header {
+    margin-bottom: 10px;
+  }
+  .trainsContent {
+    border-bottom: 1px solid #f5f5f5;
+    margin: 0;
+    padding: 8px 0px;
+
+    .trainName {
+      color: #7e828c;
+      font-size: 18px;
+      width: 20%;
+      margin-bottom: -6px;
+    }
+    .trainInfo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .trainNumber {
+        color: #041637bd;
+        font-size: 25px;
+        width: 20%;
+        span {
+          font-size: 14px;
+          color: #7e828c82;
+          margin-left: 5px;
+        }
+      }
+      .progressBarContainer {
+        width: 20%;
+        position: relative;
+        background-color: #d4d5de;
+        border-radius: 60px;
+        height: 3px;
+        display: flex;
+        align-items: center;
+        .progressBar {
+          position: absolute;
+          height: 5px;
+          border-radius: 60px;
+          &.red {
+            width: 100%;
+            background: rgb(244, 182, 182);
+            background: linear-gradient(90deg, rgba(244, 182, 182, 1) 25%, rgba(235, 88, 86, 1) 100%);
+          }
+          &.orange {
+            width: 90%;
+            background: rgb(253, 245, 219);
+            background: linear-gradient(90deg, rgba(253, 245, 219, 1) 25%, rgba(245, 175, 84, 1) 100%);
+          }
+          &.blue {
+            width: 65%;
+            background: rgb(215, 228, 253);
+            background: linear-gradient(90deg, rgba(215, 228, 253, 1) 25%, rgba(104, 147, 248, 1) 100%);
+          }
+          &.blueLow {
+            width: 45%;
+            background: rgb(215, 228, 253);
+            background: linear-gradient(90deg, rgba(215, 228, 253, 1) 25%, rgba(104, 147, 248, 1) 100%);
+          }
+          &.green {
+            width: 30%;
+            background: rgb(247, 252, 212);
+            background: linear-gradient(90deg, rgba(247, 252, 212, 1) 25%, rgba(179, 225, 75, 1) 100%);
+          }
+        }
+      }
+      .crowdIcon {
+        width: 5%;
+        img {
+          width: 30px;
+        }
+      }
+    }
+  }
+  .trainsContent:last-of-type {
+    border: none;
+  }
+}
+
+.statistics main .mainContent .thirdRowOfStatics {
+  margin-top: 30px;
+  display: flex;
+  > div {
+    .header {
+      // color: #041637;
+      color: var(--a);
+      font-size: 20px;
+      font-weight: 500;
+      display: flex;
+      img {
+        width: 25px;
+        height: 25px;
+        margin-left: auto;
+      }
+      // background-color: red;
+    }
+    .viewMore {
+      color: #b7bac9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      font-size: 17px;
+      margin-top: 15px;
+      i {
+        margin-left: 3px;
+      }
+    }
+  }
+}
+
+.statistics main .mainContent .thirdRowOfStatics .toRated {
+  width: 65%;
+  .trainRatedContent {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    margin-top: 10px;
+    .trainName {
+      width: 10%;
+      font-size: 25px;
+      font-weight: 500;
+      // color: #041637;
+      color: #041637bd;
+    }
+    .numberOfReviews {
+      width: 10%;
+      color: #7e828c;
+      font-size: 20px;
+      span {
+        display: block;
+        font-size: 14px;
+        color: #7e828c82;
+      }
+    }
+    .subReviews {
+      display: flex;
+      // justify-content: space-around;
+      > div {
+        display: flex;
+        // flex-grow: 1;
+        align-items: center;
+        height: 50px;
+        > div:first-of-type {
+          font-size: 14px;
+          margin-right: 5px;
+          opacity: 0.64;
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            margin-right: 2px;
+            // display: block;
+          }
+        }
+        > div:last-of-type {
+          display: flex;
+          margin-right: 18px;
+          i {
+            color: #bbbbbb;
+            margin-right: 2px;
+            font-size: 12px;
+            &.active {
+              color: #da8400;
+            }
+          }
+        }
+      }
+    }
+    .review {
+      color: var(--b);
+      width: 40px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 3px;
+      &.green {
+        background: linear-gradient(142deg, #a1d54f 50%, #5ba829 50%);
+      }
+      &.orange {
+        background: linear-gradient(142deg, #face7c 50%, #ffb834 50%);
+      }
+      &.red {
+        background: linear-gradient(142deg, #ff6969 50%, #ff0001 50%);
+      }
+    }
+  }
+}
+
+.statistics main .mainContent .thirdRowOfStatics .routes {
+  width: 25%;
+  margin-left: auto;
+  .routeContent {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    margin-top: 10px;
+    .fromStation,
+    .toStation {
+      color: #041637bd;
+      font-size: 16px;
+      width: 27%;
+    }
+    .arrow {
+      width: 15%;
+      margin-top: 4px;
+      text-align: center;
+      img {
+        width: 16px;
+      }
+    }
+    .numbers {
+      color: #7e828c;
+      font-size: 20px;
+      margin-left: auto;
+      span {
+        display: block;
+        font-size: 14px;
+        color: #7e828c82;
+      }
+    }
+  }
+}
+
+.statistics .footerContainer {
+  margin-top: auto;
+  padding-top: 50px;
+}
